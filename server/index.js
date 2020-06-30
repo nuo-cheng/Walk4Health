@@ -2,10 +2,92 @@ const express=require("express");
 const app=express();
 const cors=require("cors");
 const pool=require("./db");
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
 
 app.use(cors());
 app.use(express.json());
 
+//Routes
+
+const JWTKey = "SOMESECRET";
+
+
+
+app.post('/signup', async (req, res) => {
+  const { email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+  const exists = await pool.query("SELECT * FROM user_list WHERE email=$1",
+    [email]
+  );
+
+  if (exists.rowCount === 0) {
+    const newUser = await pool.query("INSERT INTO user_list (email, password) VALUES($1,$2)  RETURNING *",
+      [email, hashedPassword]
+    );
+    const userId = newUser.rows[0].user_id;
+    const token = jwt.sign({ userId: userId, email: email}, JWTKey)
+    res.status(200).send(token);
+
+  } else {
+    res.status(409).send(`Email address ${email} already registerd`);
+  }
+  res.status(200).send(`${email}, ${hashedPassword}`)
+})
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const exists = await pool.query("SELECT * FROM user_list WHERE email=$1",
+    [email]
+  );
+  if (exists.rowCount === 0) {
+    res.status(404).send('User not found');
+  } else {
+    const user = exists.rows[0];
+    if (await bcrypt.compare(password, user.password)) {
+      const token = jwt.sign({ userId: user.user_id, email: user.email}, JWTKey);
+      res.status(200).send(token);
+    } else {
+      res.status(401).send('Either email or password not correct');
+    }
+  }
+})
+
+
+ app.post('/token', (req, res) => {
+  const refreshToken = req.body.token
+  if (refreshToken == null) return res.sendStatus(401)
+  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403)
+    const accessToken = generateAccessToken({ name: user.name })
+    res.json({ accessToken: accessToken })
+  })
+})
+
+app.delete('/logout', (req, res) => {
+  refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+  res.sendStatus(204)
+})
+
+app.post('/login', (req, res) => {
+  // Authenticate User
+
+  const username = req.body.username
+  const user = { name: username }
+
+  const accessToken = generateAccessToken(user)
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+  refreshTokens.push(refreshToken)
+  res.json({ accessToken: accessToken, refreshToken: refreshToken })
+})
+
+function generateAccessToken(user) {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
+}
 //create a todo
 app.post("/todos", async(req, res)=>{
     try{
