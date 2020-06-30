@@ -21,10 +21,11 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.item}>Sign Up</Text>
         </TouchableOpacity>
       
-      <Button
-        title="Log in"
-        onPress={() => navigation.navigate("SignUp")}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <Text style={styles.item}>Log in</Text>
+       </TouchableOpacity>
+      
+      
       </View>
     );
 };
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderRadius: 10
+    borderRadius: 10,
+    fontWeight: 'bold',
 }
 
 });
