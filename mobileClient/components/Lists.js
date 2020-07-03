@@ -8,8 +8,8 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 const Lists=({navigation}) =>{
     const [lists, setLists]= useState([]);
-
-
+    const token = navigation.getParam("req");
+    console.log("up " + token.accessToken);
 
     const deleteList= async id =>{
         try{
@@ -23,21 +23,36 @@ const Lists=({navigation}) =>{
         }
     }
 
+    // console.log("============================", JSON.stringify(content.accessToken));
+    //         const response1 = await fetch("http://192.168.1.14:5000/lists",{
+    //             method: "GET",
+    //             headers: {"Content-Type": "application/json",
+    //             'Authorization': `Bearer ` + content.accessToken
+    //         }
     
 
     const getLists=async()=>{
         try{
-            const response= await fetch("http://localhost:5000/lists");
-            const jsonData= await response.json();
+            console.log("into get");
+            const response= await fetch("http://localhost:5000/lists", {
+                method: "GET",
+                headers: {"Content-Type": "application/json",
+                'Authorization': `Bearer ` + token.accessToken},
 
+            });
+            console.log("finish response")
+            
+            const jsonData= await response.json();
+           
             setLists(jsonData);
-            console.log(jsonData);
+            // console.log(jsonData);
         }catch(err){
             console.error(err.message);
         }
     };
 
     useEffect(()=> {
+        console.log("useEffect");
         getLists();
     }, []);
 
@@ -65,6 +80,7 @@ const Lists=({navigation}) =>{
 
     return(
         <View >
+            
             <Table >
                 <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
                 

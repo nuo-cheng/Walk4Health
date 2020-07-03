@@ -36,7 +36,7 @@ const SignInScreen = ({navigation}) => {
     // const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = (val) => {
-        if( val.trim().length >= 4 ) {
+        if( val.trim().length >= 1 ) {
             setData({
                 ...data,
                 username: val,
@@ -54,7 +54,7 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handlePasswordChange = (val) => {
-        if( val.trim().length >= 8 ) {
+        if( val.trim().length >= 1 ) {
             setData({
                 ...data,
                 password: val,
@@ -77,7 +77,7 @@ const SignInScreen = ({navigation}) => {
     }
 
     const handleValidUser = (val) => {
-        if( val.trim().length >= 4 ) {
+        if( val.trim().length >= 1 ) {
             setData({
                 ...data,
                 isValidUser: true
@@ -90,26 +90,51 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
-    const loginHandle = (userName, password) => {
+    const loginHandle = async (username, password) => {
 
-        const foundUser = Users.filter( item => {
-            return userName == item.username && password == item.password;
-        } );
+        // const foundUser = Users.filter( item => {
+        //     return userName == item.username && password == item.password;
+        // } );
 
-        if ( data.username.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
+        // if ( data.username.length == 0 || data.password.length == 0 ) {
+        //     Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+        //         {text: 'Okay'}
+        //     ]);
+        //     return;
+        // }
 
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
+        // if ( foundUser.length == 0 ) {
+        //     Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+        //         {text: 'Okay'}
+        //     ]);
+        //     return;
+        // }
         // signIn(foundUser);
+        try {
+            // const username = data.username;
+            // const password = data.password;
+            const body= {username, password};
+            // console.log(body);
+            const response= await fetch("http://192.168.1.14:5000/login",{
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+            const content = await response.json();
+
+            
+            // console.log("============================", JSON.stringify(content.accessToken));
+            // const response1 = await fetch("http://192.168.1.14:5000/lists",{
+            //     method: "GET",
+            //     headers: {"Content-Type": "application/json",
+            //     'Authorization': `Bearer ` + content.accessToken
+            // }
+
+            // });
+            navigation.navigate('Lists', {req: content})
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     return (

@@ -18,6 +18,25 @@ import Feather from 'react-native-vector-icons/Feather';
 
 const SignInScreen = ({navigation}) => {
 
+    const onSubmitForm = async e=>{
+        e.preventDefault();
+        try{
+            const username = data.username;
+            const password = data.password;
+            const body= {username, password};
+            const response= await fetch("http://192.168.1.14:5000/signup",{
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            });
+
+            console.log(response);
+            window.location="/";
+        }catch(err){
+            console.error(err.message);
+        }
+    }
+
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -188,7 +207,7 @@ const SignInScreen = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={() => {}}
+                    onPress={onSubmitForm}
                 >
                 {/* <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}
