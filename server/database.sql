@@ -2,7 +2,8 @@ CREATE DATABASE perntodo;
 
 CREATE TABLE todo_list(
     list_id SERIAL PRIMARY KEY, 
-    description VARCHAR(255)
+    description VARCHAR(255),
+    user_id INT
 );
 
 CREATE TABLE todo_item(
