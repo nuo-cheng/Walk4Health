@@ -23,7 +23,7 @@ import Users from '../model/users';
 const SignInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
         check_textInputChange: false,
         secureTextEntry: true,
@@ -39,14 +39,14 @@ const SignInScreen = ({navigation}) => {
         if( val.trim().length >= 1 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true,
                 isValidUser: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false,
                 isValidUser: false
             });
@@ -90,7 +90,7 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
-    const loginHandle = async (username, password) => {
+    const loginHandle = async (email, password) => {
 
         // const foundUser = Users.filter( item => {
         //     return userName == item.username && password == item.password;
@@ -111,11 +111,10 @@ const SignInScreen = ({navigation}) => {
         // }
         // signIn(foundUser);
         try {
-            // const username = data.username;
-            // const password = data.password;
-            const body= {username, password};
-            // console.log(body);
-            const response= await fetch("http://192.168.1.14:5000/login",{
+            
+            const body= {email, password};
+            console.log(body);
+            const response= await fetch("http://192.168.86.72:5000/users/login",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -159,7 +158,7 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Your Email"
                     placeholderTextColor="#666666"
                     style={[styles.textInput, {
                         // color: colors.text
@@ -242,7 +241,7 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    onPress={() => {loginHandle( data.username, data.password )}}
+                    onPress={() => {loginHandle( data.email, data.password )}}
                 >
                 {/* <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}

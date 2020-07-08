@@ -16,15 +16,15 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-const SignInScreen = ({navigation}) => {
+const SignUpScreen = ({navigation}) => {
 
     const onSubmitForm = async e=>{
         e.preventDefault();
         try{
-            const username = data.username;
+            const email = data.email;
             const password = data.password;
-            const body= {username, password};
-            const response= await fetch("http://192.168.1.14:5000/signup",{
+            const body= {email, password};
+            const response= await fetch("http://192.168.86.72:5000/users/signup",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -38,7 +38,7 @@ const SignInScreen = ({navigation}) => {
     }
 
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
         confirm_password: '',
         check_textInputChange: false,
@@ -50,13 +50,13 @@ const SignInScreen = ({navigation}) => {
         if( val.length !== 0 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false
             });
         }
@@ -109,7 +109,7 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Your Email"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}
@@ -238,7 +238,7 @@ const SignInScreen = ({navigation}) => {
     );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {
