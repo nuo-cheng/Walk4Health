@@ -99,6 +99,9 @@ const Lists=({navigation}) =>{
                     ))}
                 
             </Table>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <Text style={styles.item}>Log out</Text>
+            </TouchableOpacity>
         </View>
     );
                     };

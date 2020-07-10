@@ -61,6 +61,18 @@ app.post('/login', async (req, res) => {
   }
 })
 
+//log out
+app.delete('/logout', (req, res) => {
+    const authHeader = req.headers['authorization'];
+    // console.log(authHeader);
+    const token = authHeader && authHeader.split(' ')[1]
+    console.log(token);
+    if (token == null){
+        return res.sendStatus(401);""
+    }
+    token = undefined;
+    res.sendStatus(204);
+})
 
 
 //create a todo
@@ -189,6 +201,232 @@ app.get("/items/:id", async(req, res)=>{
     console.error(err.message);
 }
 })
+
+
+
+
+
+
+
+
+
+
+//User table API
+//sign up
+//login
+
+//Post table API
+//add post
+app.post("/createpost", async(req, res)=>{
+    try{
+        const  user_id  = req.user.userId;
+        const {time, price} = req.body;
+
+        const newItem= await pool.query("INSERT INTO post_item (creator_id, time, price, done) VALUES($1, $2, $3, False)  RETURNING *",
+            [user_id, time, price]
+        );
+        res.json(newItem);
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+//get all other post
+app.get("/posts/", authenticateToken, async(req, res)=>{
+    try{
+        // const { token } = req.headers;
+        // var decoded = jwt.verify(token, JWTKey);
+        // console.log(req.user);
+        const  user_id  = req.user.userId;
+        // console.log("auth" + user_id);
+        const lists=await pool.query("SELECT * FROM post_list WHERE user_id<>$1 AND done=false", [user_id]);
+        // console.log(lists.rows);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+})
+
+//get all self post
+//authourization
+function authenticateToken(req, res,next){
+    const authHeader = req.headers['authorization'];
+    // console.log(authHeader);
+    const token = authHeader && authHeader.split(' ')[1]
+    // console.log(token);
+    if (token == null){
+        return res.sendStatus(401);""
+    }
+    jwt.verify(token, JWTKey, (err, user) => {
+        if (err){
+            return res.sendStatus(403)
+        }
+        req.user = user;
+        console.log(user.userId);
+        next()
+    }) 
+}
+
+//get all self done lists
+app.get("/posts/done", authenticateToken, async(req, res)=>{
+    try{
+        // const { token } = req.headers;
+        // var decoded = jwt.verify(token, JWTKey);
+        // console.log(req.user);
+        const  user_id  = req.user.userId;
+        // console.log("auth" + user_id);
+        const lists=await pool.query("SELECT * FROM post_list WHERE user_id=$1 AND done=true", [user_id]);
+        // console.log(lists.rows);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+})
+
+//get all self progress lists
+app.get("/posts/progress", authenticateToken, async(req, res)=>{
+    try{
+        // const { token } = req.headers;
+        // var decoded = jwt.verify(token, JWTKey);
+        // console.log(req.user);
+        const  user_id  = req.user.userId;
+        // console.log("auth" + user_id);
+        const lists=await pool.query("SELECT * FROM post_list WHERE user_id=$1 AND done=false", [user_id]);
+        // console.log(lists.rows);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+})
+
+//get all accept order
+app.get("/posts/progress", authenticateToken, async(req, res)=>{
+    try{
+
+        const  user_id  = req.user.userId;
+        // console.log("auth" + user_id);
+        const lists=await pool.query("SELECT * FROM post_list WHERE receiver_id=$1", [user_id]);
+        // console.log(lists.rows);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+})
+
+//update post
+app.put("/updatepost/:id", async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const {time, price} = req.body;
+
+    const newItem= await pool.query("UPDATE post_item SET time=$1, price=$2 WHERE post_id=$3 RETURNING *",
+    [time, price, id] );
+    res.json(newItem);
+    }catch(err){
+    console.error(err.message);
+    } 
+});
+
+//update post to done
+app.put("/updatedone/:id", async(req, res)=>{
+    try{
+        const {id} = req.params;
+
+    const newItem= await pool.query("UPDATE todo_item SET done=True WHERE post_id=$1 RETURNING *",
+    [id] );
+    res.json(newItem);
+    }catch(err){
+    console.error(err.message);
+}
+})
+
+//delete post
+app.delete("/deletepost/:id",async(req, res)=>{
+    try{
+        const {id}=req.params;
+        const deletedItem=await pool.query("DELETE FROM post_item WHERE post_id=$1 RETURNING *",
+    [id]);
+    res.json(deletedItem);
+    }catch(err){
+        console.error(err.message);
+    }
+});
+
+//accept order
+app.put("/acceptpost/:id", authenticateToken, async(req, res)=>{
+    try{
+        const {post_id} = req.params;
+        const  user_id  = req.user.userId;
+        const newItem= await pool.query("UPDATE post_item SET reciver_id=$1 WHERE post_id=$2 RETURNING *",
+        [user_id, post_id] );
+    res.json(newItem);
+    }catch(err){
+    console.error(err.message);
+    } 
+});
+
+//filter time
+app.get("/posts/time", async(req, res)=>{
+    try{
+
+        const  time  = req.body;
+        const lists=await pool.query("SELECT * FROM post_list WHERE time=$1 AND done=false", [time]);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+});
+
+//filter price
+app.get("/posts/price", async(req, res)=>{
+    try{
+
+        const  price  = req.body;
+        const lists=await pool.query("SELECT * FROM post_list WHERE time=$1 AND done=false", [price]);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+});
+
+//search zipcode
+app.get("/posts/zipcode", async(req, res)=>{
+    try{
+
+        const  zipcode  = req.body;
+        const lists=await pool.query("SELECT * FROM post_list WHERE zipcode=$1 AND done=false", [zipcode]);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+});
+
+//get all other users
+app.get("/users",authenticateToken, async(req, res)=>{
+    try{
+
+        const  user_id  = req.user.userId;
+        const lists=await pool.query("SELECT username FROM user_list WHERE username<>$1", [user_id]);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+});
+
+
+//search user
+app.get("/users/searchuser", async(req, res)=>{
+    try{
+
+        const  username  = req.body;
+        const lists=await pool.query("SELECT username FROM user_list WHERE username=$1", [username]);
+        res.json(lists.rows);
+}catch(err){
+    console.error(err.message);
+}
+});
+
+
 
 
 app.listen(5000, ()=>{
