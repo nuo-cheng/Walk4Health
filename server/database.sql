@@ -34,5 +34,6 @@ CREATE TABLE post_list(
     time VARCHAR(255),
     price INT,
     creator_id INT,
-    reciver_id INT
+    reciver_id INT,
+    done BOOLEAN
 );
