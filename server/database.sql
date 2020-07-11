@@ -17,12 +17,6 @@ CREATE TABLE todo_item(
 CREATE TABLE user_list(
     user_id SERIAL PRIMARY KEY, 
     email VARCHAR(255),
-    password VARCHAR(255)
-);
-
-CREATE TABLE user_list(
-    user_id SERIAL PRIMARY KEY, 
-    email VARCHAR(255),
     password VARCHAR(255),
     gender VARCHAR(255),
     age INT
