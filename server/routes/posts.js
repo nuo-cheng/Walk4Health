@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { Op } = require("sequelize");
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const authentication = require('../middleware')
-const db = require('../db');
 const Post = require('../models/Post');
-
-
-//Post table API
+//middleware
 router.use(authentication);
+//Post table API
+
 //add post
 router.post("/", async(req, res)=>{
     

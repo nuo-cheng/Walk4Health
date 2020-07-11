@@ -1,27 +1,41 @@
-// //search zipcode
-// app.get("/posts/zipcode", async(req, res)=>{
-//     try{
+const express = require('express');
+const router = express.Router();
+const { Op } = require("sequelize");
+const authentication = require('../middleware')
+const Post = require('../models/Post');
+var zipcodes = require('zipcodes');
 
-//         const  zipcode  = req.body;
-//         const lists=await pool.query("SELECT * FROM post_list WHERE zipcode=$1 AND done=false", [zipcode]);
-//         res.json(lists.rows);
-// }catch(err){
-//     console.error(err.message);
-// }
-// });
+router.use(authentication);
+//search posts sorted by zipcode distance
 
-// //get all other users
-// app.get("/users",authenticateToken, async(req, res)=>{
-//     try{
+function zipcodeDistance(zipcode1, zipcode2) {
+    return zipcodes.distance(Number(zipcode1), Number(zipcode2));
+}
 
-//         const  user_id  = req.user.userId;
-//         const lists=await pool.query("SELECT username FROM user_list WHERE username<>$1", [user_id]);
-//         res.json(lists.rows);
-// }catch(err){
-//     console.error(err.message);
-// }
-// });
 
+router.get("/byzipcode", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const { zipcode }  = req.body;
+        const lists = await Post.findAll( {
+            where: {
+                done: false,
+                [Op.not]: [
+                    {creator_id: req.user.userId}
+                ]
+            }
+        });
+
+        lists.sort((p1, p2) => {
+            return zipcodeDistance(p1.zipcode, zipcode) - zipcodeDistance(p2.zipcode, zipcode);
+        });
+
+        res.json(lists)
+
+    }catch(err){
+        console.error(err.message);
+    }
+})
 
 // //search user
 // app.get("/users/searchuser", async(req, res)=>{
@@ -34,3 +48,5 @@
 //     console.error(err.message);
 // }
 // });
+
+module.exports = router;

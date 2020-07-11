@@ -2,8 +2,6 @@ const express=require("express");
 const app=express();
 const cors=require("cors");
 
-const bcrypt = require('bcrypt');
-
 //Database 
 const db = require('./db');
 
@@ -20,7 +18,7 @@ app.use(express.json());
 //Routes
 app.use('/users', require('./routes/users'));
 app.use('/posts', require('./routes/posts'));
-// app.use('/search', require('./routes/search'));
+app.use('/search', require('./routes/search'));
 // app.use('/filter', require('./routes/filter'));
 
 app.listen(5000, ()=>{
