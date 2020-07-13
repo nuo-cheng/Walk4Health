@@ -1,3 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const { Op } = require("sequelize");
+const authentication = require('../middleware')
+const Post = require('../models/Post');
+
+router.use(authentication);
+
 // //filter time
 // app.get("/posts/time", async(req, res)=>{
 //     try{
@@ -21,3 +29,5 @@
 //     console.error(err.message);
 // }
 // });
+
+module.exports = router;

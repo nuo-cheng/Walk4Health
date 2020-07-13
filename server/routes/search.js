@@ -6,8 +6,9 @@ const Post = require('../models/Post');
 var zipcodes = require('zipcodes');
 
 router.use(authentication);
-//search posts sorted by zipcode distance
 
+//search posts sorted by zipcode distance
+//helper
 function zipcodeDistance(zipcode1, zipcode2) {
     return zipcodes.distance(Number(zipcode1), Number(zipcode2));
 }
