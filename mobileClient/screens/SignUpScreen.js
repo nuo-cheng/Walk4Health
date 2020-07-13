@@ -21,10 +21,10 @@ const SignInScreen = ({navigation}) => {
     const onSubmitForm = async e=>{
         e.preventDefault();
         try{
-            const username = data.username;
+            const email = data.email;
             const password = data.password;
-            const body= {username, password};
-            const response= await fetch("http://192.168.1.14:5000/signup",{
+            const body= {email, password};
+            const response= await fetch("http://http://192.168.86.72/:5000/users/signup",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -38,7 +38,7 @@ const SignInScreen = ({navigation}) => {
     }
 
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
         password: '',
         confirm_password: '',
         check_textInputChange: false,
@@ -50,13 +50,13 @@ const SignInScreen = ({navigation}) => {
         if( val.length !== 0 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false
             });
         }
@@ -101,7 +101,7 @@ const SignInScreen = ({navigation}) => {
             style={styles.footer}
         >
             <ScrollView>
-            <Text style={styles.text_footer}>Username</Text>
+            <Text style={styles.text_footer}>email</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -109,7 +109,7 @@ const SignInScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Your email"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}

@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const db = require('../db');
 const User = require('../models/User');
 
-const JWTKey = require('../verify-signature');
+const JWTKey = "SOMESECRETS";
 
 //get user list
 router.get('/', (req, res) => 
