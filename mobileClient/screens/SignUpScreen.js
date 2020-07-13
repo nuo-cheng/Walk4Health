@@ -23,15 +23,18 @@ const SignInScreen = ({navigation}) => {
         try{
             const email = data.email;
             const password = data.password;
-            const body= {email, password};
-            const response= await fetch("http://http://192.168.86.72/:5000/users/signup",{
+            const gender = data.gender;
+            const age = data.age;
+            const body= {email, password, gender, age};
+            console.log('bodybodybody', body);
+            const response= await fetch("http://192.168.86.72:5000/users/signup",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             });
 
             console.log(response);
-            window.location="/";
+            window.location="/users";
         }catch(err){
             console.error(err.message);
         }
@@ -41,6 +44,8 @@ const SignInScreen = ({navigation}) => {
         email: '',
         password: '',
         confirm_password: '',
+        age:0,
+        gender:'',
         check_textInputChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
@@ -76,6 +81,21 @@ const SignInScreen = ({navigation}) => {
         });
     }
 
+    const handleGenderChange = (val) => {
+        setData({
+            ...data,
+            gender: val
+        });
+    }
+
+
+    const handleAgeChange = (val) => {
+        setData({
+            ...data,
+            age: val
+        });
+    }
+
     const updateSecureTextEntry = () => {
         setData({
             ...data,
@@ -101,7 +121,7 @@ const SignInScreen = ({navigation}) => {
             style={styles.footer}
         >
             <ScrollView>
-            <Text style={styles.text_footer}>email</Text>
+            <Text style={styles.text_footer}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -126,7 +146,57 @@ const SignInScreen = ({navigation}) => {
                 </Animatable.View>
                 : null}
             </View>
+            <Text style={styles.text_footer}>Gender</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder=""
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => handleGenderChange(val)}
+                />
+                {data.check_textInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
+            </View>
 
+            <Text style={styles.text_footer}>Age</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Your age"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => handleAgeChange(val)}
+                />
+                {data.check_textInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
+            </View>
             <Text style={[styles.text_footer, {
                 marginTop: 35
             }]}>Password</Text>
@@ -196,6 +266,8 @@ const SignInScreen = ({navigation}) => {
                     }
                 </TouchableOpacity>
             </View>
+
+            
             <View style={styles.textPrivate}>
                 <Text style={styles.color_textPrivate}>
                     By signing up you agree to our

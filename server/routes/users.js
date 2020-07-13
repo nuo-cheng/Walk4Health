@@ -23,6 +23,7 @@ router.get('/', (req, res) =>
 //sign up
 router.post('/signup', async (req, res) => {
     const { email, password, age, gender } = req.body;
+    console.log('password', password);
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existed = await User.findAll({
