@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const JWTKey = require('../verify-signature');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const db = require('../db');
 const User = require('../models/User');
 
-const JWTKey = "SOMESECRETS";
 
 //get user list
 router.get('/', (req, res) => 

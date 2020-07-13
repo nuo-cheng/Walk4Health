@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const authentication = function authenticateToken(req, res,next){
     
     const authHeader = req.headers['authorization'];
-    // console.log(authHeader);
     const token = authHeader && authHeader.split(' ')[1]
     console.log(token);
     if (token == null){
@@ -13,6 +12,7 @@ const authentication = function authenticateToken(req, res,next){
     }
     jwt.verify(token, JWTKey, (err, user) => {
         if (err){
+            console.log('err', err, JWTKey);
             return res.sendStatus(403)
         }
         req.user = user;
