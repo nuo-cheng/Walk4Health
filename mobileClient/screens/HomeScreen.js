@@ -17,13 +17,30 @@ const HomeScreen = ({navigation}) => {
       <Text style={styles.title}>Walk4Health</Text>
      </View>
       
-     <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-            <Text style={styles.item}>Sign Up</Text>
+     <View style={styles.button}>
+     <TouchableOpacity style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]}
+                    onPress={() => navigation.navigate("SignUp")}>
+            <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Sign Up</Text>
         </TouchableOpacity>
-      
-      <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-            <Text style={styles.item}>Log in</Text>
+        </View>
+      <View style={styles.button}>
+      <TouchableOpacity style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]}
+                    onPress={() => navigation.navigate("SignIn")}>
+            <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Log in</Text>
        </TouchableOpacity>
+       </View>
       
       
       </View>
@@ -35,25 +52,29 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+    paddingTop: 100
   },
   title: {
     textAlign: 'center',
-    color: 'coral',
-    fontSize: 20,
+    color: '#009387',
+    fontSize: 30,
     fontWeight: 'bold',
+    marginBottom: 16,
 },
-  item: {
-    padding: 16,
-    marginTop: 16,
-    borderColor: 'coral',
-    backgroundColor: 'coral',
-    color: '#fff',
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderRadius: 10,
-    fontWeight: 'bold',
+button: {
+  alignItems: 'center',
+  marginTop: 50
+},
+signIn: {
+  width: '50%',
+  height: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 10
+},
+textSign: {
+  fontSize: 18,
+  fontWeight: 'bold'
 }
 
 });
