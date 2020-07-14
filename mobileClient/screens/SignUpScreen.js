@@ -27,7 +27,7 @@ const SignInScreen = ({navigation}) => {
             const age = data.age;
             const body= {email, password, gender, age};
             console.log('bodybodybody', body);
-            const response= await fetch("http://192.168.86.72:5000/users/signup",{
+            const response= await fetch("http://localhost:5000/users/signup",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)

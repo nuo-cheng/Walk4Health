@@ -17,7 +17,7 @@ CREATE DATABASE walk4health;
 CREATE TABLE user_list(
     id SERIAL PRIMARY KEY,
     email VARCHAR(200),
-    password VARCHAR(200)
+    password VARCHAR(200),
     gender VARCHAR(255),
     age INT
 );
@@ -30,5 +30,5 @@ CREATE TABLE post_list(
     distance NUMERIC,
     done BOOLEAN,
     creator_id INT,
-    reciver_id INT
+    receiver_id INT
 );

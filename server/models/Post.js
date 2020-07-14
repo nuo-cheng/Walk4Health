@@ -21,7 +21,7 @@ const Post = db.define('post', {
     creator_id: {
         type: Sequelize.INTEGER
     },
-    reciever_id: {
+    receiver_id: {
         type: Sequelize.INTEGER
     }
 

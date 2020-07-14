@@ -34,7 +34,8 @@ const Lists=({navigation}) =>{
     const getLists=async()=>{
         try{
             console.log("into get");
-            const response= await fetch("http://localhost:5000/lists", {
+            console.log(token.accessToken);
+            const response= await fetch("http://localhost:5000/posts/", {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
                 'Authorization': `Bearer ` + token.accessToken},
@@ -59,7 +60,7 @@ const Lists=({navigation}) =>{
     console.log(lists);
 
     
-    const head=["List Id", "Description", "Delete"];
+    const head=["Post Id", "ZipCode", "Creator Id"];
 
     const deleteButton = (list_id) => (
         <TouchableOpacity onPress={()=>deleteList(list_id)}>
@@ -85,15 +86,17 @@ const Lists=({navigation}) =>{
                 <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
                 
                     {lists.map((list)=>(
-                        <TableWrapper key={list.list_id}  style={styles.row}>
-                        <Cell textStyle={styles.text} data={list.list_id}/>    
-                        <Cell textStyle={styles.text} data={listLink(list)}/>
-                        
+                        <TableWrapper key={list.id}  style={styles.row}>
+                        {/* <Cell textStyle={styles.text} data={list.list_id}/>    
+                        <Cell textStyle={styles.text} data={listLink(list)}/> */}
+                        <Cell textStyle={styles.text} data={list.id}/>    
+                        <Cell textStyle={styles.text} data={list.zipcode}/>
                            
                         
+                        {/* <Cell textStyle={styles.text}
+                        data={deleteButton(list.list_id)}/> */}
                         <Cell textStyle={styles.text}
-                        data={deleteButton(list.list_id)}/>
-                        
+                        data={list.creator_id}/>
                             
                         </TableWrapper>
                     ))}

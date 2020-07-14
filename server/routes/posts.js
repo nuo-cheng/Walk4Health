@@ -12,7 +12,7 @@ router.post("/", async(req, res)=>{
     
     const { userId }  = req.user;
     console.log('userId', userId)
-    const { price, distance, time, zipcode,reciever_id } = req.body;
+    const { price, distance, time, zipcode,receiver_id } = req.body;
     try {
         const post = await Post.create({
             price,
@@ -20,7 +20,7 @@ router.post("/", async(req, res)=>{
             time,
             zipcode,
             creator_id: userId,
-            reciever_id,
+            receiver_id,
             done: false
         });
         console.log('post', post);
@@ -38,6 +38,7 @@ router.get("/", async(req, res)=>{
     try{
         // console.log(req.user);
         const  userId  = req.user.userId;
+        console.log(userId);
         const lists = await Post.findAll( {
             where: {
                 done: false,
@@ -48,6 +49,7 @@ router.get("/", async(req, res)=>{
         });
         res.json(lists);
     }catch(err){
+        console.log(err);
         console.error(err.message);
     }
 })
