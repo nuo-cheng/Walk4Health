@@ -131,7 +131,8 @@ const SignInScreen = ({navigation}) => {
             // }
 
             // });
-            navigation.navigate('Lists', {req: content})
+            // navigation.navigate('TabScreen', { screen:'Explore', params:{req: content}});
+            navigation.navigate('TabScreen',{screen:'Explore',params:{req: content}});
         } catch (err) {
             console.error(err.message);
         }
@@ -243,7 +244,11 @@ const SignInScreen = ({navigation}) => {
                         marginTop: 15
                     }]}
                     onPress={() => {loginHandle( data.email, data.password )}}
+                    // onPress={() => navigation.navigate('TabScreen')}
                 >
+                
+            
+
                 {/* <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}
                     style={styles.signIn}

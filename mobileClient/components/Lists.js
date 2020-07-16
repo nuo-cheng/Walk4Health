@@ -6,9 +6,10 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 // import Items from "./Items";
 
-const Lists=({navigation}) =>{
+const Lists=({route, navigation}) =>{
     const [lists, setLists]= useState([]);
-    const token = navigation.getParam("req");
+    console.log(route.params);
+    const token = route.params.req;
     console.log("up " + token.accessToken);
 
     const deleteList= async id =>{
