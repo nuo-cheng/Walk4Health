@@ -1,3 +1,6 @@
+# WalkingApp
+
+
 # Walk4Health
 Walk4Health is a user-style mobile app, to help people find walking partners in their community/neighborhood
 
@@ -70,6 +73,14 @@ This is an object representing a Walk4Health account. You can retrieve it to see
   - 
 
   ## Search
+    This is a feature that users can search spicific information
+
+    Endpoints
+    - search zipcode - users input a zipcode, then get posts listing by distance to the zipcode
+        GET/search/byzipcode/
+
+    - search users - users input a username, then get the entry of that person's profile page
+        GET/search/user
 
 
   ## Filter
