@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
-    
+
     email: {
         type: Sequelize.STRING
     },
@@ -21,7 +21,12 @@ const User = db.define('user', {
 	tableName: 'user_list',
 	freezeTableName: true,	//prevent sequelize from pluralizing table names
 	timestamps: false,
-	underscored: false,
+    underscored: false
+    // classMethods: {
+    //     associate: function (models) {
+    //           user.hasMany(models.post, { foreignKey : 'id' , targetKey: 'creator_id'});
+    //     }
+    // }
 });
 
 
