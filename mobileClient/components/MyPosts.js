@@ -1,38 +1,16 @@
 import React, {Fragment, useState, useEffect} from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
 
 // import Items from "./Items";
 
-const Lists= ({route, navigation}) =>{
+const MyLists=({route, navigation}) =>{
     const [lists, setLists]= useState([]);
     console.log(route.params);
-    // const token = route.params.req;
-    // const token=null;
-    // try{
-    //     token=AsyncStorage.getItem('UserToken');
-    // }catch(err){
-    //     console.log(err);
-    // }
-    
-    async function bootstrapAsync() {
-        let token;
-        try {
-          token = await AsyncStorage.getItem('userToken');
-          
-          return token;
-        } catch (e) {
-          // Restoring token failed
-          console.log(e.message);
-        }
-        return;
-    }
-
-
-    
-    // \console.log(token);
+    const token = route.params.req;
+    console.log("up " + token.accessToken);
 
     const deleteList= async id =>{
         try{
@@ -56,13 +34,12 @@ const Lists= ({route, navigation}) =>{
 
     const getLists=async()=>{
         try{
-            const token=await bootstrapAsync();
             console.log("into get");
-            console.log(token);
+            console.log(token.accessToken);
             const response= await fetch("http://localhost:5000/posts/", {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
-                'Authorization': `Bearer ` + token},
+                'Authorization': `Bearer ` + token.accessToken},
 
             });
             console.log("finish response")
@@ -144,4 +121,4 @@ const styles = StyleSheet.create({
     btnText: { textAlign: 'center', color: '#fff' }
   });
 
-export default Lists;
+export default MyLists;

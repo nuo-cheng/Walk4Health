@@ -7,7 +7,8 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
@@ -90,6 +91,8 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
+
+
     const loginHandle = async (email, password) => {
 
         // const foundUser = Users.filter( item => {
@@ -121,8 +124,8 @@ const SignInScreen = ({navigation}) => {
                 body: JSON.stringify(body)
             });
             const content = await response.json();
-
-            
+            console.log(content.accessToken);
+            const token=content.accessToken;
             // console.log("============================", JSON.stringify(content.accessToken));
             // const response1 = await fetch("http://192.168.1.14:5000/lists",{
             //     method: "GET",
@@ -132,7 +135,14 @@ const SignInScreen = ({navigation}) => {
 
             // });
             // navigation.navigate('TabScreen', { screen:'Explore', params:{req: content}});
-            navigation.navigate('TabScreen',{screen:'Explore',params:{req: content}});
+            
+            try{
+                await AsyncStorage.setItem('userToken', token);
+            }catch(error){
+                console.log(error);
+            }
+
+            navigation.navigate('TabScreen',{screen:'Explore'});
         } catch (err) {
             console.error(err.message);
         }

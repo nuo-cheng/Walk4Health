@@ -1,11 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import homeStack from '../routes/homeStack'
+
 import Lists from '../screens/Lists'
-import Items from '../screens/Items'
+
+import CreateOrder from '../screens/CreateOrder';
 
 function Profile(){
     return(
@@ -49,9 +48,9 @@ function Mytabs(){
 
         <Tab.Navigator>
             <Tab.Screen name="Explore" component={Lists}/>
-            <Tab.Screen name="New Post" component={NewPost}/>
-            <Tab.Screen name="My Posts" component={MyPosts}/>
-            {/* <Tab.Screen name="Profile" component={Profile}/> */}
+            <Tab.Screen name="New Post" component={CreateOrder}/>
+            <Tab.Screen name="History" component={MyPosts}/>
+            <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
 
     );
