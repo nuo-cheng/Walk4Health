@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
 import Lists from '../screens/Lists'
 import Items from '../screens/Items'
+import Orders from '../screens/Orders'
 
 function Profile(){
     return(
@@ -25,11 +26,11 @@ function NewPost(){
     );
 }
 
-function MyPosts(){
-    return(
-        <Text>My Posts</Text>
-    );
-}
+// function Orders(){
+    
+//         // navitation.navigate("Orders")
+    
+// }
 
 
 // const HomeStack=createStackNavigator();
@@ -50,8 +51,8 @@ function Mytabs(){
         <Tab.Navigator>
             <Tab.Screen name="Explore" component={Lists}/>
             <Tab.Screen name="New Post" component={NewPost}/>
-            <Tab.Screen name="My Posts" component={MyPosts}/>
-            {/* <Tab.Screen name="Profile" component={Profile}/> */}
+            <Tab.Screen name="Orders" component={Orders}/>
+            <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
 
     );

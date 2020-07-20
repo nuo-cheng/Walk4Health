@@ -111,6 +111,59 @@ router.get("/", async(req, res)=>{
     }
 })
 
+//get all created order
+router.get("/created", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                creator_id: userId
+            }
+        });
+        console.log(lists);
+        res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//get all accepted order
+router.get("/accepted", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                receiver_id: userId
+            }
+        });
+        console.log(lists);
+        res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//accept order
+router.put("/acceptorder", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const { post_id } = req.body;
+        const userId  = req.user.userId;
+        const edit = await Post.update( 
+            {receiver_id: userId},{
+            where: {
+                id: post_id
+            }
+        });
+        console.log(edit);
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 //update one specific field of post
 router.put("/:id", async(req, res)=>{
     try{

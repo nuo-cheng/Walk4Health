@@ -6,6 +6,7 @@ import Items from '../screens/Items'
 import SignUp from '../screens/SignUpScreen';
 import SignIn from '../screens/SignInScreen';
 import Home from '../screens/HomeScreen';
+import Orders from '../screens/Orders';
 
 const screens={
     Home: {
@@ -22,6 +23,9 @@ const screens={
     },
     Items:{
         screen: Items
+    },
+    Orders:{
+        screen: Orders
     }
 }
 
