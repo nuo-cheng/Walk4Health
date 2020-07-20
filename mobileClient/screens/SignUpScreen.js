@@ -21,6 +21,7 @@ import { AuthContext } from '../App';
 const SignInScreen = ({navigation}) => {
 
     const {signUp}=React.useContext(AuthContext);
+    console.log(signUp);
     const onSubmitForm = async e=>{
         e.preventDefault();
         try{

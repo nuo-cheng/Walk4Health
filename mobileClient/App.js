@@ -123,14 +123,17 @@ export default function App() {
           const gender = data.gender;
           const age = data.age;
           const body= {email, password, gender, age};
+          const stringfiedBody=JSON.stringify(body);
           console.log('bodybodybody', body);
           const response= await fetch("http://localhost:5000/users/signup",{
               method: "POST",
               headers: {"Content-Type": "application/json"},
-              body: JSON.stringify(body)
+              body: stringfiedBody
           });
           const content=await response.json();
+          console.log(content);
           userToken=content.accessToken;
+          console.log(userToken);
         }catch(err){
           console.error(err.message);
       }
@@ -139,7 +142,7 @@ export default function App() {
           }catch(error){
             console.log(error);
           }
-          dispatch({ type: 'SIGN_IN', token: userToken });
+      dispatch({ type: 'SIGN_IN', token: userToken });
       
       },
     }),
