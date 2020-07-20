@@ -17,17 +17,17 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'reac
 const Stack=createStackNavigator();
 
 
-function GlobalNav(){
+function UnsignedInStack(){
     return(
-        <NavigationContainer>
+
             <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignUp" component={SignUp}/>
             <Stack.Screen name="SignIn" component={SignIn}/>
-            <Stack.Screen name="TabScreen" component={TabScreen}/>
+            
             </Stack.Navigator>
-        </NavigationContainer>
+
     );
 }
 
-export default GlobalNav;
+export default UnsignedInStack;

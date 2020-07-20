@@ -15,9 +15,12 @@ import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import { AuthContext } from '../App';
+
 
 const SignInScreen = ({navigation}) => {
 
+    const {signUp}=React.useContext(AuthContext);
     const onSubmitForm = async e=>{
         e.preventDefault();
         try{
@@ -279,7 +282,8 @@ const SignInScreen = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={onSubmitForm}
+                    // onPress={onSubmitForm}
+                    onPress={()=>signUp(data)}
                 >
                 {/* <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}

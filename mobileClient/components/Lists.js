@@ -1,14 +1,17 @@
 import React, {Fragment, useState, useEffect} from "react";
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { AuthContext } from '../App';
 
 
 
 // import Items from "./Items";
 
-const Lists= ({route, navigation}) =>{
+const Lists= ({ navigation}) =>{
     const [lists, setLists]= useState([]);
-    console.log(route.params);
+
+    const {signOut}= React.useContext(AuthContext);
+
     // const token = route.params.req;
     // const token=null;
     // try{
@@ -18,10 +21,10 @@ const Lists= ({route, navigation}) =>{
     // }
     
     async function bootstrapAsync() {
-        let token;
+        // var token;
         try {
-          token = await AsyncStorage.getItem('userToken');
-          
+          const token = await AsyncStorage.getItem('userToken');
+          console.log(token);
           return token;
         } catch (e) {
           // Restoring token failed
@@ -126,9 +129,11 @@ const Lists= ({route, navigation}) =>{
                     ))}
                 
             </Table>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}> */}
+            <TouchableOpacity onPress={()=>signOut()}>
             <Text style={styles.item}>Log out</Text>
             </TouchableOpacity>
+            
         </View>
     );
                     };
