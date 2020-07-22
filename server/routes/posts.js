@@ -21,7 +21,8 @@ router.post("/", async(req, res)=>{
             zipcode,
             creator_id: userId,
             receiver_id,
-            done: false
+            done: false,
+            rating: null
         });
         console.log('post', post);
 
@@ -87,6 +88,32 @@ router.get("/myinprogressposts", async(req, res)=>{
         });
         console.log(lists);
         res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//get all rated orders
+router.get("/ratings", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                [Op.not]: [
+                    {rating: null}
+                ],
+                receiver_id: userId
+            }
+        });
+        console.log(lists);
+        var total = 0;
+        for(var i = 0; i < lists.length; i++) {
+            total += lists[i].dataValues.rating;
+        };
+        var average = total / lists.length;
+        console.log('average rating', average);
+        res.json(average);
     }catch(err){
         console.error(err.message);
     }

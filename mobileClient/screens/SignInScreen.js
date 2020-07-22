@@ -17,7 +17,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 // import { useTheme } from 'react-native-paper';
 
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../App';
 
 import Users from '../model/users';
 
@@ -32,6 +32,7 @@ const SignInScreen = ({navigation}) => {
         isValidPassword: true,
     });
 
+    const {signIn}= React.useContext(AuthContext);
     // const { colors } = useTheme();
 
     // const { signIn } = React.useContext(AuthContext);
@@ -118,7 +119,7 @@ const SignInScreen = ({navigation}) => {
             // const password = data.password;
             const body= {email, password};
             // console.log(body);
-            const response= await fetch("http://localhost:5000/users/login",{
+            const response= await fetch("http://localhost:5000/login",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -253,7 +254,8 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    onPress={() => {loginHandle( data.email, data.password )}}
+                    // onPress={() => {loginHandle( data.email, data.password )}}
+                    onPress={() => {signIn( data.email, data.password )}}
                     // onPress={() => navigation.navigate('TabScreen')}
                 >
                 

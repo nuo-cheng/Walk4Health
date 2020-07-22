@@ -17,6 +17,7 @@ CREATE DATABASE walk4health;
 CREATE TABLE user_list(
     id SERIAL PRIMARY KEY,
     email VARCHAR(200),
+    name VARCHAR(200),
     password VARCHAR(200),
     gender VARCHAR(255),
     age INT

@@ -4,15 +4,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
-import Lists from '../screens/Lists'
+
 import Items from '../screens/Items'
 import Orders from '../screens/Orders'
+import Profile from '../screens/Profile';
 
-function Profile(){
-    return(
-        <Text>I'm ***</Text>
-    );
-}
+
+import Lists from './Explore'
+
+import CreateOrder from '../screens/CreateOrder';
+
 
 function Posts(){
     return(
@@ -50,9 +51,9 @@ function Mytabs(){
 
         <Tab.Navigator>
             <Tab.Screen name="Explore" component={Lists}/>
-            <Tab.Screen name="New Post" component={NewPost}/>
+            <Tab.Screen name="New Post" component={CreateOrder}/>
             <Tab.Screen name="Orders" component={Orders}/>
-            <Tab.Screen name="Profile" component={Profile}/>
+            <Tab.Screen name="My Profile" component={Profile}/>
         </Tab.Navigator>
 
     );
