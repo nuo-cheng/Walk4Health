@@ -30,8 +30,16 @@ const Post = db.define('post', {
 	tableName: 'post_list',
 	freezeTableName: true,	//prevent sequelize from pluralizing table names
 	timestamps: false,
-	underscored: false,
+    underscored: false
+    // classMethods:{
+    //     associate: function(models) {
+    //         post.belongsTo(models.user, { foreignKey: 'creator_id' });
+    //     }
+    // }
 });
 
+// db.sync({
+//     force: true
+// })
 
 module.exports = Post; 
