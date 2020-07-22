@@ -81,7 +81,7 @@ export default function App() {
         let userToken;
         try{
           const body={email,password};
-          const response= await fetch("http://localhost:5000/users/login",{
+          const response= await fetch("http://localhost:5000/login",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -115,7 +115,7 @@ export default function App() {
           const body= {email, password, gender, age};
           const stringfiedBody=JSON.stringify(body);
           console.log('bodybodybody', body);
-          const response= await fetch("http://localhost:5000/users/signup",{
+          const response= await fetch("http://localhost:5000/signup",{
               method: "POST",
               headers: {"Content-Type": "application/json"},
               body: stringfiedBody
