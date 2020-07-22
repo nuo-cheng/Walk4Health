@@ -6,12 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
 import Lists from '../screens/Lists'
 import Items from '../screens/Items'
+import Profile from '../screens/Profile';
 
-function Profile(){
-    return(
-        <Text>I'm ***</Text>
-    );
-}
+
 
 function Posts(){
     return(
@@ -51,6 +48,7 @@ function Mytabs(){
             <Tab.Screen name="Explore" component={Lists}/>
             <Tab.Screen name="New Post" component={NewPost}/>
             <Tab.Screen name="My Posts" component={MyPosts}/>
+            <Tab.Screen name="My Profile" component={Profile}/>
             {/* <Tab.Screen name="Profile" component={Profile}/> */}
         </Tab.Navigator>
 

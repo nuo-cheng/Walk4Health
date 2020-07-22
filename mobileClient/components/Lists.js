@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
@@ -8,10 +8,21 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 const Lists=({route, navigation}) =>{
     const [lists, setLists]= useState([]);
-    console.log(route.params);
-    const token = route.params.req;
-    console.log("up " + token.accessToken);
-
+    
+    // const token = route.params.req;
+    async function bootstrapAsync() {
+        let token;
+        try {
+          token = await AsyncStorage.getItem('userToken');
+          
+          return token;
+        } catch (e) {
+          // Restoring token failed
+          console.log(e.message);
+        }
+        return;
+    }
+    
     const deleteList= async id =>{
         try{
             const deleteList=await fetch(`http://localhost:5000/deletelist/${id}`,{
@@ -34,12 +45,13 @@ const Lists=({route, navigation}) =>{
 
     const getLists=async()=>{
         try{
+            const token=await bootstrapAsync();
             console.log("into get");
-            console.log(token.accessToken);
+            console.log(token);
             const response= await fetch("http://localhost:5000/posts/", {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
-                'Authorization': `Bearer ` + token.accessToken},
+                'Authorization': `Bearer ` + token},
 
             });
             console.log("finish response")
@@ -53,6 +65,7 @@ const Lists=({route, navigation}) =>{
         }
     };
 
+
     useEffect(()=> {
         console.log("useEffect");
         getLists();
@@ -61,7 +74,7 @@ const Lists=({route, navigation}) =>{
     console.log(lists);
 
     
-    const head=["Post Id", "ZipCode", "Creator Id"];
+    const head=["Time", "ZipCode", "Price","Creator Id"];
 
     const deleteButton = (list_id) => (
         <TouchableOpacity onPress={()=>deleteList(list_id)}>
@@ -83,30 +96,30 @@ const Lists=({route, navigation}) =>{
     return(
         <View >
             
-            <Table >
-                <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
-                
-                    {lists.map((list)=>(
-                        <TableWrapper key={list.id}  style={styles.row}>
-                        {/* <Cell textStyle={styles.text} data={list.list_id}/>    
-                        <Cell textStyle={styles.text} data={listLink(list)}/> */}
-                        <Cell textStyle={styles.text} data={list.id}/>    
-                        <Cell textStyle={styles.text} data={list.zipcode}/>
-                           
+        <Table >
+            <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
+            
+                {lists.map((list)=>(
+                    <TableWrapper key={list.id}  style={styles.row}>
+                    {/* <Cell textStyle={styles.text} data={list.list_id}/>    
+                    <Cell textStyle={styles.text} data={listLink(list)}/> */}
+                    <Cell textStyle={styles.text} data={list.time}/>    
+                    <Cell textStyle={styles.text} data={list.zipcode}/>
+                    <Cell textStyle={styles.text} data={list.creator_id}/>
+                    
+                    {/* <Cell textStyle={styles.text}
+                    data={deleteButton(list.list_id)}/> */}
+                    <Cell textStyle={styles.text}
+                    data={list.creator_id}/>
                         
-                        {/* <Cell textStyle={styles.text}
-                        data={deleteButton(list.list_id)}/> */}
-                        <Cell textStyle={styles.text}
-                        data={list.creator_id}/>
-                            
-                        </TableWrapper>
-                    ))}
-                
-            </Table>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-            <Text style={styles.item}>Log out</Text>
-            </TouchableOpacity>
-        </View>
+                    </TableWrapper>
+                ))}
+            
+        </Table>
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <Text style={styles.item}>Log out</Text>
+        </TouchableOpacity>
+    </View>
     );
                     };
 

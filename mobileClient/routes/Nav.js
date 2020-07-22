@@ -23,7 +23,7 @@ function GlobalNav(){
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignUp" component={SignUp}/>
             <Stack.Screen name="SignIn" component={SignIn}/>
-            <Stack.Screen name="TabScreen" component={TabScreen}/>
+            <Stack.Screen name="Walk4Health" component={TabScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
