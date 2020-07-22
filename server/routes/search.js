@@ -32,6 +32,7 @@ router.get("/byzipcode", async(req, res)=>{
         });
 
         res.json(lists)
+        console.log(lists);
 
     }catch(err){
         console.error(err.message);

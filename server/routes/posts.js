@@ -164,6 +164,24 @@ router.put("/acceptorder", async(req, res)=>{
     }
 })
 
+//order update done
+router.put("/:id/done", async(req, res)=>{
+    try{
+        const {id} = req.params;
+
+        const edit = await Post.update( 
+            {done: 1}, {
+               where: {
+                   id
+               }
+            }
+        );
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 //update one specific field of post
 router.put("/:id", async(req, res)=>{
     try{

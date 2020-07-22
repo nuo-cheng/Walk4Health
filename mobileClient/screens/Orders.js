@@ -38,7 +38,12 @@ const Orders = ({route,navigation}) => {
     // console.log("route.params==========="+route.params);
     // const token = route.params.req;
     // console.log("up " + token.accessToken);  
+    const [clickValue, setClickValue] = useState("created");
     
+    const getClickValue=async(name="created")=>{
+        getLists(name);
+        setClickValue(name);
+    }
 
     const getLists=async(name = "created")=>{
         try{
@@ -87,6 +92,22 @@ const Orders = ({route,navigation}) => {
     console.log("======================"+lists);
 
     const head=["Post Id", "Zipcode", "Receiver Id", "Done", "Review"];
+
+    const element = (clickValue, done) => (
+      <TouchableOpacity disabled={!done}>
+        <View style={styles.btn}>
+            {/* if (clickValue === "created"){
+                <Text style={styles.btnText}>review</Text>
+            } else if (clickValue === "partnered"){
+                <Text style={styles.btnText}>done</Text>
+            } */}
+            {clickValue === "created"
+        ? <Text style={styles.btnText}>review</Text>
+        : <Text style={styles.btnText}>done</Text>
+      }
+        </View>
+      </TouchableOpacity>
+    );
     return (
 
         <View>
@@ -96,7 +117,7 @@ const Orders = ({route,navigation}) => {
                 <SwitchSelector
                     options={listOptions}
                     initial={0}
-                    onPress={value => getLists(value)}
+                    onPress={value => getClickValue(value)}
                 />
             </View>
             <Table >
@@ -112,8 +133,8 @@ const Orders = ({route,navigation}) => {
                     {/* <Cell textStyle={styles.text}
                     data={deleteButton(list.list_id)}/> */}
                     <Cell textStyle={styles.text} data={list.receiver_id}/>
-                    <Cell textStyle={styles.text} data={list.done}/>
-                    <Cell textStyle={styles.text} data={list.done}/>
+                    <Cell textStyle={styles.text} data={list.done.toString()}/>
+                    <Cell textStyle={styles.text} data={element(clickValue, list.done)}/>
                     </TableWrapper>
                 ))}
                     
