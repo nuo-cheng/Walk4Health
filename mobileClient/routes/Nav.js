@@ -24,11 +24,7 @@ function UnsignedInStack(){
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignUp" component={SignUp}/>
             <Stack.Screen name="SignIn" component={SignIn}/>
-<<<<<<< HEAD
-            <Stack.Screen name="Walk4Health" component={TabScreen}/>
-=======
             
->>>>>>> ad28ed375d7755d7b01cc009bb7c72cdedcf1dbc
             </Stack.Navigator>
 
     );
