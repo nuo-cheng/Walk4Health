@@ -17,7 +17,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 // import { useTheme } from 'react-native-paper';
 
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../App';
 
 import Users from '../model/users';
 
@@ -32,6 +32,7 @@ const SignInScreen = ({navigation}) => {
         isValidPassword: true,
     });
 
+    const {signIn}= React.useContext(AuthContext);
     // const { colors } = useTheme();
 
     // const { signIn } = React.useContext(AuthContext);
@@ -142,7 +143,7 @@ const SignInScreen = ({navigation}) => {
                 console.log(error);
             }
 
-            navigation.navigate('Walk4Health',{screen:'Explore'});
+            navigation.navigate('TabScreen',{screen:'Explore'});
         } catch (err) {
             console.error(err.message);
         }
@@ -253,7 +254,8 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    onPress={() => {loginHandle( data.email, data.password )}}
+                    // onPress={() => {loginHandle( data.email, data.password )}}
+                    onPress={() => {signIn( data.email, data.password )}}
                     // onPress={() => navigation.navigate('TabScreen')}
                 >
                 

@@ -1,32 +1,37 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
 import React from 'react';
 
 import TabScreen from "../screens/MainTabScreen"
-import Lists from '../screens/Lists'
+import Lists from '../screens/Explore'
 import Items from '../screens/Items'
 import SignUp from '../screens/SignUpScreen';
 import SignIn from '../screens/SignInScreen';
 import Home from '../screens/HomeScreen';
+import CreateOrder from '../screens/CreateOrder';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 
 
 const Stack=createStackNavigator();
 
 
-function GlobalNav(){
+function UnsignedInStack(){
     return(
-        <NavigationContainer>
+
             <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="SignUp" component={SignUp}/>
             <Stack.Screen name="SignIn" component={SignIn}/>
+<<<<<<< HEAD
             <Stack.Screen name="Walk4Health" component={TabScreen}/>
+=======
+            
+>>>>>>> ad28ed375d7755d7b01cc009bb7c72cdedcf1dbc
             </Stack.Navigator>
-        </NavigationContainer>
+
     );
 }
 
-export default GlobalNav;
+export default UnsignedInStack;

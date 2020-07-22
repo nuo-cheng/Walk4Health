@@ -21,6 +21,52 @@ router.get('/', (req, res) =>
 
 
 
+<<<<<<< HEAD
+=======
+    if (existed.length > 0) {
+        res.status(409).send(`Email address ${email} already registerd`);
+    } else {
+        const user = await User.create({
+            email: email,
+            password: hashedPassword,
+            gender,
+            age
+        })
+        console.log('user', user)
+        const userId = user.dataValues.id;
+        const token = jwt.sign({userId: userId, email: email}, JWTKey)
+        res.json({accessToken: token});
+         res.status(200).send();
+        
+    }
+
+});
+//login
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    
+    const exist = await User.findAll({
+        where: {
+            email: email
+        }
+    });
+  
+
+    if (exist.length === 0) {
+      res.status(404).send('User not found');
+    } else {
+      const user = exist[0].dataValues;
+      if (await bcrypt.compare(password, user.password)) {
+        const token = jwt.sign({ userId: user.id, email: user.email}, JWTKey);
+        console.log(token);
+        res.json({accessToken: token});
+      } else {
+          console.log("dosen't match");
+        res.status(401).send('Either email or password not correct');
+      }
+    }
+  })
+>>>>>>> ad28ed375d7755d7b01cc009bb7c72cdedcf1dbc
 
 //log out
 // app.delete('/logout', (req, res) => {

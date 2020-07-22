@@ -1,43 +1,16 @@
 import React, {Fragment, useState, useEffect} from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-import { AuthContext } from '../App';
 
 
 
 // import Items from "./Items";
 
-const Lists= ({ navigation}) =>{
+const MyLists=({route, navigation}) =>{
     const [lists, setLists]= useState([]);
-
-    
-
-    const {signOut}= React.useContext(AuthContext);
-
-    // const token = route.params.req;
-    // const token=null;
-    // try{
-    //     token=AsyncStorage.getItem('UserToken');
-    // }catch(err){
-    //     console.log(err);
-    // }
-    
-    async function bootstrapAsync() {
-        // var token;
-        try {
-          const token = await AsyncStorage.getItem('userToken');
-          console.log(token);
-          return token;
-        } catch (e) {
-          // Restoring token failed
-          console.log(e.message);
-        }
-        return;
-    }
-
-
-    
-    // \console.log(token);
+    console.log(route.params);
+    const token = route.params.req;
+    console.log("up " + token.accessToken);
 
     const deleteList= async id =>{
         try{
@@ -58,19 +31,16 @@ const Lists= ({ navigation}) =>{
     //             'Authorization': `Bearer ` + content.accessToken
     //         }
     
-    
-
 
     const getLists=async()=>{
         try{
-            const token=await bootstrapAsync();
             console.log("into get");
-            console.log(token);
+            console.log(token.accessToken);
             const response= await fetch("http://localhost:5000/posts/", {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
-                'Authorization': `Bearer ` + token},
-                
+                'Authorization': `Bearer ` + token.accessToken},
+
             });
             console.log("finish response")
             
@@ -82,7 +52,6 @@ const Lists= ({ navigation}) =>{
             console.error(err.message);
         }
     };
-
 
     useEffect(()=> {
         console.log("useEffect");
@@ -123,7 +92,7 @@ const Lists= ({ navigation}) =>{
                         <Cell textStyle={styles.text} data={listLink(list)}/> */}
                         <Cell textStyle={styles.text} data={list.time}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
-                        <Cell textStyle={styles.text} data={list.price}/>
+                        <Cell textStyle={styles.text} data={list.creator_id}/>
                         
                         {/* <Cell textStyle={styles.text}
                         data={deleteButton(list.list_id)}/> */}
@@ -134,11 +103,9 @@ const Lists= ({ navigation}) =>{
                     ))}
                 
             </Table>
-            {/* <TouchableOpacity onPress={() => navigation.navigate("Home")}> */}
-            <TouchableOpacity onPress={()=>signOut()}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <Text style={styles.item}>Log out</Text>
             </TouchableOpacity>
-            
         </View>
     );
                     };
@@ -154,4 +121,4 @@ const styles = StyleSheet.create({
     btnText: { textAlign: 'center', color: '#fff' }
   });
 
-export default Lists;
+export default MyLists;
