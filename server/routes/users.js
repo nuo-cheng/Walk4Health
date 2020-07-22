@@ -43,8 +43,9 @@ router.post('/signup', async (req, res) => {
             age
         })
         console.log('user', user)
-        //const userId = user.dataValues.id;
-        // const token = jwt.sign({userId: userId, email: email}, JWTKey)
+        const userId = user.dataValues.id;
+        const token = jwt.sign({userId: userId, email: email}, JWTKey)
+        res.json({accessToken: token});
          res.status(200).send();
         
     }
