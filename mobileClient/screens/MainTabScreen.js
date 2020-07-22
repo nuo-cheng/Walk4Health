@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Lists from '../screens/Lists'
+import Lists from './Explore'
 
 import CreateOrder from '../screens/CreateOrder';
 

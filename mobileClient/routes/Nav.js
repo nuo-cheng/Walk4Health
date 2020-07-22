@@ -1,11 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
 import React from 'react';
 
 import TabScreen from "../screens/MainTabScreen"
-import Lists from '../screens/Lists'
+import Lists from '../screens/Explore'
 import Items from '../screens/Items'
 import SignUp from '../screens/SignUpScreen';
 import SignIn from '../screens/SignInScreen';

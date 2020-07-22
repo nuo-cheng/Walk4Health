@@ -10,6 +10,8 @@ import { AuthContext } from '../App';
 const Lists= ({ navigation}) =>{
     const [lists, setLists]= useState([]);
 
+    
+
     const {signOut}= React.useContext(AuthContext);
 
     // const token = route.params.req;
@@ -56,6 +58,8 @@ const Lists= ({ navigation}) =>{
     //             'Authorization': `Bearer ` + content.accessToken
     //         }
     
+    
+
 
     const getLists=async()=>{
         try{
@@ -66,7 +70,7 @@ const Lists= ({ navigation}) =>{
                 method: "GET",
                 headers: {"Content-Type": "application/json",
                 'Authorization': `Bearer ` + token},
-
+                
             });
             console.log("finish response")
             
@@ -118,7 +122,7 @@ const Lists= ({ navigation}) =>{
                         <Cell textStyle={styles.text} data={listLink(list)}/> */}
                         <Cell textStyle={styles.text} data={list.time}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
-                        <Cell textStyle={styles.text} data={list.creator_id}/>
+                        <Cell textStyle={styles.text} data={list.price}/>
                         
                         {/* <Cell textStyle={styles.text}
                         data={deleteButton(list.list_id)}/> */}

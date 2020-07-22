@@ -18,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { AuthContext } from '../App';
 
 
-const SignInScreen = ({navigation}) => {
+const SignUpScreen = ({navigation}) => {
 
     const {signUp}=React.useContext(AuthContext);
     console.log(signUp);
@@ -38,7 +38,7 @@ const SignInScreen = ({navigation}) => {
             });
 
             console.log(response);
-            window.location="/users";
+
         }catch(err){
             console.error(err.message);
         }
@@ -315,7 +315,7 @@ const SignInScreen = ({navigation}) => {
     );
 };
 
-export default SignInScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
     container: {

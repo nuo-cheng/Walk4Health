@@ -30,16 +30,6 @@ function SplashScreen() {
   );
 }
 
-function TestScreen(){
-  return(
-    <View>
-      <Text>yyy</Text>
-    </View>
-  )
-}
-
-
-
 export default function App() {
     const [state, dispatch]=React.useReducer(
     (preveState, action)=>{
