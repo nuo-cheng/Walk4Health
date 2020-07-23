@@ -84,6 +84,23 @@ const Orders = ({route,navigation}) => {
         }
     };
 
+    const updateDone = async(id) => {
+        try {
+            const token=await bootstrapAsync();
+            const body = {id};
+            const response= await fetch(`http://localhost:5000/posts/${id}/done`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json",
+                'Authorization': `Bearer ` + token},
+                body: JSON.stringify(body)
+                })
+                const jsonData= await response.json();
+                getLists("partnered");
+        } catch (error) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(()=> {
         console.log("useEffect");
         getLists();
@@ -91,23 +108,59 @@ const Orders = ({route,navigation}) => {
 
     console.log("======================"+lists);
 
-    const head=["Post Id", "Zipcode", "Receiver Id", "Done", "Review"];
+    const headCreated=["Post Id", "Zipcode", "Receiver Id", "Done", "Review"];
+    const headPartned=["Post Id", "Zipcode", "Creator Id", "Done", "Review"];
 
-    const element = (clickValue, done) => (
-      <TouchableOpacity disabled={!done}>
-        <View style={styles.btn}>
-            {/* if (clickValue === "created"){
-                <Text style={styles.btnText}>review</Text>
-            } else if (clickValue === "partnered"){
-                <Text style={styles.btnText}>done</Text>
-            } */}
-            {clickValue === "created"
-        ? <Text style={styles.btnText}>review</Text>
-        : <Text style={styles.btnText}>done</Text>
-      }
-        </View>
-      </TouchableOpacity>
-    );
+    const elementCreated = (clickValue, done, review) => {
+        if (review !== undefined){
+            return (
+                <Text>{review}</Text>
+            )
+        } else if (review === undefined && clickValue === "created" && done === true){
+            return (
+                <TouchableOpacity disabled={!done}>
+                    <View style={styles.btn}>
+                    <Text style={styles.btnText}>review</Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        } else {
+            return <Text> </Text>
+        }
+    }
+       
+    const elementPartneredDone = (clickValue, done, id) => {
+        if (done){
+            return (
+                <Text>Finished</Text>
+            )
+        } else {
+            return (
+                <TouchableOpacity onPress={() => {updateDone(id)}}>
+                <View style={styles.btn}>
+                <Text style={styles.btnText}>Done!</Text>
+                </View>
+                </TouchableOpacity>
+            )
+        }
+    }
+    
+
+    const elementPartneredCopy = (clickValue, done) => (
+        <TouchableOpacity disabled={!done}>
+          <View style={styles.btn}>
+              {/* if (clickValue === "created"){
+                  <Text style={styles.btnText}>review</Text>
+              } else if (clickValue === "partnered"){
+                  <Text style={styles.btnText}>done</Text>
+              } */}
+              {clickValue === "created"
+          ? <Text style={styles.btnText}>review</Text>
+          : <Text style={styles.btnText}>done</Text>
+        }
+          </View>
+        </TouchableOpacity>
+      );
     return (
 
         <View>
@@ -120,8 +173,10 @@ const Orders = ({route,navigation}) => {
                     onPress={value => getClickValue(value)}
                 />
             </View>
-            <Table >
-                <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
+
+            {clickValue === "created"
+            ? <Table >
+                <Row data={headCreated} style={styles.head}  textStyle={styles.text}></Row>
                 {lists.map((list)=>(
                     <TableWrapper key={list.id}  style={styles.row}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
@@ -134,12 +189,29 @@ const Orders = ({route,navigation}) => {
                     data={deleteButton(list.list_id)}/> */}
                     <Cell textStyle={styles.text} data={list.receiver_id}/>
                     <Cell textStyle={styles.text} data={list.done.toString()}/>
-                    <Cell textStyle={styles.text} data={element(clickValue, list.done)}/>
+                    <Cell textStyle={styles.text} data={elementCreated(clickValue, list.done, list.review)}/>
                     </TableWrapper>
                 ))}
-                    
-                
             </Table>
+            : <Table >
+                <Row data={headPartned} style={styles.head}  textStyle={styles.text}></Row>
+                {lists.map((list)=>(
+                    <TableWrapper key={list.id}  style={styles.row}>
+                    {/* <Cell textStyle={styles.text} data={list.list_id}/>    
+                    <Cell textStyle={styles.text} data={listLink(list)}/> */}
+                    <Cell textStyle={styles.text} data={list.id}/>    
+                    <Cell textStyle={styles.text} data={list.zipcode}/>
+                        
+                    
+                    {/* <Cell textStyle={styles.text}
+                    data={deleteButton(list.list_id)}/> */}
+                    <Cell textStyle={styles.text} data={list.receiver_id}/>
+                    <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id)}/>
+                    <Cell textStyle={styles.text} data={list.review}/>
+                    </TableWrapper>
+                ))}
+            </Table>
+            }
         </View>
         
 
