@@ -112,8 +112,10 @@ router.get("/ratings", async(req, res)=>{
             total += lists[i].dataValues.rating;
         };
         var average = total / lists.length;
-        console.log('average rating', average);
-        res.json(average);
+        var votes = lists.length;
+        let data = [average, votes]
+        console.log('rating data', data);
+        res.json(data);
     }catch(err){
         console.error(err.message);
     }

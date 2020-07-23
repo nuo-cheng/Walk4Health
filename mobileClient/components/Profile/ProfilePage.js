@@ -11,13 +11,17 @@ import {
     TouchableOpacity
  } from "react-native";
 import { Ionicons, AntDesign,MaterialIcons } from "@expo/vector-icons";
-import ProfilePhoto from '../../pic/Profile_photo.png';
+import ProfilePhoto from '../../pic/Profile_photo2.jpg';
+// npm install --save-dev @iconify/react @iconify/icons-ant-design
+import { Icon, InlineIcon } from '@iconify/react';
+import editOutlined from '@iconify/icons-ant-design/edit-outlined';
 
 
-const ProfilePage = ({ route, navigation, ...props }) => {
+
+const ProfilePage = ({ route, navigation}) => {
     
     const [user, setUser]= useState([]);
-    const [rating, setRating] = useState();
+    const [rating, setRating] = useState([]);
     // const token = route.params.req;
     async function bootstrapAsync() {
         let token;
@@ -35,9 +39,6 @@ const ProfilePage = ({ route, navigation, ...props }) => {
     const getUser=async()=>{
         try{
             const token=await bootstrapAsync();
-
-            console.log('async token',token);
-    
             const response= await fetch("http://localhost:5000/users/myprofile", {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
@@ -57,7 +58,7 @@ const ProfilePage = ({ route, navigation, ...props }) => {
         const getRating=async()=>{
             try{
                 const token=await bootstrapAsync();
-                console.log('async token',token);
+             //   console.log('async token',token);
         
                 const response= await fetch("http://localhost:5000/posts/ratings", {
                     method: "GET",
@@ -68,30 +69,31 @@ const ProfilePage = ({ route, navigation, ...props }) => {
                 console.log("hereherehere finish response")
                 
                 const jsonData= await response.json();
-                console.log('testtesttest json', jsonData);
+               console.log('testtesttest json', jsonData);
                 setRating(jsonData);
-               
+                
             }catch(err){
                 console.error(err.message);
             }
             };
 
         useEffect(()=> {
-            console.log("profile page: getRating");
+           // console.log("profile page: getRating");
             getUser();
             getRating();
         }, []);
+        console.log('get rating result',rating);
 
         return (
         <ScrollView showsVerticalScrollIndicator={false}>
 
             <View style={{ alignSelf: "center" }}>
                 <View style={styles.profileImage}>
-                    <Image source={ProfilePhoto} style={styles.image} resizeMode="center"></Image>
+                    <Image source={ProfilePhoto} style={styles.image}resizeMode="center"></Image>
                 </View>
 
                 <View style={styles.add}>
-                    <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+                    <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginLeft: 2 }}></Ionicons>
                 </View>
             </View>
 
@@ -102,19 +104,23 @@ const ProfilePage = ({ route, navigation, ...props }) => {
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Star score={rating} style={styles.starStyle} />
-                    <Text style={[styles.text, { fontSize: 24 }]}>4.83</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Star score={rating[0]} style={styles.starStyle} />
+                    <Text style={[styles.subText, {fontSize: 15}]}>({rating[1]})</Text>
+                    </View>
+        <Text style={[styles.text, { fontSize: 24 }]}>{rating[0]}</Text>
                     <Text style={[styles.subText]}>Overall Rating</Text>
                 </View>
             </View>
 
-
-            <Text style={[styles.subText, styles.recent]}>Personal Info
-            <TouchableOpacity style={[{marginLeft:200}]}>
-                        <AntDesign name="edit" size={18} color="#009387"  />
-                        {/* onPress={() => {loginHandle( data.email, data.password )}} */}
-                     </TouchableOpacity>
-            </Text>
+            <View style={{ flexDirection: 'row', width: 250}}>
+                <Text style={[styles.subText, styles.recent]} >Personal Info </Text>
+                <TouchableOpacity>
+                    <AntDesign name="edit" size={18} style={{marginTop: 32,marginBottom: 6}} color="#009387"  />
+                    {/* onPress={() => {loginHandle( data.email, data.password )}} */}
+                </TouchableOpacity>
+            </View>    
+            
             <View style={{ alignItems: "center" }}>
                 <View style={styles.recentItem}>
                     <View style={styles.activityIndicator}></View>
@@ -138,15 +144,19 @@ const ProfilePage = ({ route, navigation, ...props }) => {
             <Text style={[styles.subText, styles.recent]}>Log in Info</Text>
             <View style={{ alignItems: "center" }}>
                 <View style={styles.recentItem}>
+                    <View style={{ flexDirection: 'row'}}>
                     <View style={styles.activityIndicator}></View>
-                    <View style={{ width: 250 }}>
+                    <View style={{ width: 250, flexDirection: 'row' }}>
                     <Text style={[styles.text_footer]}>
                             email: {user.email}   
-                    <TouchableOpacity>
+                     </Text>
+                     <TouchableOpacity>
                         <Text style={[styles.text_footer, { textDecorationLine: 'underline', marginLeft: 5, color:'gray'}]}>Change</Text>
                         {/* onPress={() => {loginHandle( data.email, data.password )}} */}
                      </TouchableOpacity>
-                     </Text>
+                    </View>
+
+                    
                     </View>
                 </View>
 
@@ -185,8 +195,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0,
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 40,
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center"
@@ -207,9 +217,10 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     image: {
-        flex: 1,
-        height: undefined,
-        width: undefined
+        flex:1,
+        width: null,
+        height: null,
+        resizeMode: 'contain'
     },
     infoContainer: {
         alignSelf: "center",
@@ -219,9 +230,9 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 200,
         height: 200,
-        borderRadius: 100,
+        borderRadius: 200 / 2,
         overflow: "hidden",
-        marginTop: 20
+        marginTop: 20,
     },
     recent: {
         marginLeft: 50,
@@ -237,7 +248,7 @@ const styles = StyleSheet.create({
     starStyle: {
         width: 100,
         height: 20,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     statsContainer: {
         flexDirection: "row",
@@ -255,6 +266,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         fontWeight: "500"
     },
+
 
     text: {
         fontFamily: "HelveticaNeue",
