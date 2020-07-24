@@ -242,4 +242,23 @@ router.delete("/:id",async(req, res)=>{
     }
 });
 
+//give review
+router.put("/:id/review", async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const { rating } = req.body;
+
+        const edit = await Post.update( 
+            {rating: rating}, {
+               where: {
+                   id
+               }
+            }
+        );
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 module.exports = router;
