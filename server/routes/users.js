@@ -35,17 +35,17 @@ router.get('/', (req, res) =>
 //     res.sendStatus(204);
 // })
 
-//update one specific field of user
+//update user info
 router.put("/:id", async(req, res)=>{
     try{
         const {id} = req.params;
-
+        console.log('!！！test userid', id);
+        const {name, age, gender} = req.body;
+       
+        console.log('!！！test name update', name);
         const edit = await User.update( 
-            {...req.body}, {
-               where: {
-                   id
-               }
-            }
+            {name,age,gender}, 
+            {where: {id}}
         );
         res.json(edit);
     }catch(err){
@@ -56,15 +56,15 @@ router.put("/:id", async(req, res)=>{
 //get user info
 router.get("/myprofile", async(req, res)=>{
     try{
-        console.log(req.user);
-
         const id = req.user.userId;
         const user = await User.findAll( {
             where: {
                id
             }
         });
+        console.log('users info route', user);
         res.json(user);
+        
     }catch(err){
         console.error(err.message);
     }

@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
+
 
 import Items from '../screens/Items'
 import Orders from '../screens/Orders'
@@ -45,7 +47,7 @@ function NewPost(){
 // }
 
 const Tab=createBottomTabNavigator();
-
+const Stack=createStackNavigator();
 function Mytabs(){
     return(
 
