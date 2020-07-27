@@ -237,8 +237,8 @@ router.get("/:id", async(req, res)=>{
                 id
             }
         });
-        res.json(post);
-        console.log(post);
+        res.json(post[0].dataValues);
+        console.log(post[0].dataValues);
     }catch(err){
         console.error(err.message);
     }

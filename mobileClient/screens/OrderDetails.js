@@ -14,8 +14,7 @@ import {
 import SwitchSelector from "react-native-switch-selector";
 import StarRating from 'react-native-star-rating-new';
 import Mytabs from './MainTabScreen'
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-
+import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -51,10 +50,8 @@ const OrderDetails = ({route, navigation}) => {
                 'Authorization': `Bearer ` + token},
                 })
             const jsonData= await response.json();
-            console.log("jsonData"+ jsonData)
-            const newjson=JSON.stringify(jsonData);
-            var obj = JSON.parse(newjson);
-            setOrder(obj);
+            console.log("jsonData"+jsonData.id);
+            setOrder(jsonData);
             
         } catch (error) {
             console.error(err.message);
@@ -66,11 +63,8 @@ const OrderDetails = ({route, navigation}) => {
         getOrder();
     }, []);
 
-    console.log("order: " + order);
-
-    const row = [" 1", "2 "];
-    const head=["Receiver Id", "Time", "Zipcode", "Price", "Distance"];
-    // const orderData=[order.receiver_id, order.time, order.zipcode, order.price, order.distance];
+    console.log("order: " + order.id);
+    console.log("done:"+ order.done);
 
 
     return (
@@ -78,9 +72,21 @@ const OrderDetails = ({route, navigation}) => {
         <View style={styles.container}>
           <StatusBar backgroundColor='#009387' barStyle="light-content"/>
         <View style={styles.header}>
-            <Text style={styles.text_header}>Order Number #</Text>
-            <Text style={styles.text_header}>Finished: </Text>
-            <Text style={styles.text_header}>Review: </Text>
+        <Grid>
+                <Col>
+                    <Text>Order Number # </Text>
+                    <Text>Finished:   </Text>
+                    <Text>Review: </Text>
+                </Col>
+                <Col>
+                    <Text>{order.id} </Text>
+                    <Text>{String(order.done)} </Text>
+                    <Text>{order.review} </Text>
+                </Col>
+            </Grid>
+            {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
+            <Text style={styles.text_header}>Finished:  {order.done.toString()}</Text>
+            <Text style={styles.text_header}>Review: {order.review}</Text> */}
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
@@ -89,35 +95,28 @@ const OrderDetails = ({route, navigation}) => {
             }]}
         
         >
+        
+        <View style={styles.container_white}>
+
+            <Grid>
+                <Col>
+                    <Text>Reveiver Id: </Text>
+                    <Text>Time: </Text>
+                    <Text>Zipcode: </Text>
+                    <Text>Price: </Text>
+                    <Text>Distance: </Text>
+                </Col>
+                <Col>
+                    <Text>{order.receiver_id} </Text>
+                    <Text>{order.time} </Text>
+                    <Text>{order.zipcode} </Text>
+                    <Text>{order.price} </Text>
+                    <Text>{order.distance} </Text>
+                </Col>
+            </Grid>
+        </View>
             
 
-        {/* <Table >
-        
-       
-        <Row data={row} flexArr={[1, 2]} style={styles.head} textStyle={styles.text}/>
-            {order.map((post)=>(
-                
-                <TableWrapper key={post.id}  style={styles.wrapper}>
-                    
-                <Col data={head}  style={styles.col} textStyle={styles.text}></Col>
-                <Cell  textStyle={styles.text} data={post.receiver_id}/> 
-                
-                <Cell textStyle={styles.text} data={post.time}/>
-                    
-        
-                <Cell textStyle={styles.text} data={post.zipcode}/>
-                <Cell  textStyle={styles.text} data={post.price}/>
-                <Cell  textStyle={styles.text} data={post.distance}/>
-                </TableWrapper>
-            ))}
-                    
-                
-            </Table> */}
-
-
-
-        
-        
 
             <TouchableOpacity
                     style={[styles.signIn, {
@@ -144,6 +143,10 @@ const styles = StyleSheet.create({
       flex: 1, 
       backgroundColor: '#009387'
     },
+    container_white: {
+        flex: 1, 
+        backgroundColor: '#fff'
+      },
     header: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -216,16 +219,5 @@ const styles = StyleSheet.create({
     head: { height: 40, backgroundColor: '#808B97' },
     text: { margin: 6 },
     row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-
-    wrapper: { flexDirection: 'col' },
-
-
-    containernew: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    singleHead: { width: 80, height: 40, backgroundColor: '#c8e1ff' },
-    headnew: { flex: 1, backgroundColor: '#c8e1ff' },
-    title: { flex: 2, backgroundColor: '#f6f8fa' },
-    titleText: { marginRight: 6, textAlign:'right' },
-    textnew: { textAlign: 'center' },
-    btn: { width: 58, height: 18, marginLeft: 15, backgroundColor: '#c8e1ff', borderRadius: 2 },
-    btnText: { textAlign: 'center' }
+    wrapper: { flexDirection: 'column' },
   });
