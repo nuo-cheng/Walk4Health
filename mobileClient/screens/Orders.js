@@ -218,12 +218,15 @@ const Orders = ({route,navigation}) => {
             </Modal>
 
 
-            <Text>Orders</Text>
             <View>
                 <SwitchSelector
                     options={listOptions}
                     initial={0}
                     onPress={value => getClickValue(value)}
+                    textColor='#009387' //green same as login
+                    selectedColor='#FFFFFF'//white
+                    buttonColor='#009387'
+                    borderColor='#009387'
                 />
             </View>
 
@@ -234,7 +237,7 @@ const Orders = ({route,navigation}) => {
                     <TableWrapper key={list.id}  style={styles.row}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
                     <Cell textStyle={styles.text} data={listLink(list)}/> */}
-                    <Cell textStyle={styles.text} data={list.id}/>    
+                    <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
                         
                     
@@ -265,6 +268,11 @@ const Orders = ({route,navigation}) => {
                 ))}
             </Table>
             }
+            <TouchableOpacity onPress={() => navigation.navigate('OrderDetails')}>
+                <View style={styles.btn}>
+                <Text style={styles.btnText}>to detail</Text>
+                </View>
+            </TouchableOpacity>
         </View>
         
     )

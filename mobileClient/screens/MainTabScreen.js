@@ -8,6 +8,7 @@ import homeStack from '../routes/homeStack'
 import Items from '../screens/Items'
 import Orders from '../screens/Orders'
 import Profile from '../screens/Profile';
+import OrderDetails from '../screens/OrderDetails';
 
 
 import Lists from './Explore'
@@ -45,6 +46,16 @@ function NewPost(){
 // }
 
 const Tab=createBottomTabNavigator();
+const OrderNav=createStackNavigator();
+
+function OrderScreen(){
+    return (
+        <OrderNav.Navigator>
+            <Tab.Screen name="Orders" component={Orders}/>
+            <Tab.Screen name="OrderDetails" component={OrderDetails}/>
+        </OrderNav.Navigator>
+    )
+}
 
 function Mytabs(){
     return(
@@ -52,7 +63,7 @@ function Mytabs(){
         <Tab.Navigator>
             <Tab.Screen name="Explore" component={Lists}/>
             <Tab.Screen name="New Post" component={CreateOrder}/>
-            <Tab.Screen name="Orders" component={Orders}/>
+            <Tab.Screen name="Orders" component={OrderScreen}/>
             <Tab.Screen name="My Profile" component={Profile}/>
         </Tab.Navigator>
 

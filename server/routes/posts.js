@@ -227,6 +227,24 @@ router.put("/:id", async(req, res)=>{
     }
 })
 
+//get a specific self post
+router.get("/:id", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  {id}  = req.params;
+        const post = await Post.findAll( {
+            where: {
+                id
+            }
+        });
+        res.json(post);
+        console.log(post);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+
 // delete post
 router.delete("/:id",async(req, res)=>{
     try{
