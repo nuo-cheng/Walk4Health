@@ -112,8 +112,10 @@ router.get("/ratings", async(req, res)=>{
             total += lists[i].dataValues.rating;
         };
         var average = total / lists.length;
-        console.log('average rating', average);
-        res.json(average);
+        var votes = lists.length;
+        let data = [average, votes]
+        console.log('rating data', data);
+        res.json(data);
     }catch(err){
         console.error(err.message);
     }
@@ -244,7 +246,10 @@ router.get("/:id", async(req, res)=>{
     }
 })
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 66508c35aa953ae875ccdff5e573bdf93732b78d
 // delete post
 router.delete("/:id",async(req, res)=>{
     try{

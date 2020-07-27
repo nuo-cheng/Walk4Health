@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 const authentication = require('../middleware')
 const Post = require('../models/Post');
 const User = require('../models/User');
+var zipcodes = require('zipcodes');
 
 router.use(authentication);
 
@@ -32,12 +33,16 @@ router.use(authentication);
 // });
 
 //filter
-router.get("/", async(req, res)=>{
+
+function zipcodeDistance(zipcode1, zipcode2) {
+    return zipcodes.distance(Number(zipcode1), Number(zipcode2));
+}
+router.post("/", async(req, res)=>{
     try{
         // console.log(req.user);
         const  userId  = req.user.userId;
         console.log(userId);
-        const { time, price1, price2, distance1, distance2, gender, age1, age2} = req.body;
+        const { time, price1, price2, distance1, distance2, gender, age1, age2, zipcode} = req.body;
         const lists = await Post.findAll( {
             where: {
                 done: false, 
@@ -68,6 +73,11 @@ router.get("/", async(req, res)=>{
                 required: true
             }]
             
+        });
+        lists.sort((p1, p2) => {
+            const result=zipcodeDistance(p1.dataValues.zipcode, zipcode) - zipcodeDistance(p2.dataValues.zipcode, zipcode);
+            
+            return result;
         });
         res.json(lists);
     }catch(err){

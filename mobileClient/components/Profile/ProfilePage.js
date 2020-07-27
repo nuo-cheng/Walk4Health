@@ -1,88 +1,114 @@
-import React, {useState, useEffect} from "react";
+import * as Animatable from 'react-native-animatable';
+import ChangePassword from './ChangePassword';
+import EditEmail from './EditEmail';
+import EditPersonalInfo from './EditPersonalInfo';
+import Feather from 'react-native-vector-icons/Feather';
+import ProfilePhoto from '../../pic/Profile_photo2.jpg';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import React, { useState, useEffect } from "react";
 import Star from 'react-native-star-view';
-import { 
-    StyleSheet, 
-    Text, 
-    View, 
-    SafeAreaView, 
-    Image, 
-    ScrollView, 
+import {
+    StyleSheet,
+    Text,
+    View,
+    SafeAreaView,
+    Image,
+    ScrollView,
     AsyncStorage,
-    TouchableOpacity
- } from "react-native";
-import { Ionicons, AntDesign,MaterialIcons } from "@expo/vector-icons";
-import ProfilePhoto from '../../pic/Profile_photo.png';
+    TouchableOpacity,
+    Modal,
+    TextInput
+} from "react-native";
+import { Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 
-const ProfilePage = ({ route, navigation, ...props }) => {
-    
-    const [user, setUser]= useState([]);
-    const [rating, setRating] = useState();
+
+
+const ProfilePage = ({ route, navigation }) => {
+
+    const [user, setUser] = useState({});
+    const [rating, setRating] = useState([]);
+    const [signal, setSignal] = useState(false);
+    const [signal1, setSignal1] = useState(false);
+    const [signal2, setSignal2] = useState(false);
+    const [personalInfo, setPersonalInfo] = useState({
+        check_textInputChange: false
+    });
+
     // const token = route.params.req;
     async function bootstrapAsync() {
         let token;
         try {
-          token = await AsyncStorage.getItem('userToken');
-          
-          return token;
+            token = await AsyncStorage.getItem('userToken');
+
+            return token;
         } catch (e) {
-          // Restoring token failed
-          console.log(e.message);
+            // Restoring token failed
+            console.log(e.message);
         }
         return;
     }
 
-    const getUser=async()=>{
-        try{
-            const token=await bootstrapAsync();
-
-            console.log('async token',token);
-    
-            const response= await fetch("http://localhost:5000/users/myprofile", {
+    const getUser = async () => {
+        try {
+            const token = await bootstrapAsync();
+            const response = await fetch("http://localhost:5000/users/myprofile", {
                 method: "GET",
-                headers: {"Content-Type": "application/json",
-                'Authorization': `Bearer ` + token},
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ` + token
+                },
 
             });
 
             
-            const jsonData= await response.json();
+            const jsonData = await response.json();
+            console.log('001test user', jsonData);
             setUser(jsonData[0]);
+            console.log('test RIGHT AFTER SET USER', user);
+            
            
-        }catch(err){
+        } catch (err) {
             console.error(err.message);
         }
-        };
+    };
 
-        const getRating=async()=>{
-            try{
-                const token=await bootstrapAsync();
-                console.log('async token',token);
+  
+
+
+    const getRating = async () => {
+        try {
+            const token = await bootstrapAsync();
+            //   console.log('async token',token);
+
+            const response = await fetch("http://localhost:5000/posts/ratings", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ` + token
+                },
+
+            });
+
+            const jsonData = await response.json();
+            //console.log('testtesttest json', jsonData);
+            setRating(jsonData);
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+        getUser();
+        getRating();
         
-                const response= await fetch("http://localhost:5000/posts/ratings", {
-                    method: "GET",
-                    headers: {"Content-Type": "application/json",
-                    'Authorization': `Bearer ` + token},
-    
-                });
-                console.log("hereherehere finish response")
-                
-                const jsonData= await response.json();
-                console.log('testtesttest json', jsonData);
-                setRating(jsonData);
-               
-            }catch(err){
-                console.error(err.message);
-            }
-            };
+    }, []);
+    console.log('user testtesttest', user);
+    console.log('personal info test', personalInfo);
 
-        useEffect(()=> {
-            console.log("profile page: getRating");
-            getUser();
-            getRating();
-        }, []);
+    return (
 
-        return (
         <ScrollView showsVerticalScrollIndicator={false}>
 
             <View style={{ alignSelf: "center" }}>
@@ -91,31 +117,43 @@ const ProfilePage = ({ route, navigation, ...props }) => {
                 </View>
 
                 <View style={styles.add}>
-                    <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+                    <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginLeft: 2 }}></Ionicons>
                 </View>
             </View>
 
             <View style={styles.infoContainer}>
                 <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}> {user.name} </Text>
-               
+
             </View>
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Star score={rating} style={styles.starStyle} />
-                    <Text style={[styles.text, { fontSize: 24 }]}>4.83</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Star score={rating[0]} style={styles.starStyle} />
+                        <Text style={[styles.subText, { fontSize: 15 }]}>({rating[1]})</Text>
+                    </View>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{rating[0]}</Text>
                     <Text style={[styles.subText]}>Overall Rating</Text>
                 </View>
             </View>
 
+            <View style={{ flexDirection: 'row', width: 250 }}>
+                <Text style={[styles.subText, styles.recent]} >Personal Info </Text>
+                <TouchableOpacity onPress={() => setSignal(true)}>
+                    <AntDesign name="edit" size={18} style={{ marginTop: 32, marginBottom: 6 }} color="#009387" />
 
-            <Text style={[styles.subText, styles.recent]}>Personal Info
-            <TouchableOpacity style={[{marginLeft:200}]}>
-                        <AntDesign name="edit" size={18} color="#009387"  />
-                        {/* onPress={() => {loginHandle( data.email, data.password )}} */}
-                     </TouchableOpacity>
-            </Text>
+                </TouchableOpacity>
+            </View>
+
             <View style={{ alignItems: "center" }}>
+            <View style={styles.recentItem}>
+                    <View style={styles.activityIndicator}></View>
+                    <View style={{ width: 250 }}>
+                        <Text style={[styles.text_footer]}>
+                            User Name: {user.name}
+                        </Text>
+                    </View>
+                </View>
                 <View style={styles.recentItem}>
                     <View style={styles.activityIndicator}></View>
                     <View style={{ width: 250 }}>
@@ -138,30 +176,54 @@ const ProfilePage = ({ route, navigation, ...props }) => {
             <Text style={[styles.subText, styles.recent]}>Log in Info</Text>
             <View style={{ alignItems: "center" }}>
                 <View style={styles.recentItem}>
-                    <View style={styles.activityIndicator}></View>
-                    <View style={{ width: 250 }}>
-                    <Text style={[styles.text_footer]}>
-                            email: {user.email}   
-                    <TouchableOpacity>
-                        <Text style={[styles.text_footer, { textDecorationLine: 'underline', marginLeft: 5, color:'gray'}]}>Change</Text>
-                        {/* onPress={() => {loginHandle( data.email, data.password )}} */}
-                     </TouchableOpacity>
-                     </Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.activityIndicator}></View>
+                        <View style={{ width: 250, flexDirection: 'row' }}>
+                            <Text style={[styles.text_footer]}>
+                                email: {user.email}
+                            </Text>
+                            <TouchableOpacity onPress={() => setSignal1(true)}>
+                                <Text style={[styles.text_footer, { textDecorationLine: 'underline', marginLeft: 5, color: 'gray' }]}>Change</Text>
+                                
+                            </TouchableOpacity>
+                        </View>
+
+
                     </View>
                 </View>
 
                 <View style={styles.recentItem}>
                     <View style={styles.activityIndicator}></View>
                     <View style={{ width: 250 }}>
-                    <TouchableOpacity>
-                        <Text style={[styles.text_footer, { textDecorationLine: 'underline', color:'gray'}]}>Change Password</Text>
-                        {/* onPress={() => {loginHandle( data.email, data.password )}} */}
-                     </TouchableOpacity>
-                        
+                        <TouchableOpacity onPress={() => setSignal2(true)}>
+                            <Text style={[styles.text_footer, { textDecorationLine: 'underline', color: 'gray' }]}>Change Password</Text>
+                            {/* onPress={() => {loginHandle( data.email, data.password )}} */}
+                        </TouchableOpacity>
+
                     </View>
                 </View>
             </View>
+            <View >
+                <Modal visible={signal} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <EditPersonalInfo  user={user} setUser = {setUser}  personalInfo = {personalInfo} setPersonalInfo = {setPersonalInfo} signal = {signal} setSignal = {setSignal} />
 
+                </Modal>
+            </View>
+            <View >
+                <Modal visible={signal1} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <EditEmail  user={user} setUser = {setUser}  signal = {signal1} setSignal = {setSignal1} />
+
+                </Modal>
+            </View>
+            <View >
+                <Modal visible={signal2} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <ChangePassword  user={user} setUser = {setUser}  signal = {signal2} setSignal = {setSignal2} />
+
+                </Modal>
+            </View>
 
         </ScrollView>
     );
@@ -185,8 +247,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         right: 0,
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 40,
         borderRadius: 30,
         alignItems: "center",
         justifyContent: "center"
@@ -208,8 +270,9 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
-        height: undefined,
-        width: undefined
+        width: null,
+        height: null,
+        resizeMode: 'contain'
     },
     infoContainer: {
         alignSelf: "center",
@@ -219,9 +282,9 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 200,
         height: 200,
-        borderRadius: 100,
+        borderRadius: 200 / 2,
         overflow: "hidden",
-        marginTop: 20
+        marginTop: 20,
     },
     recent: {
         marginLeft: 50,
@@ -237,7 +300,7 @@ const styles = StyleSheet.create({
     starStyle: {
         width: 100,
         height: 20,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     statsContainer: {
         flexDirection: "row",
@@ -248,13 +311,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1
     },
-    
+
     subText: {
         fontSize: 10,
         color: "#AEB5BC",
         textTransform: "uppercase",
         fontWeight: "500"
     },
+
 
     text: {
         fontFamily: "HelveticaNeue",
