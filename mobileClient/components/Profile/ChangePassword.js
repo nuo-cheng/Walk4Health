@@ -17,17 +17,14 @@ import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
-var radio_props = [
-    { label: 'female', value: 0 },
-    { label: 'male', value: 1 },
-    { label: 'other', value: 2 }
-];
 
-var arr = [radio_props[0].label, radio_props[1].label, radio_props[2].label]
-
-const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal, setSignal}) => {
+const ChangePassword = ({ user, setUser,signal, setSignal}) => {
+    const [password, setPassword] = useState({
+        check_textInputChange: false,
+        secureTextEntry: true,
+        isValidPassword: true,
+        confirm_secureTextEntry: true});
         // const token = route.params.req;
         async function bootstrapAsync() {
             let token;
@@ -57,66 +54,59 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
             const jsonData = await response.json();
             console.log('001test user', jsonData);
             setUser(jsonData[0]);
+            
             console.log('test RIGHT AFTER SET USER', user);
 
 
         } catch (err) {
+            
             console.error(err.message);
         }
     };
 
 
-    const nameInputChange = (val) => {
-        if (val.length !== 0) {
-            setPersonalInfo({
-                ...personalInfo,
-                name: val,
-                check_textInputChange: true
+
+
+    const handlePasswordChange = (val) => {
+        if (val.length !== 0 && val.length >= 8 ) {
+            setPassword({
+                password: val,
+                check_textInputChange: true,
+                isValidPassword: true
             });
 
         } else {
-            setPersonalInfo({
-                ...personalInfo,
-                name: val,
-                check_textInputChange: false
+            setPassword({
+                password: val,
+                check_textInputChange: false,
+                isValidPassword: false
             });
         }
     }
 
-    const handleGenderChange = (val) => {
-        setPersonalInfo({
-            ...personalInfo,
-            gender: arr[val]
-        });
-        console.log('test arr value', arr[val]);
-    }
-
-
-
-    const handleAgeChange = (val) => {
-        setPersonalInfo({
-            ...personalInfo,
-            age: Number(val)
+    const handleConfirmPasswordChange = (val) => {
+        setPassword({
+            ...password,
+            confirm_password: val
         });
     }
 
-
-    const updatePersonalInfo = async () => {
+    const updatePassword = async () => {
         try {
-            console.log('INTO UPDATEPERSONALINFO?');
-            console.log('test personal info', personalInfo);
+            console.log('INTO update email?');
+            console.log('test password info', password);
             const token = await bootstrapAsync();
-            const update = await fetch(`http://localhost:5000/users/${user.id}`, {
+            const update = await fetch(`http://localhost:5000/users/changepassword/${user.id}`, {
                 method: "Put",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ` + token
                 },
-                body: JSON.stringify(personalInfo)
+                body: JSON.stringify(password)
 
             });
 
-            const jsonData = await update.json();
+            await update.json();
             // console.log('test personal info update', jsonData);
             // setUser(jsonData[0]);
             getUser();
@@ -124,70 +114,109 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
             console.error(err.message);
         }
     };
-    console.log('=====================', user)
+    console.log('=====================after update password', user)
 
+    const updateSecureTextEntry = () => {
+        setPassword({
+            ...password,
+            secureTextEntry: !password.secureTextEntry
+        });
+    }
+
+    const updateConfirmSecureTextEntry = () => {
+        setPassword({
+            ...password,
+            confirm_secureTextEntry: !password.confirm_secureTextEntry
+        });
+    }
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
             <View style={styles.header}>
-                <Text style={styles.text_header}>Edit Personal Info</Text>
+                <Text style={styles.text_header}>Change Password</Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
                 <ScrollView>
-                    <Text style={styles.text_footer}>Name</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="user-o"
-                            color="#05375a"
-                            size={20}
-                        />
-                        <TextInput
-                            placeholder={user.name}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => nameInputChange(val)}
-                        />
-                    </View>
-
-                    <Text style={styles.text_footer}>Age</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="user-o"
-                            color="#05375a"
-                            size={20}
-                        />
-                        <TextInput
-                            keyboardType={'numeric'}
-                            placeholder={String(user.age)}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleAgeChange(val)}
-                        />
-                    </View>
-
-                    <Text style={styles.text_footer}>Gender</Text>
-                    <View style={styles.action}>
-
-                        {/* <TextInput
-                            placeholder={user.gender}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleGenderChange(val)}
-                        /> */}
-                        <RadioForm
-                            radio_props={radio_props}
-                            initial={arr.indexOf(user.gender)}
-                            onPress={(val) => handleGenderChange(val)}
-                            buttonColor={'#009387'}
-                            buttonInnerColor={'#009387'}
-                            animation={true}
-                        />
-                    </View>
-
-
+                <Text style={[styles.text_footer, {
+                // color: colors.text,
+                marginTop: 35
+            }]}>New Password</Text>
+            <View style={styles.action}>
+                <Feather 
+                    name="lock"
+                    // color={colors.text}
+                    size={20}
+                />
+                <TextInput 
+                    placeholder={"Reset Your Password"}
+                    placeholderTextColor="#666666"
+                    secureTextEntry={password.secureTextEntry ? true : false}
+                    style={[styles.textInput, {
+                        // color: colors.text
+                    }]}
+                    autoCapitalize="none"
+                    onChangeText={(val) => handlePasswordChange(val)}
+                />
+                <TouchableOpacity
+                    onPress={updateSecureTextEntry}
+                >
+                    {password.secureTextEntry ? 
+                    <Feather 
+                        name="eye-off"
+                        color="grey"
+                        size={20}
+                    />
+                    :
+                    <Feather 
+                        name="eye"
+                        color="grey"
+                        size={20}
+                    />
+                    }
+                </TouchableOpacity>
+            </View>
+            { password.isValidPassword ? null : 
+            <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Password must be 8 characters long.</Text>
+            </Animatable.View>
+            }
+            <Text style={[styles.text_footer, {
+                marginTop: 35
+            }]}>Confirm Password</Text>
+            <View style={styles.action}>
+                <Feather 
+                    name="lock"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Confirm Your Password"
+                    secureTextEntry={password.confirm_secureTextEntry ? true : false}
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => handleConfirmPasswordChange(val)}
+                />
+                <TouchableOpacity
+                    onPress={updateConfirmSecureTextEntry}
+                >
+                    {password.secureTextEntry ? 
+                    <Feather 
+                        name="eye-off"
+                        color="grey"
+                        size={20}
+                    />
+                    :
+                    <Feather 
+                        name="eye"
+                        color="grey"
+                        size={20}
+                    />
+                    }
+                </TouchableOpacity>
+            </View>
                     <View style={styles.button}>
                         <TouchableOpacity  style={[styles.signIn, {
                         borderColor: '#009387',
@@ -195,10 +224,10 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                         marginTop: 15
                     }]} onPress={() => {
                             setSignal(false);
-                            updatePersonalInfo();
+                            updatePassword();
                         }}>
                             
-                                <Text style={styles.text_footer}>Update</Text>
+                                <Text style={styles.text_footer}>Update Password</Text>
                             
                         </TouchableOpacity>
 
@@ -221,7 +250,7 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
     );
 };
 
-export default EditPersonalInfo;
+export default ChangePassword;
 
 const styles = StyleSheet.create({
     container: {

@@ -53,6 +53,37 @@ router.put("/:id", async(req, res)=>{
     }
 })
 
+//update user info of one specific field
+router.put("/specificupdate/:id", async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const edit = await User.update( 
+            {...req.body}, 
+            {where: {id}}
+        );
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//change password
+
+router.put("/changepassword/:id", async(req, res)=>{
+    const {password} = req.body; 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    try{
+        const {id} = req.params;
+        const change = await User.update( 
+            {password: hashedPassword}, 
+            {where: {id}}
+        );
+        res.json(change);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 //get user info
 router.get("/myprofile", async(req, res)=>{
     try{

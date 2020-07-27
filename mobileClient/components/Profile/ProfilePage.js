@@ -1,4 +1,6 @@
 import * as Animatable from 'react-native-animatable';
+import ChangePassword from './ChangePassword';
+import EditEmail from './EditEmail';
 import EditPersonalInfo from './EditPersonalInfo';
 import Feather from 'react-native-vector-icons/Feather';
 import ProfilePhoto from '../../pic/Profile_photo2.jpg';
@@ -27,10 +29,9 @@ const ProfilePage = ({ route, navigation }) => {
     const [user, setUser] = useState({});
     const [rating, setRating] = useState([]);
     const [signal, setSignal] = useState(false);
+    const [signal1, setSignal1] = useState(false);
+    const [signal2, setSignal2] = useState(false);
     const [personalInfo, setPersonalInfo] = useState({
-        name: '',
-        // age: 0,
-        // gender: '',
         check_textInputChange: false
     });
 
@@ -181,9 +182,9 @@ const ProfilePage = ({ route, navigation }) => {
                             <Text style={[styles.text_footer]}>
                                 email: {user.email}
                             </Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => setSignal1(true)}>
                                 <Text style={[styles.text_footer, { textDecorationLine: 'underline', marginLeft: 5, color: 'gray' }]}>Change</Text>
-                                {/* onPress={() => {loginHandle( data.email, data.password )}} */}
+                                
                             </TouchableOpacity>
                         </View>
 
@@ -194,7 +195,7 @@ const ProfilePage = ({ route, navigation }) => {
                 <View style={styles.recentItem}>
                     <View style={styles.activityIndicator}></View>
                     <View style={{ width: 250 }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => setSignal2(true)}>
                             <Text style={[styles.text_footer, { textDecorationLine: 'underline', color: 'gray' }]}>Change Password</Text>
                             {/* onPress={() => {loginHandle( data.email, data.password )}} */}
                         </TouchableOpacity>
@@ -205,7 +206,21 @@ const ProfilePage = ({ route, navigation }) => {
             <View >
                 <Modal visible={signal} style={styles.infoContainer}>
                     {/* console.log("test===========before into child component", user); */}
-                    <EditPersonalInfo  user={user} setUser = {setUser}  personalInfo = {personalInfo} setPersonalInfo = {setPersonalInfo} signal = {signal} setSignal = {setSignal}/>
+                    <EditPersonalInfo  user={user} setUser = {setUser}  personalInfo = {personalInfo} setPersonalInfo = {setPersonalInfo} signal = {signal} setSignal = {setSignal} />
+
+                </Modal>
+            </View>
+            <View >
+                <Modal visible={signal1} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <EditEmail  user={user} setUser = {setUser}  signal = {signal1} setSignal = {setSignal1} />
+
+                </Modal>
+            </View>
+            <View >
+                <Modal visible={signal2} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <ChangePassword  user={user} setUser = {setUser}  signal = {signal2} setSignal = {setSignal2} />
 
                 </Modal>
             </View>

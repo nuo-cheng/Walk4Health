@@ -16,18 +16,10 @@ import {
 import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
-var radio_props = [
-    { label: 'female', value: 0 },
-    { label: 'male', value: 1 },
-    { label: 'other', value: 2 }
-];
 
-var arr = [radio_props[0].label, radio_props[1].label, radio_props[2].label]
-
-const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal, setSignal}) => {
+const EditEmail = ({ user, setUser,signal, setSignal}) => {
+    const [email, setEmail] = useState({check_textInputChange: false});
         // const token = route.params.req;
         async function bootstrapAsync() {
             let token;
@@ -57,6 +49,7 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
             const jsonData = await response.json();
             console.log('001test user', jsonData);
             setUser(jsonData[0]);
+            setEmail(jsonData[0].email);
             console.log('test RIGHT AFTER SET USER', user);
 
 
@@ -66,57 +59,39 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
     };
 
 
-    const nameInputChange = (val) => {
+
+
+    const emailInputChange = (val) => {
         if (val.length !== 0) {
-            setPersonalInfo({
-                ...personalInfo,
-                name: val,
+            setEmail({
+                email: val,
                 check_textInputChange: true
             });
 
         } else {
-            setPersonalInfo({
-                ...personalInfo,
-                name: val,
+            setEmail({
+                email: val,
                 check_textInputChange: false
             });
         }
     }
 
-    const handleGenderChange = (val) => {
-        setPersonalInfo({
-            ...personalInfo,
-            gender: arr[val]
-        });
-        console.log('test arr value', arr[val]);
-    }
-
-
-
-    const handleAgeChange = (val) => {
-        setPersonalInfo({
-            ...personalInfo,
-            age: Number(val)
-        });
-    }
-
-
-    const updatePersonalInfo = async () => {
+    const updateEmail = async () => {
         try {
-            console.log('INTO UPDATEPERSONALINFO?');
-            console.log('test personal info', personalInfo);
+            console.log('INTO update email?');
+            console.log('test email info', email);
             const token = await bootstrapAsync();
-            const update = await fetch(`http://localhost:5000/users/${user.id}`, {
+            const update = await fetch(`http://localhost:5000/users/specificupdate/${user.id}`, {
                 method: "Put",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ` + token
                 },
-                body: JSON.stringify(personalInfo)
+                body: JSON.stringify(email)
 
             });
 
-            const jsonData = await update.json();
+            await update.json();
             // console.log('test personal info update', jsonData);
             // setUser(jsonData[0]);
             getUser();
@@ -124,20 +99,20 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
             console.error(err.message);
         }
     };
-    console.log('=====================', user)
+    console.log('=====================after update email', user)
 
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content" />
             <View style={styles.header}>
-                <Text style={styles.text_header}>Edit Personal Info</Text>
+                <Text style={styles.text_header}>Edit Email</Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
                 <ScrollView>
-                    <Text style={styles.text_footer}>Name</Text>
+                    <Text style={styles.text_footer}>Email</Text>
                     <View style={styles.action}>
                         <FontAwesome
                             name="user-o"
@@ -148,44 +123,11 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                             placeholder={user.name}
                             style={styles.textInput}
                             autoCapitalize="none"
-                            onChangeText={(val) => nameInputChange(val)}
+                            onChangeText={(val) => emailInputChange(val)}
                         />
                     </View>
 
-                    <Text style={styles.text_footer}>Age</Text>
-                    <View style={styles.action}>
-                        <FontAwesome
-                            name="user-o"
-                            color="#05375a"
-                            size={20}
-                        />
-                        <TextInput
-                            keyboardType={'numeric'}
-                            placeholder={String(user.age)}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleAgeChange(val)}
-                        />
-                    </View>
-
-                    <Text style={styles.text_footer}>Gender</Text>
-                    <View style={styles.action}>
-
-                        {/* <TextInput
-                            placeholder={user.gender}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleGenderChange(val)}
-                        /> */}
-                        <RadioForm
-                            radio_props={radio_props}
-                            initial={arr.indexOf(user.gender)}
-                            onPress={(val) => handleGenderChange(val)}
-                            buttonColor={'#009387'}
-                            buttonInnerColor={'#009387'}
-                            animation={true}
-                        />
-                    </View>
+                  
 
 
                     <View style={styles.button}>
@@ -195,7 +137,7 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                         marginTop: 15
                     }]} onPress={() => {
                             setSignal(false);
-                            updatePersonalInfo();
+                            updateEmail();
                         }}>
                             
                                 <Text style={styles.text_footer}>Update</Text>
@@ -221,7 +163,7 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
     );
 };
 
-export default EditPersonalInfo;
+export default EditEmail;
 
 const styles = StyleSheet.create({
     container: {
