@@ -1,5 +1,5 @@
 import React, {Fragment, useState, useEffect} from "react";
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, AsyncStorage,TouchableHighlight} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import { AuthContext } from '../App';
 
@@ -9,7 +9,7 @@ import { AuthContext } from '../App';
 
 const Lists= ({ navigation}) =>{
     const [lists, setLists]= useState([]);
-
+    const [searchInput, setSearchInput]=useState();
     
 
     const {signOut}= React.useContext(AuthContext);
@@ -83,6 +83,25 @@ const Lists= ({ navigation}) =>{
         }
     };
 
+    const searchOrders=async()=>{
+        try{
+            const token=await bootstrapAsync();
+            
+            const response= await fetch(`http://localhost:5000/search/byzipcode/${searchInput}`, {
+                method: "GET",
+                headers: {"Content-Type": "application/json",
+                'Authorization': `Bearer ` + token},
+                // body: JSON.stringify(searchInput)
+            });
+            const jsonData= await response.json();
+            setLists(jsonData);
+            // setModalVisible(true);
+        }catch(err){
+            console.error(err.message);
+        }
+    }
+
+
 
     useEffect(()=> {
         console.log("useEffect");
@@ -92,7 +111,7 @@ const Lists= ({ navigation}) =>{
     console.log(lists);
 
     
-    const head=["Time", "ZipCode", "Price","Creator Id"];
+    const head=["Order Id","Time", "ZipCode", "Price","Creator Id"];
 
     const deleteButton = (list_id) => (
         <TouchableOpacity onPress={()=>deleteList(list_id)}>
@@ -113,18 +132,22 @@ const Lists= ({ navigation}) =>{
 
     return(
         <View >
-            
             <Table >
                 <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
-                
                     {lists.map((list)=>(
                         <TableWrapper key={list.id}  style={styles.row}>
-                        {/* <Cell textStyle={styles.text} data={list.list_id}/>    
-                        <Cell textStyle={styles.text} data={listLink(list)}/> */}
+                        <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Detail',
+            params:{
+              id: list.id
+            }
+          }})}/>    
+
                         <Cell textStyle={styles.text} data={list.time}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
                         <Cell textStyle={styles.text} data={list.price}/>
-                        
                         {/* <Cell textStyle={styles.text}
                         data={deleteButton(list.list_id)}/> */}
                         <Cell textStyle={styles.text}

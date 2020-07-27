@@ -16,7 +16,6 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'reac
 
 const Stack=createStackNavigator();
 
-
 function UnsignedInStack(){
     return(
 

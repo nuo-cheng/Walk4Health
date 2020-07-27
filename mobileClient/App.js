@@ -71,7 +71,7 @@ export default function App() {
       }
       console.log(userToken);
       dispatch({type: 'RESTORE_TOKEN', token: userToken});
-    }
+    };
     bootstrapAsync();
   },[]);
 

@@ -41,7 +41,7 @@ const CreateOrder=({route,navigation})=>{
                     'Authorization': `Bearer `+token},
                 body: JSON.stringify(body)
             });
-            navigation.navigate('TabScreen',{screen: 'History'});
+            navigation.navigate('TabScreen',{screen: 'Orders'});
         }catch(err){
             console.error(err.message);
         }
