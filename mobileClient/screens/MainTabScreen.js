@@ -8,11 +8,13 @@ import homeStack from '../routes/homeStack'
 import Items from '../screens/Items'
 import Orders from '../screens/Orders'
 import Profile from '../screens/Profile';
-
+import Search from '../screens/Search';
+import Filter from '../screens/Filter';
 
 import Lists from './Explore'
 
 import CreateOrder from '../screens/CreateOrder';
+import ExploreDetail from './ExploreDetail';
 
 
 function Posts(){
@@ -45,12 +47,25 @@ function NewPost(){
 // }
 
 const Tab=createBottomTabNavigator();
+const ExploreStack=createStackNavigator();
+
+function ExploreScreens(){
+    return(
+        <ExploreStack.Navigator>
+            <ExploreStack.Screen name="Explore" component={Lists}/>
+            <ExploreStack.Screen name="Search" component={Search}/>
+            <ExploreStack.Screen name="Filter" component={Filter}/>
+            <ExploreStack.Screen name="Detail" component={ExploreDetail}/>
+        </ExploreStack.Navigator>
+    )
+}
+
 
 function Mytabs(){
     return(
 
         <Tab.Navigator>
-            <Tab.Screen name="Explore" component={Lists}/>
+            <Tab.Screen name="Explores" component={ExploreScreens}/>
             <Tab.Screen name="New Post" component={CreateOrder}/>
             <Tab.Screen name="Orders" component={Orders}/>
             <Tab.Screen name="My Profile" component={Profile}/>

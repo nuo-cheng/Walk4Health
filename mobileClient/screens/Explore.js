@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput,Modal,TouchableHighlight,AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Modal,TouchableHighlight,AsyncStorage} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+
 
 import Lists from "../components/Lists"
 
@@ -42,8 +43,8 @@ export default function Home({route,navigation}) {
       }
   }
     return (
-      <View style={styles.container}>
-        <Modal
+      <View >
+        {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -57,14 +58,12 @@ export default function Home({route,navigation}) {
                 
                     {lists.map((list)=>(
                         <TableWrapper key={list.id}  style={styles.row}>
-                        {/* <Cell textStyle={styles.text} data={list.list_id}/>    
-                        <Cell textStyle={styles.text} data={listLink(list)}/> */}
+                        
                         <Cell textStyle={styles.text} data={list.time}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
                         <Cell textStyle={styles.text} data={list.price}/>
                         
-                        {/* <Cell textStyle={styles.text}
-                        data={deleteButton(list.list_id)}/> */}
+                    
                         <Cell textStyle={styles.text}
                         data={list.creator_id}/>
                             
@@ -81,7 +80,7 @@ export default function Home({route,navigation}) {
             >
               <Text style={styles.textStyle}>Hide Modal</Text>
         </TouchableHighlight>
-      </Modal>
+      </Modal> */}
 
 
 
@@ -94,13 +93,51 @@ export default function Home({route,navigation}) {
                 setSearchInput(text);
             }
       }/>
-        <TouchableHighlight
+
+      <Button title="Search" onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Search', params:{
+                input: searchInput
+            }
+          }})}/>
+
+
+<Button title="Filter" onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Filter',
+            params:{
+              zipcode: searchInput
+            }
+          }})}/>
+        {/* <TouchableHighlight
         style={styles.openButton}
-        onPress={searchOrders}
-      >
-        <Text style={styles.textStyle}>search</Text>
-      </TouchableHighlight>
-        <Text>Filter        sort by distance</Text>
+        onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Search', params:{
+                input: searchInput
+            }
+          }
+        })}
+      > 
+      
+      </TouchableHighlight> */}
+      {/* <TouchableHighlight
+        style={styles.openButton}
+        onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Filter'
+            
+            
+          }
+        })}
+      ><View>
+      <Text style={styles.textStyle}>Filter</Text>
+      </View></TouchableHighlight> */}
+        {/* <Text>Filter        sort by distance</Text> */}
         <Lists route={route} navigation={navigation}/>
       </View>
     );
