@@ -11,6 +11,7 @@ import Items from '../screens/Items'
 import Orders from '../screens/Orders'
 import Profile from '../screens/Profile';
 import OrderDetails from '../screens/OrderDetails';
+import UpdateOrder from '../screens/UpdateOrder';
 
 import Search from '../screens/Search';
 import Filter from '../screens/Filter';

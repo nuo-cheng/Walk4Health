@@ -19,13 +19,19 @@ import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import { NavigationActions } from 'react-navigation';
+import UpdateOrder from '../screens/UpdateOrder';
 
 
 const OrderDetails = ({route, navigation}) => {
 
     const [order, setOrder]= useState({});
     const { id } = route.params;
-    console.log("Detail:::" + id);
+    const [updateOpen, setUpdateOpen] = useState(false);
+    const [orderInfo, setOrderInfo] = useState({
+        check_textInputChange: false
+    });
+
 
     async function bootstrapAsync() {
         let token;
@@ -33,38 +39,51 @@ const OrderDetails = ({route, navigation}) => {
           token = await AsyncStorage.getItem('userToken');
 
           return token;
-        } catch (e) {
+        } catch (error) {
           // Restoring token failed
-          console.log(e.message);
+          console.log(error.message);
         }
         return;
+    }
+
+    const deleteOrder = async() => {
+        try {
+            const token=await bootstrapAsync();
+            const response= await fetch(`http://localhost:5000/posts/${id}`, {
+                method: "DELETE",
+                headers: {"Content-Type": "application/json",
+                'Authorization': `Bearer ` + token},
+                })
+            const jsonData= await response.json();
+            navigation.navigate('Orders');
+
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     const getOrder = async()=>{
         try {
             const token=await bootstrapAsync();
-            console.log("id in getOrder: "+ id);
             const response= await fetch(`http://localhost:5000/posts/${id}`, {
                 method: "GET",
                 headers: {"Content-Type": "application/json",
                 'Authorization': `Bearer ` + token},
                 })
             const jsonData= await response.json();
-            console.log("jsonData"+jsonData.id);
             setOrder(jsonData);
             
         } catch (error) {
-            console.error(err.message);
+            console.error(error.message);
         }
     }
 
     useEffect(()=> {
-        console.log("useEffect");
+
         getOrder();
     }, []);
 
-    console.log("order: " + order.id);
-    console.log("done:"+ order.done);
+
 
 
     return (
@@ -116,7 +135,40 @@ const OrderDetails = ({route, navigation}) => {
             </Grid>
         </View>
             
+            {order.receiver_id===null
 
+            ?<View>
+            <TouchableOpacity
+                    style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]}
+                    onPress={() => setUpdateOpen(true)}
+                >
+                    <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Update</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                    style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]}
+                    onPress={() => deleteOrder()}
+                >
+                    <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Delete</Text>
+            </TouchableOpacity>
+            </View>
+            :<View>
+            <Text>This order has been accept by a partner</Text>
+            <Text>This order can not be changed and deleted</Text>
+            </View>
+                }
 
             <TouchableOpacity
                     style={[styles.signIn, {
@@ -129,10 +181,19 @@ const OrderDetails = ({route, navigation}) => {
                     <Text style={[styles.textSign, {
                         color:'#009387'
                     }]}>Return</Text>
-                </TouchableOpacity>
+            </TouchableOpacity>
                 </Animatable.View>
 
+            
+            <View >
+                <Modal visible={updateOpen} style={styles.infoContainer}>
+                    {/* console.log("test===========before into child component", user); */}
+                    <UpdateOrder  order={order} setOrder = {setOrder}  orderInfo = {orderInfo} setOrderInfo = {setOrderInfo} signal = {updateOpen} setSignal = {setUpdateOpen}/>
+                </Modal>
+            </View>
         </View>
+
+        
     )
 }
 

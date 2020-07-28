@@ -18,6 +18,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 
 const Orders = ({route,navigation}) => {
+    
     const listOptions = [
         { label: "Created", value: "created" },
         { label: "Partnered", value: "partnered" }
@@ -55,8 +56,7 @@ const Orders = ({route,navigation}) => {
             // console.log("into get");
             // console.log(token.accessToken);
             const token=await bootstrapAsync();
-            console.log("orders token: " + token);
-            console.log(name);
+
             // var response = null;
             if (name === 'created'){
                 const response= await fetch("http://localhost:5000/posts/created", {
@@ -130,11 +130,10 @@ const Orders = ({route,navigation}) => {
     }
 
     useEffect(()=> {
-        console.log("useEffect");
-        getLists();
+        getClickValue();
     }, []);
 
-    console.log("======================"+lists);
+
 
     const headCreated=["Post Id", "Zipcode", "Receiver Id", "Done", "Review"];
     const headPartned=["Post Id", "Zipcode", "Creator Id", "Done", "Review"];
@@ -268,11 +267,7 @@ const Orders = ({route,navigation}) => {
                 ))}
             </Table>
             }
-            <TouchableOpacity onPress={() => navigation.navigate('OrderDetails')}>
-                <View style={styles.btn}>
-                <Text style={styles.btnText}>to detail</Text>
-                </View>
-            </TouchableOpacity>
+            
         </View>
         
     )

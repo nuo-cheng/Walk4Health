@@ -246,10 +246,7 @@ router.get("/:id", async(req, res)=>{
     }
 })
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 66508c35aa953ae875ccdff5e573bdf93732b78d
 // delete post
 router.delete("/:id",async(req, res)=>{
     try{
