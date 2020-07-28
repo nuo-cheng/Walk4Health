@@ -21,6 +21,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { NavigationActions } from 'react-navigation';
 import UpdateOrder from '../screens/UpdateOrder';
+import Star from 'react-native-star-view';
 
 
 const OrderDetails = ({route, navigation}) => {
@@ -78,6 +79,26 @@ const OrderDetails = ({route, navigation}) => {
         }
     }
 
+    const orderStatus = (done, review, receiver_id) => {
+        if (receiver_id === null){
+            return (
+                <Text>Pending</Text>
+            )
+        } else if (receiver_id !== null && done === false){
+            return (
+                <Text>In progress</Text>
+            )
+        } else if (receiver_id !== null && done === true && review === null){
+            return (
+                <Text>Waiting to review</Text>
+            )
+        } else if (review !== null){
+            return (
+                <Star score={review} style={styles.starStyle} />
+            )
+        }
+    }
+
     useEffect(()=> {
 
         getOrder();
@@ -94,16 +115,16 @@ const OrderDetails = ({route, navigation}) => {
         <Grid>
                 <Col>
                     <View>
-                        <Text></Text>
+                        <Text style={styles.head_text_white}> </Text>
                         <Text style={styles.head_text_white} >Order Number:  </Text>
-                        <Text style={styles.head_text_white}>Finished:   </Text>
-                        <Text style={styles.head_text_white}>Review: </Text>
+                        <Text style={styles.head_text_white}>Order Status:   </Text>
+
                     </View>
                 </Col>
                 <Col>
-                    <Text>#{order.id} </Text>
-                    <Text>{String(order.done)} </Text>
-                    <Text>{order.rating} </Text>
+                    <Text style={styles.head_text_white}> </Text>
+                    <Text style={styles.head_text_white}>#{order.id} </Text>
+                    <Text style={styles.head_text_white}>{orderStatus(order.done, order.rating, order.receiver_id)} </Text>
                 </Col>
             </Grid>
             {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
@@ -123,20 +144,20 @@ const OrderDetails = ({route, navigation}) => {
             <Grid>
                 <Col>
                     <View>
-                        <Text>Reveiver Id: </Text>
-                        <Text>Time: </Text>
-                        <Text>Zipcode: </Text>
-                        <Text>Price: </Text>
-                        <Text>Distance: </Text>
+                        <Text style={styles.head_text_green}>Partner Name: </Text>
+                        <Text style={styles.head_text_green}>Time: </Text>
+                        <Text style={styles.head_text_green}>Zipcode: </Text>
+                        <Text style={styles.head_text_green}>Price: </Text>
+                        <Text style={styles.head_text_green}>Distance: </Text>
                     </View>
                     
                 </Col>
                 <Col>
-                    <Text>{order.receiver_id} </Text>
-                    <Text>{order.time} </Text>
-                    <Text>{order.zipcode} </Text>
-                    <Text>{order.price} </Text>
-                    <Text>{order.distance} </Text>
+                    <Text style={styles.head_text_content}>{order.receiver_id} </Text>
+                    <Text style={styles.head_text_content}>{order.time} </Text>
+                    <Text style={styles.head_text_content}>{order.zipcode} </Text>
+                    <Text style={styles.head_text_content}>${order.price}/30 minites </Text>
+                    <Text style={styles.head_text_content}>{order.distance} </Text>
                 </Col>
             </Grid>
         </View>
@@ -171,8 +192,8 @@ const OrderDetails = ({route, navigation}) => {
             </TouchableOpacity>
             </View>
             :<View>
-            <Text>This order has been accept by a partner</Text>
-            <Text>This order can not be changed and deleted</Text>
+            <Text>This order can not be changed and deleted,</Text>
+            <Text>because this order has been accept by a partner</Text>
             </View>
                 }
 
@@ -213,7 +234,12 @@ const styles = StyleSheet.create({
     container_white: {
         flex: 1, 
         backgroundColor: '#fff'
-      },
+    },
+    container_information: {
+        flex: 1, 
+        backgroundColor: '#fff',
+        borderBottomColor: '#a751e8',
+    },
     header: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -287,5 +313,11 @@ const styles = StyleSheet.create({
     text: { margin: 6 },
     row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
     wrapper: { flexDirection: 'column' },
-    head_text_white: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#FFFFFF', flexDirection: 'column', textAlignVertical: 'center'}
+    head_text_white: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#FFFFFF', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_green: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#009387', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_content: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#05375a', flexDirection: 'column', textAlignVertical: 'center'},
+    starStyle: {
+        width: 100,
+        height: 20,
+    },
   });

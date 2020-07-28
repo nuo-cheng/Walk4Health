@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import SwitchSelector from "react-native-switch-selector";
 import StarRating from 'react-native-star-rating-new';
+import Star from 'react-native-star-view';
 import Mytabs from './MainTabScreen'
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
@@ -141,7 +142,7 @@ const Orders = ({route,navigation}) => {
     const elementCreated = (clickValue, done, review, id) => {
         if (review !== undefined && review !== null){
             return (
-                <Text>{review}</Text>
+                <Star score={review} style={styles.starStyle} />
             )
         } else if (review !== undefined && review === null && clickValue === "created" && done === true){
             return (
@@ -159,7 +160,7 @@ const Orders = ({route,navigation}) => {
     const elementPartneredDone = (clickValue, done, id, review) => {
         if (review !== null){
             return (
-                <Text>{review}</Text>
+                <Star score={review} style={styles.starStyle} />
             )
         } else if (done){
             return (
@@ -199,24 +200,46 @@ const Orders = ({route,navigation}) => {
            
             <Modal visible={modalOpen}>
                 <View style={{marginTop: 200}}>
-                    <Text style={{textAlign: 'center'}}>Please give a review</Text>
+                    <Text style={styles.head_text_big}>Please give a review</Text>
+                    <View marginLeft={50} marginRight={50} marginTop={50} marginBottom={30}>
                     <StarRating
                         disabled={false}
                         maxStars={5}
                         rating={score}
                         selectedStar={(rating) => setScore(rating)}
+                        fullStarColor={'#009387'}
+                        alignItems={"center"}
+                        
                     />
-                    <Text style={{textAlign: 'center'}}>You select {score} stars!</Text>
-                    <TouchableOpacity style={{alignItems: "center"}} onPress = {() => setModalOpen(false)}>
-                        <View style={styles.btn}>
-                        <Text style={styles.btnText}>close</Text>
-                        </View>
-                    </TouchableOpacity>
+                    </View>
+                    <Text style={styles.head_text_big}>You select {score} stars!</Text>
+
                     <TouchableOpacity style={{alignItems: "center"}} onPress = {() => giveReview(scoreId, score)}>
-                        <View style={styles.btn}>
-                        <Text style={styles.btnText}>submit</Text>
+                        <View style={{borderColor: '#009387',
+                                borderWidth: 1,
+                                marginTop: 15,
+                                width: '60%',
+                                height: 30,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10}}>
+                        <Text style={styles.textSign}>Submit</Text>
                         </View>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={{alignItems: "center"}} onPress = {() => setModalOpen(false)}>
+                        <View style={{borderColor: '#009387',
+                                borderWidth: 1,
+                                marginTop: 15,
+                                width: '60%',
+                                height: 30,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10}}>
+                        <Text style={styles.textSign}>close</Text>
+                        </View>
+                    </TouchableOpacity>
+                    
                 </View>
             </Modal>
 
@@ -238,7 +261,7 @@ const Orders = ({route,navigation}) => {
 
             {clickValue === "created"
             ? <Table >
-                <Row data={headCreated} style={styles.head}  textStyle={styles.head_text}></Row>
+                <Row data={headCreated} style={styles.head}  textStyle={styles.head_text_white}></Row>
                 {lists.map((list, index)=>(
                     <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
@@ -256,7 +279,7 @@ const Orders = ({route,navigation}) => {
                 ))}
             </Table>
             : <Table >
-                <Row data={headPartned} style={styles.head}  textStyle={styles.head_text}></Row>
+                <Row data={headPartned} style={styles.head}  textStyle={styles.head_text_white}></Row>
                 {lists.map((list, index)=>(
                     <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
@@ -285,9 +308,10 @@ const styles = StyleSheet.create({
     head: { height: 50, backgroundColor:'#009387' ,borderTopLeftRadius: 20,
     borderTopRightRadius: 20, borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,},
-    head_text: {margin: 6 , fontWeight:'bold', color: '#05375a'},
-    head_text_white: {margin: 6 , fontWeight:'bold', color: '#FFFFFF'},
-    text: { paddingVertical: 6, margin: 6 },
+    head_text: {fontSize: 15, margin: 6 , fontWeight:'bold', color: '#05375a', textAlign: 'center'},
+    head_text_big: {fontSize: 22, margin: 6 , fontWeight:'bold', color: '#05375a', textAlign: 'center'},
+    head_text_white: {fontSize: 15, margin: 6 , fontWeight:'bold', color: '#FFFFFF', textAlign: 'center'},
+    text: { paddingVertical: 6, margin: 6 , fontWeight:'bold', color: '#05375a', textAlign: 'center'},
     row: { flexDirection: 'row', borderTopLeftRadius: 15,
     borderTopRightRadius: 15, borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15},
@@ -299,19 +323,41 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-  },
-  middle: {
-    flex: 0.3,
-    backgroundColor: "beige",
-    borderWidth: 5,
-  },
-  bottom: {
-    flex: 0.3,
-    backgroundColor: "pink",
-    borderWidth: 5,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  }
+    },
+    middle: {
+        flex: 0.3,
+        backgroundColor: "beige",
+        borderWidth: 5,
+    },
+    bottom: {
+        flex: 0.3,
+        backgroundColor: "pink",
+        borderWidth: 5,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+    },
+    starStyle: {
+        width: 80,
+        height: 20,
+    },
+    container_star: {
+        flex: 3,
+        paddingHorizontal: 20,
+        paddingVertical: 30
+    },
+    signIn: {
+        width: '60%',
+        height: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+
+    },
+    textSign: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: '#009387'
+    },
   });
 
 export default Orders;
