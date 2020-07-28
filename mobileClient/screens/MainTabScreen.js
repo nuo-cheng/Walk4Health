@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'reac
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
 
 
@@ -19,6 +19,7 @@ import Lists from './Explore'
 
 import CreateOrder from '../screens/CreateOrder';
 import ExploreDetail from './ExploreDetail';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 function Posts(){
@@ -27,11 +28,7 @@ function Posts(){
     );
 }
 
-function NewPost(){
-    return(
-        <Text>New Post</Text>
-    );
-}
+
 
 // function Orders(){
     
@@ -53,24 +50,86 @@ function NewPost(){
 const Tab=createBottomTabNavigator();
 const OrderNav=createStackNavigator();
 
-function OrderScreen(){
+function OrderScreen({navigation}){
     return (
         <OrderNav.Navigator>
-            <Tab.Screen name="Orders" component={Orders}/>
-            <Tab.Screen name="OrderDetails" component={OrderDetails}/>
+            <Tab.Screen name="Orders" component={Orders} options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }} />
+            <Tab.Screen name="OrderDetails" component={OrderDetails} options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }}/>
         </OrderNav.Navigator>
     )
 }
 const ExploreStack=createStackNavigator();
 
-function ExploreScreens(){
+function ExploreScreens({navigation}){
     return(
         <ExploreStack.Navigator>
-            <ExploreStack.Screen name="Explore" component={Lists}/>
-            <ExploreStack.Screen name="Search" component={Search}/>
-            <ExploreStack.Screen name="Filter" component={Filter}/>
-            <ExploreStack.Screen name="Detail" component={ExploreDetail}/>
+            <ExploreStack.Screen name="Explore" component={Lists} options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }}/>
+            <ExploreStack.Screen name="Search" component={Search} options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }}/>
+            <ExploreStack.Screen name="Filter" component={Filter} 
+            options={{
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor:"#009387"
+                  },
+                }}
+            />
+            <ExploreStack.Screen name="Detail" component={ExploreDetail}
+            options={{
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor:"#009387"
+                  },
+                }}
+            />
         </ExploreStack.Navigator>
+    )
+}
+
+const NewPostStack=createStackNavigator();
+function NewPost(){
+    return(
+        <NewPostStack.Navigator>
+        <NewPostStack.Screen name="New Post" component={CreateOrder} options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }}/>
+            </NewPostStack.Navigator>
+    )
+}
+
+const ProfileStack=createStackNavigator();
+function ProfileScreen(){
+    return(
+        <ProfileStack.Navigator>
+            <ProfileStack.Screen name="Profile" component={Profile}  options={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor:"#009387"
+              },
+            }}/>
+        </ProfileStack.Navigator>
     )
 }
 
@@ -79,10 +138,10 @@ function Mytabs(){
     return(
 
         <Tab.Navigator>
-            <Tab.Screen name="Explores" component={ExploreScreens}/>
-            <Tab.Screen name="New Post" component={CreateOrder}/>
-            <Tab.Screen name="Orders" component={OrderScreen}/>
-            <Tab.Screen name="My Profile" component={Profile}/>
+            <Tab.Screen name="Explores" component={ExploreScreens} options={{ title: 'Explore' }}/>
+            <Tab.Screen name="New Post" component={NewPost} options={{ title: 'New Post' , headerShown: true}}/>
+            <Tab.Screen name="Orders" component={OrderScreen} options={{ title: 'Orders'}}/>
+            <Tab.Screen name="My Profile" component={ProfileScreen} options={{ title: 'My Profile' , headerShown: true}}/>
         </Tab.Navigator>
 
     );

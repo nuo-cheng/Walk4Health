@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, AsyncStorage } from 'react-native';
 import Navigator from './routes/Nav'
 import { NavigationContainer } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import UnsignedInStack from './routes/Nav'
 import TabScreen from "./screens/MainTabScreen"
 
@@ -30,7 +30,7 @@ function SplashScreen() {
   );
 }
 
-export default function App() {
+export default function App({navigation}) {
     const [state, dispatch]=React.useReducer(
     (preveState, action)=>{
       switch(action.type){
@@ -149,10 +149,17 @@ export default function App() {
         {state.isLoading?(
           <Stack.Screen name="Splash" component={SplashScreen}/>
         ):state.userToken==null?(
-          <Stack.Screen name="Home" component={UnsignedInStack} />
+          <Stack.Screen name="Home" component={UnsignedInStack}  />
           
         ):(
-          <Stack.Screen name="TabScreen" component={TabScreen}/>
+          <Stack.Screen name="TabScreen" component={TabScreen} options={{
+            title: 'Walk4Health',
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
         )
         }
       </Stack.Navigator>
