@@ -93,14 +93,17 @@ const OrderDetails = ({route, navigation}) => {
         <View style={styles.header}>
         <Grid>
                 <Col>
-                    <Text>Order Number # </Text>
-                    <Text>Finished:   </Text>
-                    <Text>Review: </Text>
+                    <View>
+                        <Text></Text>
+                        <Text style={styles.head_text_white} >Order Number:  </Text>
+                        <Text style={styles.head_text_white}>Finished:   </Text>
+                        <Text style={styles.head_text_white}>Review: </Text>
+                    </View>
                 </Col>
                 <Col>
-                    <Text>{order.id} </Text>
+                    <Text>#{order.id} </Text>
                     <Text>{String(order.done)} </Text>
-                    <Text>{order.review} </Text>
+                    <Text>{order.rating} </Text>
                 </Col>
             </Grid>
             {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
@@ -119,11 +122,14 @@ const OrderDetails = ({route, navigation}) => {
 
             <Grid>
                 <Col>
-                    <Text>Reveiver Id: </Text>
-                    <Text>Time: </Text>
-                    <Text>Zipcode: </Text>
-                    <Text>Price: </Text>
-                    <Text>Distance: </Text>
+                    <View>
+                        <Text>Reveiver Id: </Text>
+                        <Text>Time: </Text>
+                        <Text>Zipcode: </Text>
+                        <Text>Price: </Text>
+                        <Text>Distance: </Text>
+                    </View>
+                    
                 </Col>
                 <Col>
                     <Text>{order.receiver_id} </Text>
@@ -281,4 +287,5 @@ const styles = StyleSheet.create({
     text: { margin: 6 },
     row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
     wrapper: { flexDirection: 'column' },
+    head_text_white: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#FFFFFF', flexDirection: 'column', textAlignVertical: 'center'}
   });

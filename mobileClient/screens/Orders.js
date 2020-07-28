@@ -135,8 +135,8 @@ const Orders = ({route,navigation}) => {
 
 
 
-    const headCreated=["Post Id", "Zipcode", "Receiver Id", "Done", "Review"];
-    const headPartned=["Post Id", "Zipcode", "Creator Id", "Done", "Review"];
+    const headCreated=["Time", "Zipcode", "Partner Name", "Status"];
+    const headPartned=["Time", "Zipcode", "Partner Name", "Status"];
 
     const elementCreated = (clickValue, done, review, id) => {
         if (review !== undefined && review !== null){
@@ -156,12 +156,16 @@ const Orders = ({route,navigation}) => {
         }
     }
        
-    const elementPartneredDone = (clickValue, done, id) => {
-        if (done){
+    const elementPartneredDone = (clickValue, done, id, review) => {
+        if (review !== null){
+            return (
+                <Text>{review}</Text>
+            )
+        } else if (done){
             return (
                 <Text>Finished</Text>
             )
-        } else {
+        } else{
             return (
                 <TouchableOpacity onPress={() => {updateDone(id)}}>
                 <View style={styles.btn}>
@@ -224,45 +228,48 @@ const Orders = ({route,navigation}) => {
                     onPress={value => getClickValue(value)}
                     textColor='#009387' //green same as login
                     selectedColor='#FFFFFF'//white
-                    buttonColor='#009387'
-                    borderColor='#009387'
+                    selectedTextStyle={styles.head_text_white}
+                    buttonColor="#a751e8"
+                    borderColor="#a751e8"
+                    style={styles.head_text}
+                    textStyle={styles.head_text}
                 />
             </View>
 
             {clickValue === "created"
             ? <Table >
-                <Row data={headCreated} style={styles.head}  textStyle={styles.text}></Row>
-                {lists.map((list)=>(
-                    <TableWrapper key={list.id}  style={styles.row}>
+                <Row data={headCreated} style={styles.head}  textStyle={styles.head_text}></Row>
+                {lists.map((list, index)=>(
+                    <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
                     <Cell textStyle={styles.text} data={listLink(list)}/> */}
-                    <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
+                    <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
                         
                     
                     {/* <Cell textStyle={styles.text}
                     data={deleteButton(list.list_id)}/> */}
                     <Cell textStyle={styles.text} data={list.receiver_id}/>
-                    <Cell textStyle={styles.text} data={list.done.toString()}/>
+                    {/* <Cell textStyle={styles.text} data={list.done.toString()}/> */}
                     <Cell textStyle={styles.text} data={elementCreated(clickValue, list.done, list.rating, list.id)}/>
                     </TableWrapper>
                 ))}
             </Table>
             : <Table >
-                <Row data={headPartned} style={styles.head}  textStyle={styles.text}></Row>
-                {lists.map((list)=>(
-                    <TableWrapper key={list.id}  style={styles.row}>
+                <Row data={headPartned} style={styles.head}  textStyle={styles.head_text}></Row>
+                {lists.map((list, index)=>(
+                    <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
                     <Cell textStyle={styles.text} data={listLink(list)}/> */}
-                    <Cell textStyle={styles.text} data={list.id}/>    
+                    <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
                         
                     
                     {/* <Cell textStyle={styles.text}
                     data={deleteButton(list.list_id)}/> */}
                     <Cell textStyle={styles.text} data={list.receiver_id}/>
-                    <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id)}/>
-                    <Cell textStyle={styles.text} data={list.rating}/>
+                    {/* <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id)}/> */}
+                    <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id, list.rating)}/>
                     </TableWrapper>
                 ))}
             </Table>
@@ -275,10 +282,16 @@ const Orders = ({route,navigation}) => {
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#808B97' },
-    text: { margin: 6 },
-    row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-    btn: { width: 58, height: 18, backgroundColor: '#78B7BB',  borderRadius: 2 },
+    head: { height: 50, backgroundColor:'#009387' ,borderTopLeftRadius: 20,
+    borderTopRightRadius: 20, borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,},
+    head_text: {margin: 6 , fontWeight:'bold', color: '#05375a'},
+    head_text_white: {margin: 6 , fontWeight:'bold', color: '#FFFFFF'},
+    text: { paddingVertical: 6, margin: 6 },
+    row: { flexDirection: 'row', borderTopLeftRadius: 15,
+    borderTopRightRadius: 15, borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15},
+    btn: { width: 58, height: 18, backgroundColor: '#a751e8',  borderRadius: 2 },
     btnText: { textAlign: 'center', color: '#fff' },
     top: {
     flex: 0.3,
