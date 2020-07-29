@@ -116,7 +116,7 @@ router.get("/ratings", async(req, res)=>{
         };
         var average = total / lists.length;
         var votes = lists.length;
-        let data = [average, votes]
+        let data = [average.toFixed(2), votes]
         console.log('rating data', data);
         res.json(data);
     }catch(err){

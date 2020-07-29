@@ -277,7 +277,7 @@ const ProfilePage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     activityIndicator: {
-        backgroundColor: "#a751e8",
+        backgroundColor: "#ed721a",
         padding: 4,
         height: 12,
         width: 12,

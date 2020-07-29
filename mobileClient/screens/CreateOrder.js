@@ -78,7 +78,7 @@ const CreateOrder=({route,navigation})=>{
                 <View style={styles.action}>
                     <FontAwesome
                         name="user"
-                        color="#a751e8"
+                        color="#ed6a0c"
                         size={20}
                     />
                     <TextInput
@@ -97,7 +97,7 @@ const CreateOrder=({route,navigation})=>{
                 <View style={styles.action}>
                     <FontAwesome
                         name="info"
-                        color="#a751e8"
+                        color="#ed6a0c"
                         size={20}
                     />
                     <TextInput
@@ -116,7 +116,7 @@ const CreateOrder=({route,navigation})=>{
                 <View style={styles.action}>
                     <FontAwesome
                         name="map-marker"
-                        color="#a751e8"
+                        color="#ed6a0c"
                         size={20}
                     />
                     <TextInput
@@ -135,7 +135,7 @@ const CreateOrder=({route,navigation})=>{
                 <View style={styles.action}>
                     <FontAwesome
                         name="usd"
-                        color="#a751e8"
+                        color="#ed6a0c"
                         size={20}
                     />
                     <TextInput
@@ -155,7 +155,7 @@ const CreateOrder=({route,navigation})=>{
 
                 <View style={styles.button}>
                     <TouchableOpacity  style={[styles.signIn, {
-                    borderColor: '#a751e8',
+                    borderColor: '#ed6a0c',
                     
                     borderWidth: 1,
                     marginTop: 15
@@ -189,7 +189,7 @@ export default CreateOrder;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#a751e8'
+        backgroundColor: '#ed6a0c'
     },
     header: {
         flex: 1,
