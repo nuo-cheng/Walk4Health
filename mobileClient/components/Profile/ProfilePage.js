@@ -9,6 +9,8 @@ import generic from '../../pic/generic.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React, { useState, useEffect } from "react";
 import Star from 'react-native-star-view';
+import { AuthContext } from '../../App';
+
 import {
     StyleSheet,
     Text,
@@ -38,6 +40,7 @@ const ProfilePage = ({ route, navigation }) => {
     const [personalInfo, setPersonalInfo] = useState({
         check_textInputChange: false
     });
+    const {signOut}= React.useContext(AuthContext);
 
     // const token = route.params.req;
     async function bootstrapAsync() {
@@ -267,7 +270,19 @@ const ProfilePage = ({ route, navigation }) => {
 
                 </Modal>
             </View>
-
+            <View style={styles.button}>
+      <TouchableOpacity style={[styles.signIn, {
+                        borderColor: '#a751e8',
+                        backgroundColor: "#a751e8",
+                        borderWidth: 1,
+                        marginTop: 5
+                    }]}
+                    onPress={() => signOut()}>
+            <Text style={[styles.textSign, {
+                        color:'#ffffff'
+                    }]}>Log Out</Text>
+       </TouchableOpacity>
+       </View>
         </ScrollView>
     );
 }
@@ -374,7 +389,18 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#05375a',
         fontSize: 15
-    }
+    },
+    button: {
+        alignItems: 'center',
+        marginTop: 75
+      },
+      signIn: {
+        width: '30%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+      },
 
 });
 

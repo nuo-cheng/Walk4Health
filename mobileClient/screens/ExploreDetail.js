@@ -17,6 +17,7 @@ import {
 import Mytabs from './MainTabScreen'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from 'react-native-animatable';
+import Star from 'react-native-star-view';
 // import LinearGradient from 'react-native-linear-gradient';
 
 
@@ -89,6 +90,25 @@ const ExploreDetail = ({route, navigation}) => {
     console.log("order: " + order.id);
     console.log("done:"+ order.done);
 
+    const orderStatus = (done, review, receiver_id) => {
+        if (receiver_id === null){
+            return (
+                <Text>Pending</Text>
+            )
+        } else if (receiver_id !== null && done === false){
+            return (
+                <Text>In progress</Text>
+            )
+        } else if (receiver_id !== null && done === true && review === null){
+            return (
+                <Text>Waiting to review</Text>
+            )
+        } else if (review !== null){
+            return (
+                <Star score={review} style={styles.starStyle} />
+            )
+        }
+    }
 
     return (
        
@@ -97,14 +117,17 @@ const ExploreDetail = ({route, navigation}) => {
         <View style={styles.header}>
         <Grid>
                 <Col>
-                    <Text>Order Number # </Text>
-                    <Text>Finished:   </Text>
-                    <Text>Review: </Text>
+                <View>
+                        <Text style={styles.head_text_white}> </Text>
+                        <Text style={styles.head_text_white} >Order Number:  </Text>
+                        <Text style={styles.head_text_white}>Order Status:   </Text>
+
+                    </View>
                 </Col>
                 <Col>
-                    <Text>{order.id} </Text>
-                    <Text>{String(order.done)} </Text>
-                    <Text>{order.review} </Text>
+                <Text style={styles.head_text_white}> </Text>
+                    <Text style={styles.head_text_white}>#{order.id} </Text>
+                    <Text style={styles.head_text_white}>{orderStatus(order.done, order.rating, order.receiver_id)} </Text>
                 </Col>
             </Grid>
             {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
@@ -121,23 +144,27 @@ const ExploreDetail = ({route, navigation}) => {
         
         <View style={styles.container_white}>
 
-            <Grid>
-                <Col>
-                    <Text>Reveiver Id: </Text>
-                    <Text>Time: </Text>
-                    <Text>Zipcode: </Text>
-                    <Text>Price: </Text>
-                    <Text>Distance: </Text>
-                </Col>
-                <Col>
-                    <Text>{order.receiver_id} </Text>
-                    <Text>{order.time} </Text>
-                    <Text>{order.zipcode} </Text>
-                    <Text>{order.price} </Text>
-                    <Text>{order.distance} </Text>
-                </Col>
-            </Grid>
-        </View>
+        <Grid>
+            <Col>
+                <View>
+                   
+                    <Text style={styles.head_text_green}>Customer Name: </Text>
+                    <Text style={styles.head_text_green}>Time: </Text>
+                    <Text style={styles.head_text_green}>Zipcode: </Text>
+                    <Text style={styles.head_text_green}>Price: </Text>
+                    <Text style={styles.head_text_green}>Distance: </Text>
+                </View>
+                
+            </Col>
+            <Col>
+                <Text style={styles.head_text_content}>{order.creator_name} </Text>
+                <Text style={styles.head_text_content}>{order.time} </Text>
+                <Text style={styles.head_text_content}>{order.zipcode} </Text>
+                <Text style={styles.head_text_content}>${order.price}/30 minutes </Text>
+                <Text style={styles.head_text_content}>{order.distance} </Text>
+            </Col>
+        </Grid>
+    </View>
             
 
 
@@ -240,6 +267,9 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     head: { height: 40, backgroundColor: '#808B97' },
+    head_text_white: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#FFFFFF', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_green: {fontSize: 16, margin: 6 , fontWeight:'bold', color: '#009387', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_content: {fontSize: 16, margin: 6 , fontWeight:'bold', color: '#05375a', flexDirection: 'column', textAlignVertical: 'center'},
     text: { margin: 6 },
     row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
     wrapper: { flexDirection: 'column' },
