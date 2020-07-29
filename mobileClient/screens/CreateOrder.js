@@ -189,7 +189,7 @@ export default CreateOrder;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ed6a0c'
+        backgroundColor: '#009387'
     },
     header: {
         flex: 1,

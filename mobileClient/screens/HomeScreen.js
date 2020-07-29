@@ -40,8 +40,9 @@ const HomeScreen = ({navigation}) => {
         </View>
       <View style={styles.button}>
       <TouchableOpacity style={[styles.signIn, {
-                        borderColor: '#a751e8',
-                        backgroundColor: "#a751e8",
+                        borderColor: '#ed721a',
+
+                        backgroundColor: "#ed721a",
                         borderWidth: 1,
                         marginTop: 15
                     }]}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    color: '#a751e8',
+    color: '#ed721a',
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 6,
