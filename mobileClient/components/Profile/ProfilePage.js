@@ -3,7 +3,9 @@ import ChangePassword from './ChangePassword';
 import EditEmail from './EditEmail';
 import EditPersonalInfo from './EditPersonalInfo';
 import Feather from 'react-native-vector-icons/Feather';
-import ProfilePhoto from '../../pic/Profile_photo2.jpg';
+import female from '../../pic/female.png';
+import male from '../../pic/male.png';
+import generic from '../../pic/generic.png';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import React, { useState, useEffect } from "react";
 import Star from 'react-native-star-view';
@@ -20,12 +22,14 @@ import {
     TextInput
 } from "react-native";
 import { Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
-
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 
 
 const ProfilePage = ({ route, navigation }) => {
-
+    // let female_Profile_Image = {uri:'https://visualpharm.com/assets/353/Person%20Female-595b40b65ba036ed117d451b.svg'};
+    // let male_Profile_Image = {uri:'https://visualpharm.com/assets/403/Person-595b40b65ba036ed117d451c.svg'};
+    // let neutural_Profile_Image = {uri:'https://visualpharm.com/assets/10/More%20Info-595b40b65ba036ed117d42d1.svg'};
     const [user, setUser] = useState({});
     const [rating, setRating] = useState([]);
     const [signal, setSignal] = useState(false);
@@ -99,6 +103,18 @@ const ProfilePage = ({ route, navigation }) => {
         }
     };
 
+    const getProfileImage = (val) => {
+        console.log('test profile image import', val);
+        if (val === 'female') {
+            return female;
+
+        } else if(val === 'male') {
+            return male;
+        } else {
+            return generic;
+        }
+    }
+
     useEffect(() => {
         getUser();
         getRating();
@@ -110,16 +126,43 @@ const ProfilePage = ({ route, navigation }) => {
     return (
 
         <ScrollView showsVerticalScrollIndicator={false}>
-
-            <View style={{ alignSelf: "center" }}>
+                    <Grid>
+                <Col>
+                     <View style={{ alignSelf: "center"}}>
                 <View style={styles.profileImage}>
-                    <Image source={ProfilePhoto} style={styles.image} resizeMode="center"></Image>
+                    <Image source={getProfileImage(user.gender)} style={styles.image} resizeMode="center"></Image>
                 </View>
 
-                <View style={styles.add}>
-                    <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginLeft: 2 }}></Ionicons>
+            </View>
+
+                </Col>
+                <Col>
+            <View style={styles.infoContainer}>
+                <Text style={[styles.text, { fontWeight: "200", fontSize: 36, color:"#009387" }]}> {user.name} </Text>
+            </View>
+
+            <View style={styles.statsContainer}>
+                <View style={styles.statsBox}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Star score={rating[0]} style={styles.starStyle} />
+                        <Text style={[styles.subText, { fontSize: 15, color:"#009387" }]}>{rating[0]}</Text>
+                        <Text style={[styles.subText, { fontSize: 15 }]}>({rating[1]})</Text>
+                    </View>
+                    
+                    <Text style={[styles.subText]}>Overall Rating</Text>
                 </View>
             </View>
+                </Col>
+            </Grid>
+            {/* <View style={{ alignSelf: "center" }}>
+                <View style={styles.profileImage}>
+                    <Image source={getProfileImage(user.gender)} style={styles.image} resizeMode="center"></Image>
+                </View>
+
+                {/* <View style={styles.add}>
+                    <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginLeft: 2 }}></Ionicons>
+                </View> */}
+            {/* </View>
 
             <View style={styles.infoContainer}>
                 <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}> {user.name} </Text>
@@ -135,7 +178,7 @@ const ProfilePage = ({ route, navigation }) => {
                     <Text style={[styles.text, { fontSize: 24 }]}>{rating[0]}</Text>
                     <Text style={[styles.subText]}>Overall Rating</Text>
                 </View>
-            </View>
+            </View> */} 
 
             <View style={{ flexDirection: 'row', width: 250 }}>
                 <Text style={[styles.subText, styles.recent]} >Personal Info </Text>
@@ -234,7 +277,7 @@ const ProfilePage = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     activityIndicator: {
-        backgroundColor: "#009387",
+        backgroundColor: "#a751e8",
         padding: 4,
         height: 12,
         width: 12,
@@ -277,7 +320,9 @@ const styles = StyleSheet.create({
     infoContainer: {
         alignSelf: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 22,
+        paddingTop: 30,
+
     },
     profileImage: {
         width: 200,
@@ -300,12 +345,14 @@ const styles = StyleSheet.create({
     starStyle: {
         width: 100,
         height: 20,
-        marginBottom: 10,
+        marginBottom: 10
+    
+        
     },
     statsContainer: {
         flexDirection: "row",
         alignSelf: "center",
-        marginTop: 32
+        marginTop: 12
     },
     statsBox: {
         alignItems: "center",

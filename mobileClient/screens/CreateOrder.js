@@ -1,6 +1,21 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, View, TextInput, Button, AsyncStorage} from 'react-native';
 
+import React, { useState, useEffect } from 'react';
+import {
+    View,
+    Text,
+    Button,
+    TouchableOpacity,
+    Dimensions,
+    TextInput,
+    Platform,
+    StyleSheet,
+    ScrollView,
+    StatusBar,
+    AsyncStorage
+} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+// import LinearGradient from 'react-native-linear-gradient';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const CreateOrder=({route,navigation})=>{
     // const token=route.params.req;
@@ -49,64 +64,196 @@ const CreateOrder=({route,navigation})=>{
 
 
     return(
-        <View>
-            <Text>Create Order</Text>
-            <Text>start time</Text>
-            <TextInput 
-            placeholder='start time'
-            onChangeText={(val)=>{setOrder({
-                ...order,
-                time: val
-            });
-            }}/>
-            <Text>Distance</Text>
-            <TextInput
-            placeholder='distance'
-            onChangeText={(text)=>{
-                setOrder({
-                    ...order,
-                    distance: text
-                });
-            }}
-            />
-            <Text>zipcode</Text>
-            <TextInput
-            placeholder='zipcode'
-            onChangeText={
-                (text)=>{
-                    setOrder({
-                        ...order,
-                        zipcode: text
-                        
-                    });
-                }
-            }
-            />
-            {/* <Text>Patner Preferences</Text>
-            <Text>partner gender</Text>
-            <TextInput/>
-            <Text>partner age range</Text>
-            <TextInput/> */}
-            <Text>price/30minutes</Text>
-            <TextInput
-            placeholder='price'
-            onChangeText={
-                (text)=>{
-                    setOrder({
-                        ...order,
-                        price: text
-                    });
-                }
-            }
-            />
-
-            <Button title="Submit" onPress={onSubmitForm}/>
-
-
-
+        <View style={styles.container}>
+        <StatusBar backgroundColor='#009387' barStyle="light-content" />
+        <View style={styles.header}>
+            <Text style={styles.text_header}>Create Order</Text>
         </View>
+        <Animatable.View
+            animation="fadeInUpBig"
+            style={styles.footer}
+        >
+            <ScrollView>
+                <Text style={styles.text_footer}>start time</Text>
+                <View style={styles.action}>
+                    <FontAwesome
+                        name="user"
+                        color="#a751e8"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder='start time'
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(val)=>{setOrder({
+                            ...order,
+                            time: val
+                        });
+                        }}
+                    />
+                </View>
 
-    )
+                <Text style={styles.text_footer}>Distance</Text>
+                <View style={styles.action}>
+                    <FontAwesome
+                        name="info"
+                        color="#a751e8"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder='walking distance'
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(val)=>{setOrder({
+                            ...order,
+                            distance: val
+                        });
+                        }}
+                    />
+                </View>
+
+                <Text style={styles.text_footer}>Zipcode</Text>
+                <View style={styles.action}>
+                    <FontAwesome
+                        name="map-marker"
+                        color="#a751e8"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder='where you want to have this walk'
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(val)=>{setOrder({
+                            ...order,
+                            zipcode: val
+                        });
+                        }}
+                    />
+                </View>
+
+                <Text style={styles.text_footer}>Price</Text>
+                <View style={styles.action}>
+                    <FontAwesome
+                        name="usd"
+                        color="#a751e8"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder='price/30 minutes'
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(val)=>{setOrder({
+                            ...order,
+                            price: val
+                        });
+                        }}
+                    />
+                </View>
+
+              
+
+
+                <View style={styles.button}>
+                    <TouchableOpacity  style={[styles.signIn, {
+                    borderColor: '#a751e8',
+                    
+                    borderWidth: 1,
+                    marginTop: 15
+                }]} onPress={onSubmitForm}>
+                        
+                            <Text style={styles.text_footer}>Submit</Text>
+                        
+                    </TouchableOpacity>
+
+                    {/* <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={[styles.signIn, {
+                  borderColor: '#009387',
+                  borderWidth: 1,
+                  marginTop: 15
+              }]}
+          >
+              <Text style={[styles.textSign, {
+                  color: '#009387'
+              }]}>Sign In</Text>
+          </TouchableOpacity> */}
+                </View>
+            </ScrollView>
+        </Animatable.View>
+    </View>
+);
 }
 
 export default CreateOrder;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#a751e8'
+    },
+    header: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        paddingHorizontal: 20,
+        paddingBottom: 50
+    },
+    footer: {
+        flex: Platform.OS === 'ios' ? 3 : 5,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical: 30
+    },
+    text_header: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 30
+    },
+    text_footer: {
+        color: '#009387',
+        fontSize: 18
+    },
+    action: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f2f2f2',
+        paddingBottom: 5
+    },
+    textInput: {
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,
+        paddingLeft: 10,
+        color: '#05375a',
+    },
+    button: {
+        alignItems: 'center',
+        marginTop: 50,
+       
+    },
+    signIn: {
+        width: '50%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    textSign: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    textPrivate: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 20
+    },
+    color_textPrivate: {
+        color: 'grey'
+    },
+    infoContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 22
+    }
+});
