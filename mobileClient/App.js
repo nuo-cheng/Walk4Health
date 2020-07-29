@@ -112,7 +112,8 @@ export default function App({navigation}) {
           const password = data.password;
           const gender = data.gender;
           const age = data.age;
-          const body= {email, password, gender, age};
+          const name=data.name;
+          const body= {email, password, gender, age,name};
           const stringfiedBody=JSON.stringify(body);
           console.log('bodybodybody', body);
           const response= await fetch("http://localhost:5000/signup",{
@@ -128,6 +129,7 @@ export default function App({navigation}) {
           console.error(err.message);
       }
           try{
+            console.log("132 async storage");
             await AsyncStorage.setItem('userToken', userToken);
           }catch(error){
             console.log(error);
@@ -149,7 +151,14 @@ export default function App({navigation}) {
         {state.isLoading?(
           <Stack.Screen name="Splash" component={SplashScreen}/>
         ):state.userToken==null?(
-          <Stack.Screen name="Home" component={UnsignedInStack}  />
+          <Stack.Screen name="Home" component={UnsignedInStack}  options={{
+
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
           
         ):(
           <Stack.Screen name="TabScreen" component={TabScreen} options={{

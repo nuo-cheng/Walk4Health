@@ -21,7 +21,7 @@ const HomeScreen = ({navigation}) => {
      <TouchableOpacity style={[styles.signIn, {
                         borderColor: '#009387',
                         borderWidth: 1,
-                        marginTop: 15
+                        marginTop: 120
                     }]}
                     onPress={() => navigation.navigate("SignUp")}>
             <Text style={[styles.textSign, {

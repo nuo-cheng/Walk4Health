@@ -12,7 +12,7 @@ const User = require('../models/User');
 
 //sign up
 router.post('/signup', async (req, res) => {
-    const { email, password, age, gender } = req.body;
+    const { email, password, age, gender, name} = req.body;
     console.log('password', password);
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -31,11 +31,13 @@ router.post('/signup', async (req, res) => {
             email: email,
             password: hashedPassword,
             gender,
-            age
+            age,
+            name
         })
         console.log('user', user)
-        //const userId = user.dataValues.id;
-        // const token = jwt.sign({userId: userId, email: email}, JWTKey)
+        const userId = user.dataValues.id;
+        const token = jwt.sign({userId: userId, email: email, userName: name}, JWTKey)
+        res.json({accessToken: token});
          res.status(200).send();
         
     }
