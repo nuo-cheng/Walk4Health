@@ -166,7 +166,7 @@ const SignInScreen = ({navigation}) => {
             }]}>Username</Text>
             <View style={styles.action}>
                 <FontAwesome 
-                    name="user-o"
+                    name="envelope-o"
                     // color={colors.text}
                     size={20}
                 />
@@ -268,6 +268,29 @@ const SignInScreen = ({navigation}) => {
                     <Text style={[styles.textSign, {
                         color:'#009387'
                     }]}>Sign In</Text>
+                {/* </LinearGradient> */}
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]}
+                    // onPress={() => {loginHandle( data.email, data.password )}}
+                    onPress={() => navigation.goBack()}
+                    // onPress={() => navigation.navigate('TabScreen')}
+                >
+                
+            
+
+                {/* <LinearGradient
+                    colors={['#08d4c4', '#01ab9d']}
+                    style={styles.signIn}
+                > */}
+                    <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Cancel</Text>
                 {/* </LinearGradient> */}
                 </TouchableOpacity>
 

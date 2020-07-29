@@ -21,10 +21,31 @@ function UnsignedInStack(){
     return(
 
             <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="SignUp" component={SignUp}/>
-            <Stack.Screen name="SignIn" component={SignIn}/>
-            <Stack.Screen name="OrderDetails" component={OrderDetails}/>
+            <Stack.Screen name="Home" component={Home} options={{
+            title: 'Walk4Health',
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
+            <Stack.Screen name="SignUp" component={SignUp} options={{
+            title: 'Walk4Health',
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
+            <Stack.Screen name="SignIn" component={SignIn} options={{
+            title: 'Walk4Health',
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
+
             
             </Stack.Navigator>
 

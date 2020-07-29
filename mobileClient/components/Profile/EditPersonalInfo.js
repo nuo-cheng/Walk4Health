@@ -202,6 +202,15 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                             
                         </TouchableOpacity>
 
+                        <TouchableOpacity  style={[styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }]} onPress={() => {setSignal(false);}}>
+                            
+                        <Text style={styles.text_footer}>Cancel</Text>
+                        </TouchableOpacity>
+
                         {/* <TouchableOpacity
                   onPress={() => navigation.goBack()}
                   style={[styles.signIn, {

@@ -16,10 +16,16 @@ import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { AuthContext } from '../App';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 
 const SignUpScreen = ({navigation}) => {
-
+    var radio_props = [
+        {label: 'male', value: 0 },
+        {label: 'female', value: 1 },
+        {label: 'other', value: 2}
+      ];
+    
     const {signUp}=React.useContext(AuthContext);
     console.log(signUp);
     const onSubmitForm = async e=>{
@@ -29,7 +35,8 @@ const SignUpScreen = ({navigation}) => {
             const password = data.password;
             const gender = data.gender;
             const age = data.age;
-            const body= {email, password, gender, age};
+            const name= data.name;
+            const body= {email, password, gender, age,name};
             console.log('bodybodybody', body);
             const response= await fetch("http://localhost:5000/users/signup",{
                 method: "POST",
@@ -49,7 +56,8 @@ const SignUpScreen = ({navigation}) => {
         password: '',
         confirm_password: '',
         age:0,
-        gender:'',
+        gender:'male',
+        name:'',
         check_textInputChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
@@ -71,6 +79,14 @@ const SignUpScreen = ({navigation}) => {
         }
     }
 
+    const handleNameChange = (val) => {
+        console.log(val);
+        setData({
+            ...data,
+            name: val
+        });
+    }
+
     const handlePasswordChange = (val) => {
         setData({
             ...data,
@@ -86,9 +102,14 @@ const SignUpScreen = ({navigation}) => {
     }
 
     const handleGenderChange = (val) => {
+        console.log("+++++++++++++++++++");
+        console.log(val);
+        var genders=['male', 'female','other'];
+        const gender1=genders[val];
+        console.log(gender1);
         setData({
             ...data,
-            gender: val
+            gender: gender1
         });
     }
 
@@ -128,7 +149,7 @@ const SignUpScreen = ({navigation}) => {
             <Text style={styles.text_footer}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome 
-                    name="user-o"
+                    name="envelope-o"
                     color="#05375a"
                     size={20}
                 />
@@ -150,7 +171,7 @@ const SignUpScreen = ({navigation}) => {
                 </Animatable.View>
                 : null}
             </View>
-            <Text style={styles.text_footer}>Gender</Text>
+            <Text style={styles.text_footer}>Name</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="user-o"
@@ -158,12 +179,39 @@ const SignUpScreen = ({navigation}) => {
                     size={20}
                 />
                 <TextInput 
+                    placeholder="Your name"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => handleNameChange(val)}
+                />
+                
+            </View>
+
+
+
+            <Text style={styles.text_footer}>Gender</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                {/* <TextInput 
                     placeholder=""
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => handleGenderChange(val)}
-                />
-                {data.check_textInputChange ? 
+                /> */}
+                <RadioForm
+            radio_props={radio_props}
+            initial={0}
+             
+             formHorizontal={true}
+             labelHorizontal={false}
+             buttonColor={'#009387'}
+             onPress={(value) =>handleGenderChange(value)}
+            />
+                {/* {data.check_textInputChange ? 
                 <Animatable.View
                     animation="bounceIn"
                 >
@@ -173,7 +221,7 @@ const SignUpScreen = ({navigation}) => {
                         size={20}
                     />
                 </Animatable.View>
-                : null}
+                : null} */}
             </View>
 
             <Text style={styles.text_footer}>Age</Text>
@@ -202,7 +250,7 @@ const SignUpScreen = ({navigation}) => {
                 : null}
             </View>
             <Text style={[styles.text_footer, {
-                marginTop: 35
+                marginTop: 15
             }]}>Password</Text>
             <View style={styles.action}>
                 <Feather 
@@ -237,7 +285,7 @@ const SignUpScreen = ({navigation}) => {
             </View>
 
             <Text style={[styles.text_footer, {
-                marginTop: 35
+                marginTop: 15
             }]}>Confirm Password</Text>
             <View style={styles.action}>
                 <Feather 
@@ -282,7 +330,11 @@ const SignUpScreen = ({navigation}) => {
             </View>
             <View style={styles.button}>
                 <TouchableOpacity
-                    style={styles.signIn}
+                    style={styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }}
                     // onPress={onSubmitForm}
                     onPress={()=>signUp(data)}
                 >
@@ -291,10 +343,32 @@ const SignUpScreen = ({navigation}) => {
                     style={styles.signIn}
                 > */}
               
-                    <Text style={styles.text_footer
-                    }>Sign Up</Text>
+                    <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Sign Up</Text>
                 {/* </LinearGradient> */}
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.signIn, {
+                        borderColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 15
+                    }}
+                    // onPress={onSubmitForm}
+                    onPress={()=>navigation.goBack()}
+                >
+                {/* <LinearGradient
+                    colors={['#08d4c4', '#01ab9d']}
+                    style={styles.signIn}
+                > */}
+              
+                    <Text style={[styles.textSign, {
+                        color:'#009387'
+                    }]}>Cancel</Text>
+                {/* </LinearGradient> */}
+                </TouchableOpacity>
+
+                
 
                 {/* <TouchableOpacity
                     onPress={() => navigation.goBack()}
@@ -360,7 +434,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 10
     },
     signIn: {
         width: '100%',

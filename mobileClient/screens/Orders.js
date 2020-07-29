@@ -221,6 +221,18 @@ const Orders = ({route,navigation}) => {
                     </View>
                     <Text style={styles.head_text_big}>You select {score} stars!</Text>
 
+                    <TouchableOpacity style={{alignItems: "center"}} onPress = {() => giveReview(scoreId, score)}>
+                        <View style={{borderColor: '#009387',
+                                borderWidth: 1,
+                                marginTop: 15,
+                                width: '60%',
+                                height: 30,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10}}>
+                        <Text style={styles.textSign}>Submit</Text>
+                        </View>
+                    </TouchableOpacity>
                     
                     <TouchableOpacity style={{alignItems: "center"}} onPress = {() => setModalOpen(false)}>
                         <View style={{borderColor: '#009387',

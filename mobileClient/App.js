@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, AsyncStorage } from 'react-native';
 import Navigator from './routes/Nav'
 import { NavigationContainer } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import UnsignedInStack from './routes/Nav'
 import TabScreen from "./screens/MainTabScreen"
 
@@ -30,7 +30,7 @@ function SplashScreen() {
   );
 }
 
-export default function App() {
+export default function App({navigation}) {
     const [state, dispatch]=React.useReducer(
     (preveState, action)=>{
       switch(action.type){
@@ -112,7 +112,8 @@ export default function App() {
           const password = data.password;
           const gender = data.gender;
           const age = data.age;
-          const body= {email, password, gender, age};
+          const name=data.name;
+          const body= {email, password, gender, age,name};
           const stringfiedBody=JSON.stringify(body);
           console.log('bodybodybody', body);
           const response= await fetch("http://localhost:5000/signup",{
@@ -128,6 +129,7 @@ export default function App() {
           console.error(err.message);
       }
           try{
+            console.log("132 async storage");
             await AsyncStorage.setItem('userToken', userToken);
           }catch(error){
             console.log(error);
@@ -149,10 +151,24 @@ export default function App() {
         {state.isLoading?(
           <Stack.Screen name="Splash" component={SplashScreen}/>
         ):state.userToken==null?(
-          <Stack.Screen name="Home" component={UnsignedInStack} />
+          <Stack.Screen name="Home" component={UnsignedInStack}  options={{
+
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
           
         ):(
-          <Stack.Screen name="TabScreen" component={TabScreen}/>
+          <Stack.Screen name="TabScreen" component={TabScreen} options={{
+            title: 'Walk4Health',
+            headerStyle: {
+              backgroundColor:"#009387"
+            },
+            headerShown: false
+            
+          }}/>
         )
         }
       </Stack.Navigator>
