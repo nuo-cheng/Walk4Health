@@ -27,7 +27,8 @@ import Star from 'react-native-star-view';
 const OrderDetails = ({route, navigation}) => {
 
     const [order, setOrder]= useState({});
-    const { id } = route.params;
+    const [user, setUser] = useState({});
+    const { id, creatorId } = route.params;
     const [updateOpen, setUpdateOpen] = useState(false);
     const [orderInfo, setOrderInfo] = useState({
         check_textInputChange: false
@@ -72,12 +73,37 @@ const OrderDetails = ({route, navigation}) => {
                 'Authorization': `Bearer ` + token},
                 })
             const jsonData= await response.json();
+            console.log("order in the getOrder" + JSON.stringify(jsonData.id))
             setOrder(jsonData);
             
         } catch (error) {
             console.error(error.message);
         }
     }
+
+    const getUser = async () => {
+        try {
+            const token = await bootstrapAsync();
+            const response = await fetch("http://localhost:5000/users/myprofile", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ` + token
+                },
+
+            });
+
+            
+            const jsonData = await response.json();
+            console.log('001test user', jsonData);
+            setUser(jsonData[0]);
+            console.log('test RIGHT AFTER SET USER', user);
+            
+           
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
 
     const orderStatus = (done, review, receiver_id) => {
         if (receiver_id === null){
@@ -102,6 +128,7 @@ const OrderDetails = ({route, navigation}) => {
     useEffect(()=> {
 
         getOrder();
+        getUser();
     }, []);
 
 
@@ -139,11 +166,14 @@ const OrderDetails = ({route, navigation}) => {
         
         >
         
+        {user.id === creatorId
+        ?
         <View style={styles.container_white}>
 
             <Grid>
                 <Col>
                     <View>
+                       
                         <Text style={styles.head_text_green}>Partner Name: </Text>
                         <Text style={styles.head_text_green}>Time: </Text>
                         <Text style={styles.head_text_green}>Zipcode: </Text>
@@ -153,14 +183,39 @@ const OrderDetails = ({route, navigation}) => {
                     
                 </Col>
                 <Col>
-                    <Text style={styles.head_text_content}>{order.receiver_id} </Text>
+                    <Text style={styles.head_text_content}>{order.receiver_name} </Text>
                     <Text style={styles.head_text_content}>{order.time} </Text>
                     <Text style={styles.head_text_content}>{order.zipcode} </Text>
-                    <Text style={styles.head_text_content}>${order.price}/30 minites </Text>
+                    <Text style={styles.head_text_content}>${order.price}/30 minutes </Text>
                     <Text style={styles.head_text_content}>{order.distance} </Text>
                 </Col>
             </Grid>
         </View>
+        : <View style={styles.container_white}>
+
+        <Grid>
+            <Col>
+                <View>
+                   
+                    <Text style={styles.head_text_green}>Customer Name: </Text>
+                    <Text style={styles.head_text_green}>Time: </Text>
+                    <Text style={styles.head_text_green}>Zipcode: </Text>
+                    <Text style={styles.head_text_green}>Price: </Text>
+                    <Text style={styles.head_text_green}>Distance: </Text>
+                </View>
+                
+            </Col>
+            <Col>
+                <Text style={styles.head_text_content}>{order.creator_name} </Text>
+                <Text style={styles.head_text_content}>{order.time} </Text>
+                <Text style={styles.head_text_content}>{order.zipcode} </Text>
+                <Text style={styles.head_text_content}>${order.price}/30 minutes </Text>
+                <Text style={styles.head_text_content}>{order.distance} </Text>
+            </Col>
+        </Grid>
+    </View>
+    }
+    
             
             {order.receiver_id===null
 
@@ -314,8 +369,8 @@ const styles = StyleSheet.create({
     row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
     wrapper: { flexDirection: 'column' },
     head_text_white: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#FFFFFF', flexDirection: 'column', textAlignVertical: 'center'},
-    head_text_green: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#009387', flexDirection: 'column', textAlignVertical: 'center'},
-    head_text_content: {fontSize: 20, margin: 6 , fontWeight:'bold', color: '#05375a', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_green: {fontSize: 16, margin: 6 , fontWeight:'bold', color: '#009387', flexDirection: 'column', textAlignVertical: 'center'},
+    head_text_content: {fontSize: 16, margin: 6 , fontWeight:'bold', color: '#05375a', flexDirection: 'column', textAlignVertical: 'center'},
     starStyle: {
         width: 100,
         height: 20,

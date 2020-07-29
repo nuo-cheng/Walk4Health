@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
     } else {
       const user = exist[0].dataValues;
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ userId: user.id, email: user.email}, JWTKey);
+        const token = jwt.sign({ userId: user.id, email: user.email, userName: user.name}, JWTKey);
         console.log(token);
         res.json({accessToken: token});
       } else {

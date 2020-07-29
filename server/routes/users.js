@@ -101,4 +101,20 @@ router.get("/myprofile", async(req, res)=>{
     }
 })
 
+//get one other user
+router.get("/:id", async(req, res)=>{
+    try{
+        const id = req.params;
+        const user = await User.findAll( {
+            where: {
+               id
+            }
+        });
+        res.json(user);
+        
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 module.exports = router;

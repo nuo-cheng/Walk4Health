@@ -10,8 +10,10 @@ router.use(authentication);
 //add post
 router.post("/", async(req, res)=>{
     
-    const { userId }  = req.user;
+    const  userId   = req.user.userId;
+    const creator_name = req.user.userName;
     console.log('userId', userId)
+    console.log('username int add: ' + creator_name);
     const { price, distance, time, zipcode,receiver_id } = req.body;
     try {
         const post = await Post.create({
@@ -22,7 +24,8 @@ router.post("/", async(req, res)=>{
             creator_id: userId,
             receiver_id,
             done: false,
-            rating: null
+            rating: null,
+            creator_name: creator_name
         });
         console.log('post', post);
 
@@ -180,8 +183,11 @@ router.put("/acceptorder", async(req, res)=>{
         // console.log(req.user);
         const { post_id } = req.body;
         const userId  = req.user.userId;
+        const userName = req.user.userName;
+        console.log("user in the accept order: "+ req.user.userName);
         const edit = await Post.update( 
-            {receiver_id: userId},{
+            {receiver_id: userId,
+            receiver_name: userName},{
             where: {
                 id: post_id
             }

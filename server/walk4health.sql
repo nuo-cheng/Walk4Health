@@ -31,5 +31,7 @@ CREATE TABLE post_list(
     distance NUMERIC,
     done BOOLEAN,
     creator_id INT,
-    receiver_id INT
+    receiver_id INT,
+    receiver_name VARCHAR(255),
+    creator_name VARCHAR(255)
 );

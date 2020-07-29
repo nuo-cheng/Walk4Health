@@ -24,6 +24,12 @@ const Post = db.define('post', {
     receiver_id: {
         type: Sequelize.INTEGER
     },
+    receiver_name: {
+        type: Sequelize.STRING
+    },
+    creator_name: {
+        type: Sequelize.STRING
+    },
     rating: {
         type: Sequelize.INTEGER
     }

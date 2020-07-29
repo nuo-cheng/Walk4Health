@@ -130,6 +130,27 @@ const Orders = ({route,navigation}) => {
         }
     }
 
+    const getName = async(user_id) => {
+        try {
+            const token=await bootstrapAsync();
+            const response= await fetch(`http://localhost:5000/users/${user_id}`, {
+                method: "GET",
+                headers: {"Content-Type": "application/json",
+                'Authorization': `Bearer ` + token},
+                })
+            const jsonData= await response.json();
+            console.log("jsondata int gat name: "+ jsonData);
+            const name = JSON.stringify(jsonData.name);
+            setLists({
+                ...lists,
+                receiver_id:name
+            })
+            return name;
+        } catch (error) {
+            console.error(err.message);
+        }
+    }
+
     useEffect(()=> {
         getClickValue();
     }, []);
@@ -137,7 +158,7 @@ const Orders = ({route,navigation}) => {
 
 
     const headCreated=["Time", "Zipcode", "Partner Name", "Status"];
-    const headPartned=["Time", "Zipcode", "Partner Name", "Status"];
+    const headPartned=["Time", "Zipcode", "Customer Name", "Status"];
 
     const elementCreated = (clickValue, done, review, id) => {
         if (review !== undefined && review !== null){
@@ -178,21 +199,7 @@ const Orders = ({route,navigation}) => {
     }
     
 
-    const elementPartneredCopy = (clickValue, done) => (
-        <TouchableOpacity disabled={!done}>
-          <View style={styles.btn}>
-              {/* if (clickValue === "created"){
-                  <Text style={styles.btnText}>review</Text>
-              } else if (clickValue === "partnered"){
-                  <Text style={styles.btnText}>done</Text>
-              } */}
-              {clickValue === "created"
-          ? <Text style={styles.btnText}>review</Text>
-          : <Text style={styles.btnText}>done</Text>
-        }
-          </View>
-        </TouchableOpacity>
-      );
+    
     return (
 
         <View>
@@ -214,19 +221,7 @@ const Orders = ({route,navigation}) => {
                     </View>
                     <Text style={styles.head_text_big}>You select {score} stars!</Text>
 
-                    <TouchableOpacity style={{alignItems: "center"}} onPress = {() => giveReview(scoreId, score)}>
-                        <View style={{borderColor: '#009387',
-                                borderWidth: 1,
-                                marginTop: 15,
-                                width: '60%',
-                                height: 30,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 10}}>
-                        <Text style={styles.textSign}>Submit</Text>
-                        </View>
-                    </TouchableOpacity>
-
+                    
                     <TouchableOpacity style={{alignItems: "center"}} onPress = {() => setModalOpen(false)}>
                         <View style={{borderColor: '#009387',
                                 borderWidth: 1,
@@ -236,7 +231,7 @@ const Orders = ({route,navigation}) => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 borderRadius: 10}}>
-                        <Text style={styles.textSign}>close</Text>
+                        <Text style={styles.textSign}>Close</Text>
                         </View>
                     </TouchableOpacity>
                     
@@ -266,13 +261,13 @@ const Orders = ({route,navigation}) => {
                     <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
                     {/* <Cell textStyle={styles.text} data={list.list_id}/>    
                     <Cell textStyle={styles.text} data={listLink(list)}/> */}
-                    <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
+                    <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id, creatorId: list.creator_id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
                         
                     
                     {/* <Cell textStyle={styles.text}
                     data={deleteButton(list.list_id)}/> */}
-                    <Cell textStyle={styles.text} data={list.receiver_id}/>
+                    <Cell textStyle={styles.text} data={list.receiver_name}/>
                     {/* <Cell textStyle={styles.text} data={list.done.toString()}/> */}
                     <Cell textStyle={styles.text} data={elementCreated(clickValue, list.done, list.rating, list.id)}/>
                     </TableWrapper>
@@ -290,7 +285,7 @@ const Orders = ({route,navigation}) => {
                     
                     {/* <Cell textStyle={styles.text}
                     data={deleteButton(list.list_id)}/> */}
-                    <Cell textStyle={styles.text} data={list.receiver_id}/>
+                    <Cell textStyle={styles.text} data={list.creator_name}/>
                     {/* <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id)}/> */}
                     <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id, list.rating)}/>
                     </TableWrapper>
