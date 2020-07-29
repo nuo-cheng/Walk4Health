@@ -1,17 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import homeStack from '../routes/homeStack'
-import Lists from '../screens/Lists'
-import Items from '../screens/Items'
 
-function Profile(){
-    return(
-        <Text>I'm ***</Text>
-    );
-}
+
+import Items from '../screens/Items'
+import Orders from '../screens/Orders'
+import Profile from '../screens/Profile';
+import OrderDetails from '../screens/OrderDetails';
+
+import Search from '../screens/Search';
+import Filter from '../screens/Filter';
+
+import Lists from './Explore'
+
+import CreateOrder from '../screens/CreateOrder';
+import ExploreDetail from './ExploreDetail';
+
 
 function Posts(){
     return(
@@ -25,11 +33,11 @@ function NewPost(){
     );
 }
 
-function MyPosts(){
-    return(
-        <Text>My Posts</Text>
-    );
-}
+// function Orders(){
+    
+//         // navitation.navigate("Orders")
+    
+// }
 
 
 // const HomeStack=createStackNavigator();
@@ -43,15 +51,38 @@ function MyPosts(){
 // }
 
 const Tab=createBottomTabNavigator();
+const OrderNav=createStackNavigator();
+
+function OrderScreen(){
+    return (
+        <OrderNav.Navigator>
+            <Tab.Screen name="Orders" component={Orders}/>
+            <Tab.Screen name="OrderDetails" component={OrderDetails}/>
+        </OrderNav.Navigator>
+    )
+}
+const ExploreStack=createStackNavigator();
+
+function ExploreScreens(){
+    return(
+        <ExploreStack.Navigator>
+            <ExploreStack.Screen name="Explore" component={Lists}/>
+            <ExploreStack.Screen name="Search" component={Search}/>
+            <ExploreStack.Screen name="Filter" component={Filter}/>
+            <ExploreStack.Screen name="Detail" component={ExploreDetail}/>
+        </ExploreStack.Navigator>
+    )
+}
+
 
 function Mytabs(){
     return(
 
         <Tab.Navigator>
-            <Tab.Screen name="Explore" component={Lists}/>
-            <Tab.Screen name="New Post" component={NewPost}/>
-            <Tab.Screen name="My Posts" component={MyPosts}/>
-            {/* <Tab.Screen name="Profile" component={Profile}/> */}
+            <Tab.Screen name="Explores" component={ExploreScreens}/>
+            <Tab.Screen name="New Post" component={CreateOrder}/>
+            <Tab.Screen name="Orders" component={OrderScreen}/>
+            <Tab.Screen name="My Profile" component={Profile}/>
         </Tab.Navigator>
 
     );

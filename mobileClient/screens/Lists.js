@@ -8,7 +8,7 @@ import Lists from "../components/Lists"
 export default function Home({route,navigation}) {
     return (
       <View style={styles.container}>
-        <CreateList navigation={navigation}/>
+        
         
         <Lists route={route} navigation={navigation}/>
       </View>

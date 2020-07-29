@@ -14,10 +14,11 @@ function zipcodeDistance(zipcode1, zipcode2) {
 }
 
 
-router.get("/byzipcode", async(req, res)=>{
+router.get("/byzipcode/:zipcode", async(req, res)=>{
     try{
         // console.log(req.user);
-        const { zipcode }  = req.body;
+        const { zipcode }  = req.params;
+        console.log(zipcode);
         const lists = await Post.findAll( {
             where: {
                 done: false,
@@ -26,12 +27,15 @@ router.get("/byzipcode", async(req, res)=>{
                 ]
             }
         });
-
+    
         lists.sort((p1, p2) => {
-            return zipcodeDistance(p1.zipcode, zipcode) - zipcodeDistance(p2.zipcode, zipcode);
+            const result=zipcodeDistance(p1.dataValues.zipcode, zipcode) - zipcodeDistance(p2.dataValues.zipcode, zipcode);
+            
+            return result;
         });
-
-        res.json(lists)
+        
+        res.json(lists);
+       
 
     }catch(err){
         console.error(err.message);

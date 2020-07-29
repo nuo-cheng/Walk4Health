@@ -7,7 +7,8 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 // import LinearGradient from 'react-native-linear-gradient';
@@ -16,7 +17,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 // import { useTheme } from 'react-native-paper';
 
-import { AuthContext } from '../components/context';
+import { AuthContext } from '../App';
 
 import Users from '../model/users';
 
@@ -31,6 +32,7 @@ const SignInScreen = ({navigation}) => {
         isValidPassword: true,
     });
 
+    const {signIn}= React.useContext(AuthContext);
     // const { colors } = useTheme();
 
     // const { signIn } = React.useContext(AuthContext);
@@ -90,6 +92,8 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
+
+
     const loginHandle = async (email, password) => {
 
         // const foundUser = Users.filter( item => {
@@ -115,14 +119,14 @@ const SignInScreen = ({navigation}) => {
             // const password = data.password;
             const body= {email, password};
             // console.log(body);
-            const response= await fetch("http://localhost:5000/users/login",{
+            const response= await fetch("http://localhost:5000/login",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             });
             const content = await response.json();
-
-            
+            console.log(content.accessToken);
+            const token=content.accessToken;
             // console.log("============================", JSON.stringify(content.accessToken));
             // const response1 = await fetch("http://192.168.1.14:5000/lists",{
             //     method: "GET",
@@ -132,7 +136,14 @@ const SignInScreen = ({navigation}) => {
 
             // });
             // navigation.navigate('TabScreen', { screen:'Explore', params:{req: content}});
-            navigation.navigate('TabScreen',{screen:'Explore',params:{req: content}});
+            
+            try{
+                await AsyncStorage.setItem('userToken', token);
+            }catch(error){
+                console.log(error);
+            }
+
+            navigation.navigate('TabScreen',{screen:'Explore'});
         } catch (err) {
             console.error(err.message);
         }
@@ -243,7 +254,8 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    onPress={() => {loginHandle( data.email, data.password )}}
+                    // onPress={() => {loginHandle( data.email, data.password )}}
+                    onPress={() => {signIn( data.email, data.password )}}
                     // onPress={() => navigation.navigate('TabScreen')}
                 >
                 

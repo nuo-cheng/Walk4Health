@@ -21,7 +21,8 @@ router.post("/", async(req, res)=>{
             zipcode,
             creator_id: userId,
             receiver_id,
-            done: false
+            done: false,
+            rating: null
         });
         console.log('post', post);
 
@@ -92,6 +93,34 @@ router.get("/myinprogressposts", async(req, res)=>{
     }
 })
 
+//get all rated orders
+router.get("/ratings", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                [Op.not]: [
+                    {rating: null}
+                ],
+                receiver_id: userId
+            }
+        });
+        console.log(lists);
+        var total = 0;
+        for(var i = 0; i < lists.length; i++) {
+            total += lists[i].dataValues.rating;
+        };
+        var average = total / lists.length;
+        var votes = lists.length;
+        let data = [average, votes]
+        console.log('rating data', data);
+        res.json(data);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
 //get all accept order
 router.get("/", async(req, res)=>{
     try{
@@ -106,6 +135,77 @@ router.get("/", async(req, res)=>{
         });
         console.log(lists);
         res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//get all created order
+router.get("/created", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                creator_id: userId
+            }
+        });
+        console.log(lists);
+        res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//get all accepted order
+router.get("/accepted", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  userId  = req.user.userId;
+        const lists = await Post.findAll( {
+            where: {
+                receiver_id: userId
+            }
+        });
+        console.log(lists);
+        res.json(lists);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//accept order
+router.put("/acceptorder", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const { post_id } = req.body;
+        const userId  = req.user.userId;
+        const edit = await Post.update( 
+            {receiver_id: userId},{
+            where: {
+                id: post_id
+            }
+        });
+        console.log(edit);
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+//order update done
+router.put("/:id/done", async(req, res)=>{
+    try{
+        const {id} = req.params;
+
+        const edit = await Post.update( 
+            {done: 1}, {
+               where: {
+                   id
+               }
+            }
+        );
+        res.json(edit);
     }catch(err){
         console.error(err.message);
     }
@@ -129,6 +229,24 @@ router.put("/:id", async(req, res)=>{
     }
 })
 
+//get a specific self post
+router.get("/:id", async(req, res)=>{
+    try{
+        // console.log(req.user);
+        const  {id}  = req.params;
+        const post = await Post.findAll( {
+            where: {
+                id
+            }
+        });
+        res.json(post[0].dataValues);
+        console.log(post[0].dataValues);
+    }catch(err){
+        console.error(err.message);
+    }
+})
+
+
 // delete post
 router.delete("/:id",async(req, res)=>{
     try{
@@ -143,5 +261,24 @@ router.delete("/:id",async(req, res)=>{
         console.error(err.message);
     }
 });
+
+//give review
+router.put("/:id/review", async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const { rating } = req.body;
+
+        const edit = await Post.update( 
+            {rating: rating}, {
+               where: {
+                   id
+               }
+            }
+        );
+        res.json(edit);
+    }catch(err){
+        console.error(err.message);
+    }
+})
 
 module.exports = router;
