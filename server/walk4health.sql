@@ -26,7 +26,7 @@ CREATE TABLE user_list(
 CREATE TABLE post_list(
     id SERIAL PRIMARY KEY, 
     zipcode INT,
-    time VARCHAR(255),
+    time TIME,
     price INT,
     distance NUMERIC,
     done BOOLEAN,

@@ -46,6 +46,7 @@ router.get("/", async(req, res)=>{
         const lists = await Post.findAll( {
             where: {
                 done: false,
+                receiver_id: null,
                 [Op.not]: [
                     {creator_id: userId}
                 ]

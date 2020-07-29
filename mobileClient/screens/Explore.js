@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput,Button,Modal,TouchableHighlight,AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, TextInput,Button,Modal,TouchableOpacity, TouchableHighlight,AsyncStorage} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Lists from "../components/Lists"
 
@@ -85,32 +85,97 @@ export default function Home({route,navigation}) {
 
 
         {/* <CreateList navigation={navigation}/> */}
-        <Text>Posts</Text>
-        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' , marginTop: 20,marginLeft: 10,marginRight:10}}>
+        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 , width: "75%", marginLeft: 10}}
         placeholder='zipcode'
         onChangeText={
             (text)=>{
                 setSearchInput(text);
             }
       }/>
+      <View style={styles.action}>
+                    <FontAwesome
+                        name="search"
+                        color="#009387"
+                        size={30}
+                        onPress={()=>navigation.navigate('TabScreen',{
+                          screen: 'Explores',
+                          params:{
+                            screen: 'Search', params:{
+                                input: searchInput
+                            }
+                          }})}
+                    />
+                </View>
+      <View style={styles.action}>
+                    <FontAwesome
+                        name="filter"
+                        color="#009387"
+                        size={30}
+                        onPress={()=>navigation.navigate('TabScreen',{
+                          screen: 'Explores',
+                          params:{
+                            screen: 'Filter',
+                            params:{
+                              zipcode: searchInput
+                            }
+                          }})}
+                    />
+                </View>
 
-      <Button title="Search" onPress={()=>navigation.navigate('TabScreen',{
+      
+      </View>
+
+      {/* <Button title="Search" style={[styles.signIn, {
+                        borderColor: '#009387',
+                        backgroundColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 120
+                    }]} onPress={()=>navigation.navigate('TabScreen',{
           screen: 'Explores',
           params:{
             screen: 'Search', params:{
                 input: searchInput
             }
-          }})}/>
+          }})}/> */}
+      {/* <View style={styles.button}>
+     <TouchableOpacity style={[styles.signIn, {
+                        borderColor: '#009387',
+                        backgroundColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 10
+                    }]}
+                    onPress={()=>navigation.navigate('TabScreen',{
+                      screen: 'Explores',
+                      params:{
+                        screen: 'Search', params:{
+                            input: searchInput
+                        }
+                      }})}>
+            <Text style={[styles.textSign, {
+                        color:'#ffffff',
+
+                    }]}>Search</Text>
+            
+        </TouchableOpacity>
+        </View> */}
+        
 
 
-<Button title="Filter" onPress={()=>navigation.navigate('TabScreen',{
+{/* <Button title="Filter" style={[styles.signIn, {
+                        borderColor: '#009387',
+                        backgroundColor: '#009387',
+                        borderWidth: 1,
+                        marginTop: 120
+                    }]} onPress={()=>navigation.navigate('TabScreen',{
           screen: 'Explores',
           params:{
             screen: 'Filter',
             params:{
               zipcode: searchInput
             }
-          }})}/>
+          }})}/> */}
         {/* <TouchableHighlight
         style={styles.openButton}
         onPress={()=>navigation.navigate('TabScreen',{
@@ -138,7 +203,7 @@ export default function Home({route,navigation}) {
       <Text style={styles.textStyle}>Filter</Text>
       </View></TouchableHighlight> */}
         {/* <Text>Filter        sort by distance</Text> */}
-        <Lists route={route} navigation={navigation}/>
+        <Lists route={route} navigation={navigation } />
       </View>
     );
   }
@@ -149,5 +214,16 @@ export default function Home({route,navigation}) {
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    signIn: {
+      width: '30%',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10
+    },
+    button: {
+      alignItems: 'center',
+      marginTop: 0
     },
   });
