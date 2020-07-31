@@ -134,21 +134,37 @@ const Filter=({route,navigation})=>{
             <Button title="Filter" onPress={onFilter}/>
 
             
-                <Table >
-                <Row data={head} style={styles.head}  textStyle={styles.text}></Row>
-                    {lists.map((list)=>(
-                        <TableWrapper key={list.id}  style={styles.row}>
-                   
-                        <Cell textStyle={styles.text} data={list.time}/>    
+            <Table >
+                <Row data={head} style={styles.head}  textStyle={styles.head_text_white}></Row>
+                    {lists.map((list,index)=>(
+                        <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
+                        {/* <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Detail',
+            params:{
+              id: list.id
+            }
+          }})}/>     */}
+
+                        <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('TabScreen',{
+          screen: 'Explores',
+          params:{
+            screen: 'Detail',
+            params:{
+              id: list.id
+            }
+          }})}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
                         <Cell textStyle={styles.text} data={list.price}/>
-                      
+                        {/* <Cell textStyle={styles.text}
+                        data={deleteButton(list.list_id)}/> */}
                         <Cell textStyle={styles.text}
-                        data={list.creator_id}/>
+                        data={list.creator_name}/>
                             
                         </TableWrapper>
-                    ))
-                    }
+                    ))}
+                
             </Table>
             
         </View>
@@ -158,10 +174,15 @@ const Filter=({route,navigation})=>{
 
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#808B97' },
-    text: { margin: 6 },
-    row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
+    head: { height: 50, backgroundColor:'#009387' ,borderTopLeftRadius: 20,
+    borderTopRightRadius: 20, borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,},
+    text: { paddingVertical: 6, margin: 6 , fontWeight:'bold', color: '#05375a', textAlign: 'center'},
+    row: { flexDirection: 'row', borderTopLeftRadius: 15,
+    borderTopRightRadius: 15, borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15},
     btn: { width: 58, height: 18, backgroundColor: '#78B7BB',  borderRadius: 2 },
+    head_text_white: {fontSize: 15, margin: 6 , fontWeight:'bold', color: '#FFFFFF', textAlign: 'center'},
     btnText: { textAlign: 'center', color: '#fff' }
   });
 

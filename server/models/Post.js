@@ -10,7 +10,7 @@ const Post = db.define('post', {
         type: Sequelize.NUMBER
     },
     time: {
-        type: Sequelize.STRING
+        type: Sequelize.TIME
     },
     zipcode: {
         type: Sequelize.INTEGER

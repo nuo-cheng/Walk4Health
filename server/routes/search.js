@@ -22,6 +22,7 @@ router.get("/byzipcode/:zipcode", async(req, res)=>{
         const lists = await Post.findAll( {
             where: {
                 done: false,
+                receiver_id: null,
                 [Op.not]: [
                     {creator_id: req.user.userId}
                 ]
