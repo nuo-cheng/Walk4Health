@@ -51,12 +51,12 @@ After clone the master branch, follow steps below.
   $ npm install nodemon -g --save
   $ npm install express
 
-  into the server file
+  To start running backend, into the server file
   $ nodemon index
 
 - Frontend(React Native & expo)
   $ npm install -g expo-cli
-  into the mobileClient file
+  into the mobileClient file:
   $ npm install expo
 
   Befor start running:
