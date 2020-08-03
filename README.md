@@ -32,18 +32,18 @@ https://google.github.io/styleguide/jsguide.html
 # Installation
 After clone the master branch, follow steps below.
  - Database(Postgres)
-  $ brew install postgres
-  $ initdb /usr/local/var/postgres
-  $ createuser postgres -s
-  $ psql -U postgres
-    $ \l                     to list all roles
-    $ \c postgres            to connect database "postgress" as user "postgres"
-    $ \dt                    to see relations in the databade "postgres"
+  - $ brew install postgres
+  - $ initdb /usr/local/var/postgres
+  - $ createuser postgres -s
+  - $ psql -U postgres
+    - $ \l                     to list all roles
+    - $ \c postgres            to connect database "postgress" as user "postgres"
+    - $ \dt                    to see relations in the databade "postgres"
     
-    Then, copy codes in the walk4health.sql to create the walk4health database and 2 tables
+    -Then, copy codes in the walk4health.sql to create the walk4health database and 2 tables
   
-  $ pg_ctl -D /usr/local/var/postgres -l logfile start 
-  can start the database if the database is stopped
+  -$ pg_ctl -D /usr/local/var/postgres -l logfile start 
+  -can start the database if the database is stopped
   
 
  - Backend(Node)
