@@ -152,6 +152,28 @@ This is an object representing a Walk4Health account. You can retrieve it to see
     - filter by gender and age
       - Get /filter/gender
 
+# Screens
+## Explore Screen
+### List of Acceptable Orders
+  - Show time, zipcode, price, creator name of orders
+  - Click to get more details of an order
+### Filter and Search Order
+  - Search orders by a zipcode user input and sort orders by distances to the zipcode
+  - Fiter orders by some conditions including start time, price, distance, age and gender
+## New Post Screen
+  - Create a new post by inputting start time, distance, zipcode, and price
+## Orders Screen
+  - Check and edit orders created or partnered by user
+## My Profile Screen
+  - Check and edit personal profile and account information
+
+
+
+
+
+
+
+
 # Credits
 
 
