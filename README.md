@@ -42,8 +42,8 @@ After clone the master branch, follow steps below.
     
     Then, copy codes in the walk4health.sql to create the walk4health database and 2 tables  
   
-  `$ pg_ctl -D /usr/local/var/postgres -l logfile start`  
-  can start the database if the database is stopped  
+   `$ pg_ctl -D /usr/local/var/postgres -l logfile start`  
+   can start the database if the database is stopped  
   
   
     
@@ -52,8 +52,8 @@ After clone the master branch, follow steps below.
   `$ npm install nodemon -g --save`  
   `$ npm install express`  
 
-  To start running backend, into the server file  
-  `$ nodemon index`  
+   To start running backend, into the server file  
+   `$ nodemon index`  
   
   
 - Frontend(React Native & expo)  
