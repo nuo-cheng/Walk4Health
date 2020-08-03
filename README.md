@@ -89,50 +89,68 @@ This is an object representing a Walk4Health account. You can retrieve it to see
   - password (String): the account's hashedpassword
   - gender (String): the user's gender
   - age (Integer): the user's age
+  - name (String): the user's name
  
 ### Endpoints
   - create an account
-    - Post /users/signup
+    - Post /signup
   - Log in an account
-    - Post /users/login
+    - Post /login
   - log out an account
     - Post /users/logout
+  - change password
+    - Put /users/changepassword/:id
+  - get user info
+    - Get /users/myprofile
+  - get one user
+    -Get /users/:id
+  - update user name, age and gender at the same time
+    - Put /users/:id
+  - update one specific field of user
+    - Put /users/specificupdate/:id
+  
+    
 
   ## Posts
 ### Attributes
   - id (Serial primary key): Unique identifier for the object
-  - time (String): the planned start time of the walking
+  - time (time): the planned start time of the walking
   - zipcode (Integer): the user's age
   - price (Integer): the price of walking with(per 30 minutes)
   - distance(Number): the walking distance
   - done (Boolean): the state of the order, true represents completed, false indicates in progress
   - creator_id (Integer): the order creator's id
   - receiver_id (Integer): the id of the user accpeting the order 
+  - creator_name (String): order's creator name
+  - receiver_name (String): the name of the user accpeting the order 
  
  ### Endpoints
   - create a post
     - Post /posts/
-  - retrive all other posts
+  - retrive all posts created by others and states are incomplete
     - GET /posts/
   - retrieve all completed posts the user created
-    - Post /users/mycompletedposts
+    - Post /posts/mycompletedposts
   - retrieve all in-progress posts the user created
-    - Post /users/mycompletedposts
-  - 
+    - Post /posts/mycompletedposts
+  - retrieve all rated orders
+    - Post /posts/ratings
 
   ## Search
-    This is a feature that users can search spicific information
+    This is a feature that users can search orders by zipcode from the closest to the most distant
 
     Endpoints
-    - search zipcode - users input a zipcode, then get posts listing by distance to the zipcode
-        GET/search/byzipcode/
-
-    - search users - users input a username, then get the entry of that person's profile page
-        GET/search/user
+    - search zipcode and sort orders by zipcode distance
+      - GET /search/byzipcode
 
 
   ## Filter
-
+  
+      Endpoints
+    - filter orders by conditionally combination of age range, distance range, price range, gender, and start time
+      - Post /filter/
+    - filter by gender and age
+      - Get /filter/gender
 
 # Credits
 
