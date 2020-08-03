@@ -1,7 +1,9 @@
-# WalkingApp
+
+
 
 
 # Walk4Health
+<img src="https://user-images.githubusercontent.com/54332765/89233708-fe868800-d59e-11ea-8770-dda697e9f7b7.png" width=200 height=350 align="right">
 Walk4Health is a user-style mobile app, to help people find walking partners in their community/neighborhood
 
 # Motivation
