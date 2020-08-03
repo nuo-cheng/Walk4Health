@@ -15,8 +15,6 @@ Compared to the existing competitors, the uniqueness of walk4health is that it p
 - Search/Filter (in progress)
 - Reviews/History (not started)
 
-# Screenshots
-
 # Tech/framework used
 
 Built with 
