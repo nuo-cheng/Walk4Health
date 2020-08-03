@@ -1,7 +1,3 @@
-
-
-
-
 # Walk4Health
 <img src="https://user-images.githubusercontent.com/54332765/89233708-fe868800-d59e-11ea-8770-dda697e9f7b7.png" width=300 height=475 align="right">
 Walk4Health is a user-style mobile app, to help people find walking partners in their community/neighborhood
@@ -153,7 +149,8 @@ This is an object representing a Walk4Health account. You can retrieve it to see
       - Get /filter/gender
 
 # Screens
-## Explore Screen
+## Explore Screen 
+### <img src="https://user-images.githubusercontent.com/54332765/89234812-ac933180-d5a1-11ea-97e4-c104643464ef.png" alt="explore" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89235723-9ab28e00-d5a3-11ea-965b-6fb7e63193be.png" alt="filter" width=300 height=475 > 
 ### List of Acceptable Orders
   - Show time, zipcode, price, creator name of orders
   - Click to get more details of an order
@@ -161,20 +158,16 @@ This is an object representing a Walk4Health account. You can retrieve it to see
   - Search orders by a zipcode user input and sort orders by distances to the zipcode
   - Fiter orders by some conditions including start time, price, distance, age and gender
 ## New Post Screen
+### <img src="https://user-images.githubusercontent.com/54332765/89235948-21676b00-d5a4-11ea-8999-239712482206.png" alt="neworder" width=300 height=475 align="center">  
   - Create a new post by inputting start time, distance, zipcode, and price
 ## Orders Screen
+### <img src="https://user-images.githubusercontent.com/54332765/89236134-a3f02a80-d5a4-11ea-8842-56ec001b1082.png" alt="orders" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236244-ddc13100-d5a4-11ea-9ca4-ecca9b7ba2c3.png" alt="updateorder" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236361-3395d900-d5a5-11ea-9db2-a903b5a5a108.png" alt="editorder" width=300 height=475>
+
   - Check and edit orders created or partnered by user
 ## My Profile Screen
+### <img src="https://user-images.githubusercontent.com/54332765/89236049-64c1d980-d5a4-11ea-82c3-be7e27eaf3bd.png" alt="profilepage" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236595-dea69280-d5a5-11ea-8a5f-29790752216d.png" alt="editpersonalinfo" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236708-29280f00-d5a6-11ea-925e-b7f673f7afcb.png" alt="resetpassword" width=300 height=475>
   - Check and edit personal profile and account information
 
-
-
-
-
-
-
-
-# Credits
 
 
 
