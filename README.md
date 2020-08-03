@@ -30,6 +30,51 @@ Built with
 https://google.github.io/styleguide/jsguide.html
 
 # Installation
+After clone the master branch, follow steps below.
+ - Database(Postgres)
+  $ brew install postgres
+  $ initdb /usr/local/var/postgres
+  $ createuser postgres -s
+  $ psql -U postgres
+    $ \l                     to list all roles
+    $ \c postgres            to connect database "postgress" as user "postgres"
+    $ \dt                    to see relations in the databade "postgres"
+    
+    Then, copy codes in the walk4health.sql to create the walk4health database and 2 tables
+  
+  $ pg_ctl -D /usr/local/var/postgres -l logfile start 
+  can start the database if the database is stopped
+  
+
+ - Backend(Node)
+  $ brew install node
+  $ npm install nodemon -g --save
+  $ npm install express
+
+  into the server file
+  $ nodemon index
+
+- Frontend(React Native & expo)
+  $ npm install -g expo-cli
+  into the mobileClient file
+  $ npm install expo
+
+  Befor start running:
+    Go to mobileClient/node_modules/react-native-star-view/index.js
+    Modified line 2: module.exports = StarView
+    To: export default StarView;
+  
+  To start running:
+    $ npm start
+
+iOS simulator
+  Please go to APP Store to download Xcode
+
+  If there are some error running on iOS simulator, try:
+    1. Go to expo's own node_modules, remove the react-native-safe-area-context from there
+    2. Remove react-native-safe-area-context from package.json for expo's folder in node_modules
+    3. Run again using npm start
+
 
 # API Reference
 The Walk4Health API is organized around REST. Our API has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
