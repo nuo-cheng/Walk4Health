@@ -172,6 +172,11 @@ This is an object representing a Walk4Health account. You can retrieve it to see
 ### <img src="https://user-images.githubusercontent.com/54332765/89236049-64c1d980-d5a4-11ea-82c3-be7e27eaf3bd.png" alt="profilepage" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236595-dea69280-d5a5-11ea-8a5f-29790752216d.png" alt="editpersonalinfo" width=300 height=475><img src="https://user-images.githubusercontent.com/54332765/89236708-29280f00-d5a6-11ea-925e-b7f673f7afcb.png" alt="resetpassword" width=300 height=475>
 
 
+# Existing Bugs
+- Crash when user input wrong email or password on login page
+- Can not jump to partner walk page after accept order
+- Can not filter if missing some condition
+- Failure to check the validity email or password on signup page and reset email & password page
 
 
 
