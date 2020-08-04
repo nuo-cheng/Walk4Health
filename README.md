@@ -133,20 +133,19 @@ This is an object representing a Walk4Health account. You can retrieve it to see
     - Post /posts/ratings
 
   ## Search
-    This is a feature that users can search orders by zipcode from the closest to the most distant
-
-    Endpoints
-    - search zipcode and sort orders by zipcode distance
-      - GET /search/byzipcode
+  This is a feature that users can search orders by zipcode from the closest to the most distant  
+  - Endpoints  
+    - search zipcode and sort orders by zipcode distance  
+      - GET /search/byzipcode  
 
 
   ## Filter
   
-      Endpoints
-    - filter orders by conditionally combination of age range, distance range, price range, gender, and start time
-      - Post /filter/
-    - filter by gender and age
-      - Get /filter/gender
+  - Endpoints  
+    - filter orders by conditionally combination of age range, distance range, price range, gender, and start time  
+       - Post /filter/  
+    - filter by gender and age  
+       - Get /filter/gender  
 
 # Screens
 ## Explore Screen 
