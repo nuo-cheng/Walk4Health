@@ -179,6 +179,25 @@ This is an object representing a Walk4Health account. You can retrieve it to see
 - Failure to check the validity email or password on signup page and reset email & password page
 
 
+# Future Enhancement
+- Code Refector
+  - Code reuseful
+  - Improve Architecture
+  - Improve Robustness based on more test  
+  
+- Add Features
+  - Messaging feature 
+  - Allow access to user Location
+  - User safety
+     - Share My Trip
+     - GPS tracking
+     - Emergency assistance button
+  - In-app Payment
+
+
+
+
+
 
 
 
