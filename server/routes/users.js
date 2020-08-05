@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const JWTKey = require('../verify-signature');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const authentication = require('../middleware')
-const db = require('../db');
 const User = require('../models/User');
 //middleware
 router.use(authentication);
@@ -19,21 +16,6 @@ router.get('/', (req, res) =>
         .catch(err => console.log(err))
 );
 
-
-
-
-//log out
-// app.delete('/logout', (req, res) => {
-//     const authHeader = req.headers['authorization'];
-//     // console.log(authHeader);
-//     const token = authHeader && authHeader.split(' ')[1]
-//     console.log(token);
-//     if (token == null){
-//         return res.sendStatus(401);""
-//     }
-//     token = undefined;
-//     res.sendStatus(204);
-// })
 
 //update user info
 router.put("/:id", async(req, res)=>{
@@ -101,7 +83,7 @@ router.get("/myprofile", async(req, res)=>{
     }
 })
 
-//get one other user
+//get one user
 router.get("/:id", async(req, res)=>{
     try{
         const id = req.params;

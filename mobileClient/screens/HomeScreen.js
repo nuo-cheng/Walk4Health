@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, StatusBar, TouchableOpacity, Image} from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Image} from 'react-native';
 import { useTheme } from '@react-navigation/native';
-import { Col, Row, Grid } from "react-native-easy-grid";
 import walking from '../pic/walking.png';
 const HomeScreen = ({navigation}) => {
 
-  const { colors } = useTheme();
+  const {} = useTheme();
 
   const theme = useTheme();
   
@@ -17,13 +16,7 @@ const HomeScreen = ({navigation}) => {
         <View style={styles.header}>
       <Text style={styles.title}>Walk4Health</Text>
      </View>
-      
-     {/* <Grid>
-                <Col> */}
-                    
 
-                {/* </Col>
-                <Col> */}
                  <View style={styles.button}>
      <TouchableOpacity style={[styles.signIn, {
                         borderColor: '#009387',

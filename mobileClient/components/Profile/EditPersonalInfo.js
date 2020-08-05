@@ -171,12 +171,6 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                     <Text style={styles.text_footer}>Gender</Text>
                     <View style={styles.action}>
 
-                        {/* <TextInput
-                            placeholder={user.gender}
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={(val) => handleGenderChange(val)}
-                        /> */}
                         <RadioForm
                             radio_props={radio_props}
                             initial={arr.indexOf(user.gender)}
@@ -211,18 +205,7 @@ const EditPersonalInfo = ({ user, setUser, personalInfo, setPersonalInfo, signal
                         <Text style={styles.text_footer}>Cancel</Text>
                         </TouchableOpacity>
 
-                        {/* <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  style={[styles.signIn, {
-                      borderColor: '#009387',
-                      borderWidth: 1,
-                      marginTop: 15
-                  }]}
-              >
-                  <Text style={[styles.textSign, {
-                      color: '#009387'
-                  }]}>Sign In</Text>
-              </TouchableOpacity> */}
+    
                     </View>
                 </ScrollView>
             </Animatable.View>

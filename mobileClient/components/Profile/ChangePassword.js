@@ -14,8 +14,7 @@ import {
     AsyncStorage
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 import Feather from 'react-native-vector-icons/Feather';
 
 
@@ -107,8 +106,7 @@ const ChangePassword = ({ user, setUser,signal, setSignal}) => {
             });
 
             await update.json();
-            // console.log('test personal info update', jsonData);
-            // setUser(jsonData[0]);
+  
             getUser();
         } catch (err) {
             console.error(err.message);
@@ -239,18 +237,6 @@ const ChangePassword = ({ user, setUser,signal, setSignal}) => {
                         <Text style={styles.text_footer}>Cancel</Text>
                         </TouchableOpacity>
 
-                        {/* <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  style={[styles.signIn, {
-                      borderColor: '#009387',
-                      borderWidth: 1,
-                      marginTop: 15
-                  }]}
-              >
-                  <Text style={[styles.textSign, {
-                      color: '#009387'
-                  }]}>Sign In</Text>
-              </TouchableOpacity> */}
                     </View>
                 </ScrollView>
             </Animatable.View>

@@ -25,11 +25,6 @@ const User = db.define('user', {
 	freezeTableName: true,	//prevent sequelize from pluralizing table names
 	timestamps: false,
     underscored: false
-    // classMethods: {
-    //     associate: function (models) {
-    //           user.hasMany(models.post, { foreignKey : 'id' , targetKey: 'creator_id'});
-    //     }
-    // }
 });
 
 

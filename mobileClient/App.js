@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, AsyncStorage } from 'react-native';
-import Navigator from './routes/Nav'
+import { Text, View, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import UnsignedInStack from './routes/Nav'
 import TabScreen from "./screens/MainTabScreen"
 
@@ -30,7 +29,7 @@ function SplashScreen() {
   );
 }
 
-export default function App({navigation}) {
+export default function App() {
     const [state, dispatch]=React.useReducer(
     (preveState, action)=>{
       switch(action.type){

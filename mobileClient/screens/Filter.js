@@ -138,14 +138,7 @@ const Filter=({route,navigation})=>{
                 <Row data={head} style={styles.head}  textStyle={styles.head_text_white}></Row>
                     {lists.map((list,index)=>(
                         <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
-                        {/* <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('TabScreen',{
-          screen: 'Explores',
-          params:{
-            screen: 'Detail',
-            params:{
-              id: list.id
-            }
-          }})}/>     */}
+                      
 
                         <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('TabScreen',{
           screen: 'Explores',
@@ -157,8 +150,7 @@ const Filter=({route,navigation})=>{
           }})}/>    
                         <Cell textStyle={styles.text} data={list.zipcode}/>
                         <Cell textStyle={styles.text} data={list.price}/>
-                        {/* <Cell textStyle={styles.text}
-                        data={deleteButton(list.list_id)}/> */}
+
                         <Cell textStyle={styles.text}
                         data={list.creator_name}/>
                             

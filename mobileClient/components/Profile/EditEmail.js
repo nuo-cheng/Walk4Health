@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import {
     View,
     Text,
@@ -92,8 +92,7 @@ const EditEmail = ({ user, setUser,signal, setSignal}) => {
             });
 
             await update.json();
-            // console.log('test personal info update', jsonData);
-            // setUser(jsonData[0]);
+   
             getUser();
         } catch (err) {
             console.error(err.message);
@@ -152,18 +151,7 @@ const EditEmail = ({ user, setUser,signal, setSignal}) => {
                         <Text style={styles.text_footer}>Cancel</Text>
                         </TouchableOpacity>
 
-                        {/* <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  style={[styles.signIn, {
-                      borderColor: '#009387',
-                      borderWidth: 1,
-                      marginTop: 15
-                  }]}
-              >
-                  <Text style={[styles.textSign, {
-                      color: '#009387'
-                  }]}>Sign In</Text>
-              </TouchableOpacity> */}
+
                     </View>
                 </ScrollView>
             </Animatable.View>

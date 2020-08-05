@@ -39,9 +39,7 @@ const Orders = ({route,navigation}) => {
     }
     
     const [lists, setLists]= useState([]);
-    // console.log("route.params==========="+route.params);
-    // const token = route.params.req;
-    // console.log("up " + token.accessToken);  
+
     const [clickValue, setClickValue] = useState("created");
     const [modalOpen, setModalOpen] = useState(false);
     const [scoreId, setScoreId] = useState();
@@ -54,11 +52,9 @@ const Orders = ({route,navigation}) => {
 
     const getLists=async(name = "created")=>{
         try{
-            // console.log("into get");
-            // console.log(token.accessToken);
             const token=await bootstrapAsync();
 
-            // var response = null;
+
             if (name === 'created'){
                 const response= await fetch("http://localhost:5000/posts/created", {
                 method: "GET",
@@ -79,12 +75,7 @@ const Orders = ({route,navigation}) => {
                 setLists(jsonData);
             }
             
-            // console.log("finish response")
-            
-            // const jsonData= await response.json();
-           
-            // setLists(jsonData);
-            // console.log(jsonData);
+
         }catch(err){
             console.error(err.message);
         }
@@ -130,26 +121,7 @@ const Orders = ({route,navigation}) => {
         }
     }
 
-    const getName = async(user_id) => {
-        try {
-            const token=await bootstrapAsync();
-            const response= await fetch(`http://localhost:5000/users/${user_id}`, {
-                method: "GET",
-                headers: {"Content-Type": "application/json",
-                'Authorization': `Bearer ` + token},
-                })
-            const jsonData= await response.json();
-            console.log("jsondata int gat name: "+ jsonData);
-            const name = JSON.stringify(jsonData.name);
-            setLists({
-                ...lists,
-                receiver_id:name
-            })
-            return name;
-        } catch (error) {
-            console.error(err.message);
-        }
-    }
+
 
     useEffect(()=> {
         getClickValue();
@@ -271,16 +243,12 @@ const Orders = ({route,navigation}) => {
                 <Row data={headCreated} style={styles.head}  textStyle={styles.head_text_white}></Row>
                 {lists.map((list, index)=>(
                     <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
-                    {/* <Cell textStyle={styles.text} data={list.list_id}/>    
-                    <Cell textStyle={styles.text} data={listLink(list)}/> */}
+
                     <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id, creatorId: list.creator_id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
-                        
-                    
-                    {/* <Cell textStyle={styles.text}
-                    data={deleteButton(list.list_id)}/> */}
+
                     <Cell textStyle={styles.text} data={list.receiver_name}/>
-                    {/* <Cell textStyle={styles.text} data={list.done.toString()}/> */}
+
                     <Cell textStyle={styles.text} data={elementCreated(clickValue, list.done, list.rating, list.id)}/>
                     </TableWrapper>
                 ))}
@@ -289,16 +257,15 @@ const Orders = ({route,navigation}) => {
                 <Row data={headPartned} style={styles.head}  textStyle={styles.head_text_white}></Row>
                 {lists.map((list, index)=>(
                     <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
-                    {/* <Cell textStyle={styles.text} data={list.list_id}/>    
-                    <Cell textStyle={styles.text} data={listLink(list)}/> */}
+
                     <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('OrderDetails', {id:list.id})}/>    
                     <Cell textStyle={styles.text} data={list.zipcode}/>
                         
                     
-                    {/* <Cell textStyle={styles.text}
-                    data={deleteButton(list.list_id)}/> */}
+
+
                     <Cell textStyle={styles.text} data={list.creator_name}/>
-                    {/* <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id)}/> */}
+
                     <Cell textStyle={styles.text} data={elementPartneredDone(clickValue, list.done, list.id, list.rating)}/>
                     </TableWrapper>
                 ))}

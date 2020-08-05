@@ -14,13 +14,6 @@ const Lists= ({ navigation}) =>{
 
     const {signOut}= React.useContext(AuthContext);
 
-    // const token = route.params.req;
-    // const token=null;
-    // try{
-    //     token=AsyncStorage.getItem('UserToken');
-    // }catch(err){
-    //     console.log(err);
-    // }
     
     async function bootstrapAsync() {
         // var token;
@@ -51,12 +44,6 @@ const Lists= ({ navigation}) =>{
         }
     }
 
-    // console.log("============================", JSON.stringify(content.accessToken));
-    //         const response1 = await fetch("http://192.168.1.14:5000/lists",{
-    //             method: "GET",
-    //             headers: {"Content-Type": "application/json",
-    //             'Authorization': `Bearer ` + content.accessToken
-    //         }
     
     
 
@@ -113,21 +100,7 @@ const Lists= ({ navigation}) =>{
     
     const head=["Time", "ZipCode", "Price","Creator Name"];
 
-    const deleteButton = (list_id) => (
-        <TouchableOpacity onPress={()=>deleteList(list_id)}>
-          <View style={styles.btn}>
-            <Text style={styles.btnText}>Delete</Text>
-          </View>
-        </TouchableOpacity>
-      );
 
-    const listLink = (list) =>(
-        <TouchableOpacity onPress={()=>navigation.navigate('Items', {list:list})}>
-          <View style={styles.btn}>
-            <Text style={styles.btnText}>{list.description}</Text>
-          </View>
-        </TouchableOpacity>
-    )
 
 
     return(
@@ -136,14 +109,6 @@ const Lists= ({ navigation}) =>{
                 <Row data={head} style={styles.head}  textStyle={styles.head_text_white}></Row>
                     {lists.map((list,index)=>(
                         <TableWrapper key={index}  style={[styles.row, index%2 && {backgroundColor: '#b2dedb'}]}>
-                        {/* <Cell textStyle={styles.text} data={list.id} onPress={()=>navigation.navigate('TabScreen',{
-          screen: 'Explores',
-          params:{
-            screen: 'Detail',
-            params:{
-              id: list.id
-            }
-          }})}/>     */}
 
                         <Cell textStyle={styles.text} data={list.time} onPress={()=>navigation.navigate('TabScreen',{
           screen: 'Explores',

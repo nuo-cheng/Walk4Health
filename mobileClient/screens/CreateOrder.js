@@ -14,17 +14,16 @@ import {
     AsyncStorage
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import LinearGradient from 'react-native-linear-gradient';
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const CreateOrder=({route,navigation})=>{
-    // const token=route.params.req;
-    // console.log(token);
+
     const [order, setOrder]=useState({time:'', distance:'',
     price:'', zipcode:''
     })
 
-    // const {partner, setPartner}=useState({gender:'', ageRange:''})
+    
 
     async function bootstrapAsync() {
         // var token;
@@ -165,18 +164,7 @@ const CreateOrder=({route,navigation})=>{
                         
                     </TouchableOpacity>
 
-                    {/* <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={[styles.signIn, {
-                  borderColor: '#009387',
-                  borderWidth: 1,
-                  marginTop: 15
-              }]}
-          >
-              <Text style={[styles.textSign, {
-                  color: '#009387'
-              }]}>Sign In</Text>
-          </TouchableOpacity> */}
+     
                 </View>
             </ScrollView>
         </Animatable.View>

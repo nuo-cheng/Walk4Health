@@ -5,9 +5,9 @@ const authentication = require('../middleware')
 const Post = require('../models/Post');
 //middleware
 router.use(authentication);
-//Post table API
 
-//add post
+
+//create post
 router.post("/", async(req, res)=>{
     
     const  userId   = req.user.userId;

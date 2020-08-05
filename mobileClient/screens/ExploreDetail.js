@@ -14,11 +14,11 @@ import {
 } from 'react-native';
 
 
-import Mytabs from './MainTabScreen'
+
 import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from 'react-native-animatable';
 import Star from 'react-native-star-view';
-// import LinearGradient from 'react-native-linear-gradient';
+
 
 
 
@@ -37,7 +37,6 @@ const ExploreDetail = ({route, navigation}) => {
 
           return token;
         } catch (e) {
-          // Restoring token failed
           console.log(e.message);
         }
         return;
@@ -130,9 +129,7 @@ const ExploreDetail = ({route, navigation}) => {
                     <Text style={styles.head_text_white}>{orderStatus(order.done, order.rating, order.receiver_id)} </Text>
                 </Col>
             </Grid>
-            {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
-            <Text style={styles.text_header}>Finished:  {order.done.toString()}</Text>
-            <Text style={styles.text_header}>Review: {order.review}</Text> */}
+ 
         </View>
         <Animatable.View 
             animation="fadeInUpBig"

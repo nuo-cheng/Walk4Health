@@ -43,16 +43,6 @@ router.get("/byzipcode/:zipcode", async(req, res)=>{
     }
 })
 
-// //search user
-// app.get("/users/searchuser", async(req, res)=>{
-//     try{
 
-//         const  username  = req.body;
-//         const lists=await pool.query("SELECT username FROM user_list WHERE username=$1", [username]);
-//         res.json(lists.rows);
-// }catch(err){
-//     console.error(err.message);
-// }
-// });
 
 module.exports = router;

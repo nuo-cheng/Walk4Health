@@ -11,15 +11,10 @@ import {
     AsyncStorage,
     Modal
 } from 'react-native';
-import SwitchSelector from "react-native-switch-selector";
-import StarRating from 'react-native-star-rating-new';
-import Mytabs from './MainTabScreen'
+
 import { Col, Row, Grid } from "react-native-easy-grid";
 import * as Animatable from 'react-native-animatable';
-// import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import { NavigationActions } from 'react-navigation';
+
 import UpdateOrder from '../screens/UpdateOrder';
 import Star from 'react-native-star-view';
 
@@ -154,9 +149,7 @@ const OrderDetails = ({route, navigation}) => {
                     <Text style={styles.head_text_white}>{orderStatus(order.done, order.rating, order.receiver_id)} </Text>
                 </Col>
             </Grid>
-            {/* <Text style={styles.text_header}>Order Number #{order.id}</Text>
-            <Text style={styles.text_header}>Finished:  {order.done.toString()}</Text>
-            <Text style={styles.text_header}>Review: {order.review}</Text> */}
+
         </View>
         <Animatable.View 
             animation="fadeInUpBig"
@@ -269,7 +262,7 @@ const OrderDetails = ({route, navigation}) => {
             
             <View >
                 <Modal visible={updateOpen} style={styles.infoContainer}>
-                    {/* console.log("test===========before into child component", user); */}
+
                     <UpdateOrder  order={order} setOrder = {setOrder}  orderInfo = {orderInfo} setOrderInfo = {setOrderInfo} signal = {updateOpen} setSignal = {setUpdateOpen}/>
                 </Modal>
             </View>

@@ -7,8 +7,6 @@ const bcrypt = require('bcrypt');
 
 const db = require('../db');
 const User = require('../models/User');
-//middleware
-
 
 //sign up
 router.post('/signup', async (req, res) => {

@@ -29,9 +29,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 
 const ProfilePage = ({ route, navigation }) => {
-    // let female_Profile_Image = {uri:'https://visualpharm.com/assets/353/Person%20Female-595b40b65ba036ed117d451b.svg'};
-    // let male_Profile_Image = {uri:'https://visualpharm.com/assets/403/Person-595b40b65ba036ed117d451c.svg'};
-    // let neutural_Profile_Image = {uri:'https://visualpharm.com/assets/10/More%20Info-595b40b65ba036ed117d42d1.svg'};
+
     const [user, setUser] = useState({});
     const [rating, setRating] = useState([]);
     const [signal, setSignal] = useState(false);
@@ -157,31 +155,7 @@ const ProfilePage = ({ route, navigation }) => {
             </View>
                 </Col>
             </Grid>
-            {/* <View style={{ alignSelf: "center" }}>
-                <View style={styles.profileImage}>
-                    <Image source={getProfileImage(user.gender)} style={styles.image} resizeMode="center"></Image>
-                </View>
 
-                {/* <View style={styles.add}>
-                    <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginLeft: 2 }}></Ionicons>
-                </View> */}
-            {/* </View>
-
-            <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}> {user.name} </Text>
-
-            </View>
-
-            <View style={styles.statsContainer}>
-                <View style={styles.statsBox}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Star score={rating[0]} style={styles.starStyle} />
-                        <Text style={[styles.subText, { fontSize: 15 }]}>({rating[1]})</Text>
-                    </View>
-                    <Text style={[styles.text, { fontSize: 24 }]}>{rating[0]}</Text>
-                    <Text style={[styles.subText]}>Overall Rating</Text>
-                </View>
-            </View> */} 
 
             <View style={{ flexDirection: 'row', width: 250 }}>
                 <Text style={[styles.subText, styles.recent]} >Personal Info </Text>
@@ -243,7 +217,7 @@ const ProfilePage = ({ route, navigation }) => {
                     <View style={{ width: 250 }}>
                         <TouchableOpacity onPress={() => setSignal2(true)}>
                             <Text style={[styles.text_footer, { textDecorationLine: 'underline', color: 'gray' }]}>Change Password</Text>
-                            {/* onPress={() => {loginHandle( data.email, data.password )}} */}
+                            
                         </TouchableOpacity>
 
                     </View>

@@ -6,20 +6,14 @@ import {
     TextInput,
     Platform,
     StyleSheet ,
-    StatusBar,
-    Alert,
-    AsyncStorage
+    StatusBar
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
-// import { useTheme } from 'react-native-paper';
 
 import { AuthContext } from '../App';
-
-import Users from '../model/users';
 
 const SignInScreen = ({navigation}) => {
 
@@ -33,9 +27,7 @@ const SignInScreen = ({navigation}) => {
     });
 
     const {signIn}= React.useContext(AuthContext);
-    // const { colors } = useTheme();
-
-    // const { signIn } = React.useContext(AuthContext);
+   
 
     const textInputChange = (val) => {
         if( val.trim().length >= 1 ) {
@@ -92,63 +84,6 @@ const SignInScreen = ({navigation}) => {
         }
     }
 
-
-
-    const loginHandle = async (email, password) => {
-
-        // const foundUser = Users.filter( item => {
-        //     return userName == item.username && password == item.password;
-        // } );
-
-        // if ( data.username.length == 0 || data.password.length == 0 ) {
-        //     Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-        //         {text: 'Okay'}
-        //     ]);
-        //     return;
-        // }
-
-        // if ( foundUser.length == 0 ) {
-        //     Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-        //         {text: 'Okay'}
-        //     ]);
-        //     return;
-        // }
-        // signIn(foundUser);
-        try {
-            // const username = data.username;
-            // const password = data.password;
-            const body= {email, password};
-            // console.log(body);
-            const response= await fetch("http://localhost:5000/login",{
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(body)
-            });
-            const content = await response.json();
-            console.log(content.accessToken);
-            const token=content.accessToken;
-            // console.log("============================", JSON.stringify(content.accessToken));
-            // const response1 = await fetch("http://192.168.1.14:5000/lists",{
-            //     method: "GET",
-            //     headers: {"Content-Type": "application/json",
-            //     'Authorization': `Bearer ` + content.accessToken
-            // }
-
-            // });
-            // navigation.navigate('TabScreen', { screen:'Explore', params:{req: content}});
-            
-            try{
-                await AsyncStorage.setItem('userToken', token);
-            }catch(error){
-                console.log(error);
-            }
-
-            navigation.navigate('TabScreen',{screen:'Explore'});
-        } catch (err) {
-            console.error(err.message);
-        }
-    }
-
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#009387' barStyle="light-content"/>
@@ -158,23 +93,23 @@ const SignInScreen = ({navigation}) => {
         <Animatable.View 
             animation="fadeInUpBig"
             style={[styles.footer, {
-                // backgroundColor: colors.background
+                
             }]}
         >
             <Text style={[styles.text_footer, {
-                // color: colors.text
+               
             }]}>Username</Text>
             <View style={styles.action}>
                 <FontAwesome 
                     name="envelope-o"
-                    // color={colors.text}
+                    
                     size={20}
                 />
                 <TextInput 
                     placeholder="Your Username"
                     placeholderTextColor="#666666"
                     style={[styles.textInput, {
-                        // color: colors.text
+                        
                     }]}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}
@@ -200,13 +135,13 @@ const SignInScreen = ({navigation}) => {
             
 
             <Text style={[styles.text_footer, {
-                // color: colors.text,
+               
                 marginTop: 35
             }]}>Password</Text>
             <View style={styles.action}>
                 <Feather 
                     name="lock"
-                    // color={colors.text}
+                    
                     size={20}
                 />
                 <TextInput 
@@ -214,7 +149,7 @@ const SignInScreen = ({navigation}) => {
                     placeholderTextColor="#666666"
                     secureTextEntry={data.secureTextEntry ? true : false}
                     style={[styles.textInput, {
-                        // color: colors.text
+                       
                     }]}
                     autoCapitalize="none"
                     onChangeText={(val) => handlePasswordChange(val)}
@@ -244,9 +179,6 @@ const SignInScreen = ({navigation}) => {
             }
             
 
-            <TouchableOpacity>
-                <Text style={{color: '#009387', marginTop:15}}>Forgot password?</Text>
-            </TouchableOpacity>
             <View style={styles.button}>
                 <TouchableOpacity
                     style={[styles.signIn, {
@@ -254,21 +186,18 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    // onPress={() => {loginHandle( data.email, data.password )}}
+                   
                     onPress={() => {signIn( data.email, data.password )}}
-                    // onPress={() => navigation.navigate('TabScreen')}
+                    
                 >
                 
             
 
-                {/* <LinearGradient
-                    colors={['#08d4c4', '#01ab9d']}
-                    style={styles.signIn}
-                > */}
+ 
                     <Text style={[styles.textSign, {
                         color:'#009387'
                     }]}>Sign In</Text>
-                {/* </LinearGradient> */}
+               
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -277,35 +206,18 @@ const SignInScreen = ({navigation}) => {
                         borderWidth: 1,
                         marginTop: 15
                     }]}
-                    // onPress={() => {loginHandle( data.email, data.password )}}
+                    
                     onPress={() => navigation.goBack()}
-                    // onPress={() => navigation.navigate('TabScreen')}
+                    
                 >
-                
-            
 
-                {/* <LinearGradient
-                    colors={['#08d4c4', '#01ab9d']}
-                    style={styles.signIn}
-                > */}
                     <Text style={[styles.textSign, {
                         color:'#009387'
                     }]}>Cancel</Text>
-                {/* </LinearGradient> */}
+              
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity
-                    onPress={() => navigation.navigate('SignUpScreen')}
-                    style={[styles.signIn, {
-                        borderColor: '#009387',
-                        borderWidth: 1,
-                        marginTop: 15
-                    }]}
-                >
-                    <Text style={[styles.textSign, {
-                        color: '#009387'
-                    }]}>Sign Up</Text>
-                </TouchableOpacity> */}
+
             </View>
         </Animatable.View>
       </View>

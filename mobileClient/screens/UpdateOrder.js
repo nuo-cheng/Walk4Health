@@ -13,10 +13,9 @@ import {
     AsyncStorage
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import LinearGradient from 'react-native-linear-gradient';
+
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+
 
 
 const UpdateOrderInfo = ({ order, setOrder, orderInfo, setOrderInfo, signal, setSignal}) => {
@@ -28,7 +27,7 @@ const UpdateOrderInfo = ({ order, setOrder, orderInfo, setOrderInfo, signal, set
 
           return token;
         } catch (e) {
-          // Restoring token failed
+
           console.log(e.message);
         }
         return;
@@ -67,8 +66,7 @@ const UpdateOrderInfo = ({ order, setOrder, orderInfo, setOrderInfo, signal, set
             });
 
             const jsonData = await update.json();
-            // console.log('test personal info update', jsonData);
-            // setUser(jsonData[0]);
+
             getOrder();
         } catch (err) {
             console.error(err.message);
@@ -124,12 +122,7 @@ const UpdateOrderInfo = ({ order, setOrder, orderInfo, setOrderInfo, signal, set
     }
 
 
-    // const handleAgeChange = (val) => {
-    //     setPersonalInfo({
-    //         ...personalInfo,
-    //         age: Number(val)
-    //     });
-    // }
+
 
     return (
         <View style={styles.container}>
@@ -234,18 +227,7 @@ const UpdateOrderInfo = ({ order, setOrder, orderInfo, setOrderInfo, signal, set
                     }]}>return</Text>
                 </TouchableOpacity>
 
-                        {/* <TouchableOpacity
-                  onPress={() => navigation.goBack()}
-                  style={[styles.signIn, {
-                      borderColor: '#009387',
-                      borderWidth: 1,
-                      marginTop: 15
-                  }]}
-              >
-                  <Text style={[styles.textSign, {
-                      color: '#009387'
-                  }]}>Sign In</Text>
-              </TouchableOpacity> */}
+
                     </View>
                 </ScrollView>
             </Animatable.View>

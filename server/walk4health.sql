@@ -1,19 +1,5 @@
 CREATE DATABASE walk4health;
 
--- CREATE TABLE todo_list(
---     list_id SERIAL PRIMARY KEY, 
---     description VARCHAR(255),
---     user_id INT
--- );
-
--- CREATE TABLE todo_item(
---     item_id SERIAL PRIMARY KEY,
---     list_id INT NOT NULL REFERENCES todo_list(list_id),
---     description VARCHAR(25),
---     done BOOLEAN
--- );
-
-
 CREATE TABLE user_list(
     id SERIAL PRIMARY KEY,
     email VARCHAR(200),
@@ -33,5 +19,6 @@ CREATE TABLE post_list(
     creator_id INT,
     receiver_id INT,
     receiver_name VARCHAR(255),
-    creator_name VARCHAR(255)
+    creator_name VARCHAR(255)，
+    rating NUMERIC
 );
